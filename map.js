@@ -17,6 +17,9 @@ const OPENCAGE_TOKEN = '616df02868e141878736c00fb6840f26';
 //Geoapify Token
 const GEOAPIFY_TOKEN = '94fc6b02418d4459b2d161af64dd7d27';
 
+//Places API
+const PLACES_API = "89c1dc776459400bb23c1c7ec8189025";
+
 // web service request function
 function webServiceRequest(url, data)
 {
@@ -353,6 +356,8 @@ function confirmLocation()
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
     buttonsRef.innerHTML = displayButtons;
+
+    searchMap();
 }
 
 //CANCEL LOCATION

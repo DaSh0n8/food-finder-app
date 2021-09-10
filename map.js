@@ -1,7 +1,7 @@
 "use strict";
 
-let centrepointLocation = {};
-let newLocation = {};
+let centrepointLocation = {}; //centrepoint object (contains lat and lng)
+let newLocation = {}; //after clicking on the map, but not confirmed
 let centrepointSet = false;
 let markerList = [];
 let resultList = [];
@@ -80,7 +80,6 @@ function buildURL(url, data)
 
 
 //FORWARD GEOCODE
-
 function forwardGeocode()
 {
     let streetNumber = document.getElementById('street_number').value;
@@ -192,6 +191,55 @@ function getDataEdit(result)
     //updateList();
 }
 
+function getDataSearch(result)
+{
+    //console log result
+    console.log(result);
+    //mapbox token
+    mapboxgl.accessToken = MAPBOX_TOKEN;
+
+    //getting data
+    let data = result.results[0];
+
+    //editing data
+    newLocation =
+    {
+        lat: data.geometry.lat,
+        lng: data.geometry.lng,
+        address: data.formatted
+    }
+
+    //centre map
+    map.setCenter([data.geometry.lng, data.geometry.lat]);
+
+    //set marker position
+    let marker = resultMarker(data.geometry.lat, data.geometry.lng);
+    marker.setLngLat([data.geometry.lng, data.geometry.lat]);
+
+    //popup with formated information
+    let popup = new mapboxgl.Popup({ offset: 45 });
+    popup.setHTML(`${data.formatted}`);
+
+    //set popup to marker
+    marker.setPopup(popup);
+
+    //add marker to map
+    marker.addTo(map);
+
+    //add popup to map
+    popup.addTo(map);
+
+    let buttonsRef = document.getElementById('buttons');
+    let displayButtons = '';
+    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
+    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="confirmLocation()">Confirm Centrepoint</button>`;
+    displayButtons += `</div>`;
+    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
+    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Cancel Centrepoint</button>`;
+    displayButtons += `</div>`;
+    buttonsRef.innerHTML = displayButtons;
+}
+
 
 //Initialising map
 let mapStyle = 'osm-carto'
@@ -257,7 +305,7 @@ function resultMarker(x, y)
 }
 
 //REVERSE GEOCODE
-function reverseGeocode(x, y, edit = false)
+function reverseGeocode(x, y, search = false, edit = false)
 {
     let coordinates = `${x}+${y}`;
     let data =
@@ -270,6 +318,10 @@ function reverseGeocode(x, y, edit = false)
     {
         data.callback = 'getDataEdit'
     }
+    if (search)
+    {
+        data.callback = 'getDataSearch'
+    }
     webServiceRequest('https://api.opencagedata.com/geocode/v1/json', data);
 }
 
@@ -277,7 +329,7 @@ function onDragEnd(marker)
 {
     let coordinates = marker.target._lngLat;
     centrepointLocation = coordinates;
-    reverseGeocode(coordinates.lat, coordinates.lng, true);
+    reverseGeocode(coordinates.lat, coordinates.lng, false, true);
 }
 
 //REFRESH MAP
@@ -333,8 +385,21 @@ function refreshMap()
         //recreate result locations
         for (let i = 0; i < resultList.length; i++)
         {
+            //initiate marker
             let markerResult = resultMarker(resultList[i].lat,resultList[i].lng);
+
+            //add marker to map
             markerResult.addTo(map);
+
+            //popup with formated information
+            let popup = new mapboxgl.Popup({ offset: 45 });
+            popup.setHTML('INSERT INFORMATION HERE');
+
+            //set popup to marker
+            markerResult.setPopup(popup);
+
+            //add popup to map
+            popup.addTo(map);
         }
     });
 }
@@ -381,19 +446,10 @@ function changeMapStyle(style)
 //Test location markers
 function testResults()
 {
-    resultList.push(
-        {
-            lat: -37.8337851,
-            lng: 145.0059866
-        }, 
-        {
-            lat: -37.8349175,
-            lng: 145.018526
-        },
-        {
-            lat: -37.8405046,
-            lng: 145.0245795
-        }
-    )
-    refreshMap();
+    resultList.push({lat:-37.8337851,lng:145.0059866})
+    reverseGeocode(-37.8337851,145.0059866,true,false)
+    resultList.push({lat:-37.8349175,lng:145.018526})
+    reverseGeocode(-37.8349175,145.018526,true,false)
+    resultList.push({lat:-37.8405046,lng:145.0245795})
+    reverseGeocode(-37.8405046,145.0245795,true,false)
 }

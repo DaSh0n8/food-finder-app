@@ -441,6 +441,24 @@ function cancelLocation()
     buttonsRef.innerHTML = displayButtons;
 }
 
+//CURRENT LOCATION
+function getCurrentLocation()
+{
+    if ('geolocation' in navigator)
+    {
+        console.log('Geolocation is available.')
+        locationConfirmed = false;
+        navigator.geolocation.getCurrentPosition((position) =>
+        {
+            reverseGeocode(position.coords.latitude, position.coords.longitude);
+        });
+    }
+    else
+    {
+        console.log('Geolocation is not available.')
+    }
+}
+
 //CHANGE MAP STYLE
 function changeMapStyle(style)
 {

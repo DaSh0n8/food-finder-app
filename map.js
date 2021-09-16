@@ -253,7 +253,7 @@ let map = new mapboxgl.Map(
         container: 'map',
         style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 17 // starting zoom
     });
 globalThis.map;
 
@@ -421,8 +421,6 @@ function confirmLocation()
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
     buttonsRef.innerHTML = displayButtons;
-
-    searchMap();
 }
 
 //CANCEL LOCATION

@@ -1,11 +1,30 @@
 function searchMap() {
-    console.log('abc');
     var requestOptions = {
         method: 'GET',
       };
-      
-      fetch("https://api.geoapify.com/v2/places?categories=commercial.supermarket&filter=rect%3A10.716463143326969%2C48.755151258420966%2C10.835314015356737%2C48.680903341613316&limit=20&apiKey=89c1dc776459400bb23c1c7ec8189025", requestOptions)
+      let select = document.getElementById('select').value;
+      if (select == "Restaurant") {
+        select = "catering.restaurant"
+      }
+      else if (select == "Coffee") {
+        select = "catering.cafe";	
+      }
+      else {
+        window.alert("Please select what you want to search!");
+        return;
+      }
+      fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},2000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
         .then(response => response.json())
-        .then(result => console.log(result))
+        .then(result => drawResult(result))
         .catch(error => console.log('error', error));
+}
+
+function drawResult(result) {
+    //console.log(result);
+    //console.log(result.features[0].properties.lat);
+    //console.log(result.features[0].properties.lon);
+    for (let i = 0; i < result.features.length; i++) {
+      resultList.push({lat:result.features[i].properties.lat,lng:result.features[i].properties.lon})
+      reverseGeocode(result.features[i].properties.lat,result.features[i].properties.lon,true,false)
+    }
 }

@@ -253,7 +253,7 @@ let map = new mapboxgl.Map(
         container: 'map',
         style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 9 // starting zoom
+        zoom: 17 // starting zoom
     });
 globalThis.map;
 
@@ -421,8 +421,6 @@ function confirmLocation()
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
     buttonsRef.innerHTML = displayButtons;
-
-    searchMap();
 }
 
 //CANCEL LOCATION
@@ -475,4 +473,47 @@ function testResults()
     reverseGeocode(-37.8349175,145.018526,true,false)
     resultList.push({lat:-37.8405046,lng:145.0245795})
     reverseGeocode(-37.8405046,145.0245795,true,false)
+}
+
+const geojson = {
+    type: 'FeatureCollection',
+    features: [
+        {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [144.9626398, -37.8104191]
+            },
+            properties: {
+                title: 'Restaurant Name',
+                description: 'Category'
+            }
+        },
+        {
+            type: 'Feature',
+            geometry: {
+                type: 'Point',
+                coordinates: [144.99942, -37.8104191]
+            },
+            properties: {
+                title: 'Restaurant Name',
+                description: 'Category'
+            }
+        }
+    ]
+};
+
+// add markers to map
+for (const { geometry, properties } of geojson.features) {
+    // create a HTML element for each feature
+    const el = document.createElement('div');
+    el.className = 'marker';
+
+    // make a marker for each feature and add to the map
+    new mapboxgl.Marker(el).setLngLat(geometry.coordinates).addTo(map)
+.setPopup(
+        new mapboxgl.Popup({ offset: 25 }) // add popups
+            .setHTML(`<h3>${properties.title}</h3><p>${properties.description}</p>`)
+    )
+
 }

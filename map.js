@@ -513,7 +513,9 @@ for (const { geometry, properties } of geojson.features) {
     new mapboxgl.Marker(el).setLngLat(geometry.coordinates).addTo(map)
 .setPopup(
         new mapboxgl.Popup({ offset: 25 }) // add popups
-            .setHTML(`<h3>${properties.title}</h3><p>${properties.description}</p>`)
+            .setHTML(`<span style="font-size: 1.5em; color: Tomato;">
+            <i class="fas fa-bookmark"></i>
+        </span>`)
     )
 
 }

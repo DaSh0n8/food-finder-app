@@ -376,7 +376,7 @@ function refreshMap()
 
             //popup with formated information
             let popup = new mapboxgl.Popup({ offset: 45 });
-            popup.setHTML('INSERT INFORMATION HERE');
+            popup.setHTML(`<button type="button" onclick="sayTest()">INSERT INFORMATION HERE FOR MARKER ${marker}</button>`);
 
             //set popup to marker
             marker.setPopup(popup);
@@ -516,4 +516,10 @@ for (const { geometry, properties } of geojson.features) {
             .setHTML(`<h3>${properties.title}</h3><p>${properties.description}</p>`)
     )
 
+}
+
+//test buttons
+function sayTest()
+{
+    console.log('test');
 }

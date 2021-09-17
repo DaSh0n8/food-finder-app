@@ -376,7 +376,7 @@ function refreshMap()
 
             //popup with formated information
             let popup = new mapboxgl.Popup({ offset: 45 });
-            popup.setHTML('INSERT INFORMATION HERE');
+            popup.setHTML(`<button type="button" onclick="sayTest()">INSERT INFORMATION HERE FOR MARKER ${marker}</button>`);
 
             //set popup to marker
             marker.setPopup(popup);
@@ -475,6 +475,7 @@ function testResults()
     reverseGeocode(-37.8405046,145.0245795,true,false)
 }
 
+// creating markers
 const geojson = {
     type: 'FeatureCollection',
     features: [
@@ -518,4 +519,10 @@ for (const { geometry, properties } of geojson.features) {
         </span>`)
     )
 
+}
+
+//test buttons
+function sayTest()
+{
+    console.log('test');
 }

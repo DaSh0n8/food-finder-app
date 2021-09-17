@@ -164,25 +164,6 @@ function testCentrepoints()
 
 
 // Constructing Classes
-
-
-class CentrePoint{
-    constructor(lat, lng, address, bookmarked){
-        this.lat = lat;
-        this.lng = lng;
-        this.address = address;
-        this.bookmarked = bookmarked;
-    }
-
-    getLat(){
-        return this.lat;
-    }
-    getLng(){
-        return this.lng;
-    }
-}
-
-
 class SearchResult {
     constructor(name, lat, lng, address, category, bookmarked, review){
         this.name = name;
@@ -195,34 +176,34 @@ class SearchResult {
 
     }
 
-    getName(){
+    get name(){
         return this.name 
     }
     
-    getLat(){
+    get lat(){
         return this.lat;
     }
 
-    getLng(){
+    get lng(){
         return this.lng;
     }
 
-    getAddress(){
+    get address(){
         return this.address;
     }
 
-    getCategory(){
+    get category(){
         return this.category;
     }
-    getBookMarked(){
+    get bookMarked(){
         return this.bookmarked;
     }
     
-    getReview(){
+    get review(){
         return this.review;
     }
 
-    setBookmarked(bookmarked){
+    set bookmarked(bookmarked){
         this.bookmarked = bookmarked;
     }
 
@@ -230,10 +211,10 @@ class SearchResult {
         this.review = review
     }
 
-    getDistance(CentrePoint){
+    getDistance(centrepoint){
         // Calculates the distance between the search reseult and a centrePoint
         const R = 6371e3; // metres
-        const φ1 = CentrePoint.getLat() * Math.PI/180; // φ, λ in radians 
+        const φ1 = centrepoint.getLat() * Math.PI/180; // φ, λ in radians 
         const φ2 = this.getLat() * Math.PI/180;
         const Δφ = (this.getLat() - CentrePoint.getLat()) * Math.PI/180;
         const Δλ = (this.getLng() - CentrePoint.getLng()) * Math.PI/180;

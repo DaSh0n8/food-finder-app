@@ -475,6 +475,7 @@ function testResults()
     reverseGeocode(-37.8405046,145.0245795,true,false)
 }
 
+// creating markers
 const geojson = {
     type: 'FeatureCollection',
     features: [

@@ -7,7 +7,6 @@ const CENTREPOINT_LIST_KEY = 'centrepointList';
 
 
 //CLASSES
-
 //Centrepoint class
 class Centrepoint
 {
@@ -85,7 +84,6 @@ class CentrepointList
 
 
 //LOCAL STORAGE FUNCTIONS
-
 //check if local storage is available
 function checkLocalStorage(key)
 {
@@ -165,50 +163,51 @@ function testCentrepoints()
 
 // Constructing Classes
 class SearchResult {
-    constructor(name, lat, lng, address, category, bookmarked, review){
-        this.name = name;
-        this.lat = lat;
-        this.lng = lng;
-        this.address = address;
-        this.category = category;
-        this.bookmarked = bookmarked = false;
-        this.review = review; 
-
+    constructor(name, lat, lng, address, category, position, bookmarked = false, review = 0){
+        this._name = name;
+        this._lat = lat;
+        this._lng = lng;
+        this._address = address;
+        this._category = category;
+        this._bookmarked = bookmarked;
+        this._review = review;
+        this._position = position;
     }
 
     get name(){
-        return this.name 
+        return this._name 
     }
     
     get lat(){
-        return this.lat;
+        return this._lat;
     }
 
     get lng(){
-        return this.lng;
+        return this._lng;
     }
 
     get address(){
-        return this.address;
+        return this._address;
     }
 
     get category(){
-        return this.category;
+        return this._category;
     }
+
     get bookMarked(){
-        return this.bookmarked;
+        return this._bookmarked;
     }
     
     get review(){
-        return this.review;
+        return this._review;
     }
 
-    set bookmarked(bookmarked){
-        this.bookmarked = bookmarked;
+    get position(){
+        return this._position;
     }
 
     addReview(review){
-        this.review = review
+        this._review = review
     }
 
     getDistance(centrepoint){
@@ -227,9 +226,7 @@ class SearchResult {
         const d = R * c; // in metres
   
         return d
-
     }
-
 }
 
 //>>>>>>> 8c7c1301d9bc431f28317d6b644614957730f726

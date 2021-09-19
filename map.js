@@ -5,6 +5,7 @@ let newLocation = {}; //after clicking on the map, but not confirmed
 let centrepointSet = false;
 let markerList = [];
 let resultList = [];
+let resultInstanceList = [];
 let locationConfirmed = true;
 
 const APPDATA_KEY = 'appdatakey';
@@ -194,6 +195,7 @@ function getDataEdit(result)
     //updateList();
 }
 
+//might change or get rid of
 function getDataSearch(result)
 {
     //console log result
@@ -241,6 +243,42 @@ function getDataSearch(result)
     displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Cancel Centrepoint</button>`;
     displayButtons += `</div>`;
     buttonsRef.innerHTML = displayButtons;
+}
+
+//Displaying searach results
+function displaySearchResults(result) //result should be an instance of SearchResult
+{
+    let name = result.name;
+    let lat = result.lat;
+    let lng = result.lng;
+    let address = result.formatted;
+    let categories = result.categories;
+    
+    //Show Marker
+    //set marker position
+    let marker = resultMarker(lat, lng);
+    marker.setLngLat([lng, lat]);
+
+    //popup with formated information
+    let popup = new mapboxgl.Popup({ offset: 45 });
+    popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
+
+    //set popup to marker
+    marker.setPopup(popup);
+
+    //add marker to map
+    marker.addTo(map);
+
+    //add popup to map
+    popup.addTo(map);
+}
+
+//Bookmark Search Result
+function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
+{
+    console.log(resultPosition);
+    resultInstanceList[resultPosition]._bookmarked = true;
+    console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
 }
 
 
@@ -464,7 +502,7 @@ function changeMapStyle(style)
     refreshMap();
 }
 
-//Test location markers
+/*//Test location markers
 function testResults()
 {
     resultList.push({lat:-37.8337851,lng:145.0059866})
@@ -473,7 +511,7 @@ function testResults()
     reverseGeocode(-37.8349175,145.018526,true,false)
     resultList.push({lat:-37.8405046,lng:145.0245795})
     reverseGeocode(-37.8405046,145.0245795,true,false)
-}
+}*/
 
 // creating markers
 const geojson = {

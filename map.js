@@ -513,51 +513,7 @@ function testResults()
     reverseGeocode(-37.8405046,145.0245795,true,false)
 }*/
 
-// creating markers
-const geojson = {
-    type: 'FeatureCollection',
-    features: [
-        {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [144.9626398, -37.8104191]
-            },
-            properties: {
-                title: 'Restaurant Name',
-                description: 'Category'
-            }
-        },
-        {
-            type: 'Feature',
-            geometry: {
-                type: 'Point',
-                coordinates: [144.99942, -37.8104191]
-            },
-            properties: {
-                title: 'Restaurant Name',
-                description: 'Category'
-            }
-        }
-    ]
-};
 
-// add markers to map
-for (const { geometry, properties } of geojson.features) {
-    // create a HTML element for each feature
-    const el = document.createElement('div');
-    el.className = 'marker';
-
-    // make a marker for each feature and add to the map
-    new mapboxgl.Marker(el).setLngLat(geometry.coordinates).addTo(map)
-.setPopup(
-        new mapboxgl.Popup({ offset: 25 }) // add popups
-            .setHTML(`<span style="font-size: 1.5em; color: Tomato;">
-            <i class="fas fa-bookmark"></i>
-        </span>`)
-    )
-
-}
 
 //test buttons
 function sayTest()

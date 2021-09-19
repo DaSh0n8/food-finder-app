@@ -22,22 +22,17 @@ const GEOAPIFY_TOKEN = '94fc6b02418d4459b2d161af64dd7d27';
 const PLACES_API = "89c1dc776459400bb23c1c7ec8189025";
 
 // web service request function
-function webServiceRequest(url, data)
-{
+function webServiceRequest(url, data) {
     // Build URL parameters from data object.
     let params = "";
     // For each key in data object...
-    for (let key in data)
-    {
-        if (data.hasOwnProperty(key))
-        {
-            if (params.length == 0)
-            {
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            if (params.length == 0) {
                 // First parameter starts with '?'
                 params += "?";
             }
-            else
-            {
+            else {
                 // Subsequent parameter separated by '&'
                 params += "&";
             }
@@ -53,22 +48,17 @@ function webServiceRequest(url, data)
     document.body.appendChild(script);
 }
 
-function buildURL(url, data)
-{
+function buildURL(url, data) {
     // Build URL parameters from data object.
     let params = "";
     // For each key in data object...
-    for (let key in data)
-    {
-        if (data.hasOwnProperty(key))
-        {
-            if (params.length == 0)
-            {
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            if (params.length == 0) {
                 // First parameter starts with '?'
                 params += "?";
             }
-            else
-            {
+            else {
                 // Subsequent parameter separated by '&'
                 params += "&";
             }
@@ -84,8 +74,7 @@ function buildURL(url, data)
 
 
 //FORWARD GEOCODE
-function forwardGeocode()
-{
+function forwardGeocode() {
     let streetNumber = document.getElementById('street_number').value;
     let street = document.getElementById('street').value;
     let postcode = document.getElementById('postcode').value;
@@ -105,8 +94,7 @@ function forwardGeocode()
 }
 
 //Callback function
-function getData(result)
-{
+function getData(result) {
     //console log result
     console.log(result);
     //mapbox token
@@ -154,8 +142,7 @@ function getData(result)
     buttonsRef.innerHTML = displayButtons;
 }
 
-function getDataEdit(result)
-{
+function getDataEdit(result) {
     //console log result
     console.log(result);
     //mapbox token
@@ -196,8 +183,7 @@ function getDataEdit(result)
 }
 
 //might change or get rid of
-function getDataSearch(result)
-{
+function getDataSearch(result) {
     //console log result
     console.log(result);
     //mapbox token
@@ -253,24 +239,40 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     let lng = result.lng;
     let address = result.formatted;
     let categories = result.categories;
-    
+
     //Show Marker
-    //set marker position
-    let marker = resultMarker(lat, lng);
-    marker.setLngLat([lng, lat]);
+    let geojson = {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [lng, lat]
+                },
+            },
+        ]
+    };
+    for (const { geometry, properties } of geojson.features) {
+        // create a HTML element for each feature
+        const el = document.createElement('div');
+        el.className = 'marker';
 
-    //popup with formated information
-    let popup = new mapboxgl.Popup({ offset: 45 });
-    popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
+        // make a marker for each feature and add to the map
+        let marker = new mapboxgl.Marker(el).setLngLat(geometry.coordinates);
+        //popup with formated information
+        let popup = new mapboxgl.Popup({ offset: 45 });
+        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
 
-    //set popup to marker
-    marker.setPopup(popup);
+        //set popup to marker
+        marker.setPopup(popup);
 
-    //add marker to map
-    marker.addTo(map);
+        //add marker to map
+        marker.addTo(map);
 
-    //add popup to map
-    popup.addTo(map);
+        //add popup to map
+        popup.addTo(map);
+    }
 }
 
 //Bookmark Search Result
@@ -296,12 +298,9 @@ let map = new mapboxgl.Map(
 globalThis.map;
 
 //MAP ON CLICK
-map.on('style.load', function ()
-{
-    map.on('click', function (click)
-    {
-        if (locationConfirmed)
-        {
+map.on('style.load', function () {
+    map.on('click', function (click) {
+        if (locationConfirmed) {
             let coordinates = click.lngLat;
             centrepointLocation = coordinates;
             let x = coordinates.lat;
@@ -319,8 +318,7 @@ buttonsRef.innerHTML = displayButtons;
 
 
 //NEW MARKERS
-function newMarker(x, y)
-{
+function newMarker(x, y) {
     let marker = new mapboxgl.Marker({ draggable: true, color: '#3FB1CE' });
     marker.setLngLat([y, x]);
     console.log(`New marker at (${x}, ${y}).`)
@@ -330,24 +328,21 @@ function newMarker(x, y)
 }
 
 //STATIC MARKERS
-function staticMarker(x, y)
-{
+function staticMarker(x, y) {
     let marker = new mapboxgl.Marker({ draggable: false, color: '#4AE961' });
     marker.setLngLat([y, x]);
     return marker;
 }
 
 //RESULT MARKERS
-function resultMarker(x, y)
-{
+function resultMarker(x, y) {
     let marker = new mapboxgl.Marker({ draggable: false, color: '#e71e28' });
     marker.setLngLat([y, x]);
     return marker;
 }
 
 //REVERSE GEOCODE
-function reverseGeocode(x, y, search = false, edit = false)
-{
+function reverseGeocode(x, y, search = false, edit = false) {
     let coordinates = `${x}+${y}`;
     let data =
     {
@@ -355,27 +350,23 @@ function reverseGeocode(x, y, search = false, edit = false)
         key: OPENCAGE_TOKEN,
         callback: 'getData'
     }
-    if (edit)
-    {
+    if (edit) {
         data.callback = 'getDataEdit'
     }
-    if (search)
-    {
+    if (search) {
         data.callback = 'getDataSearch'
     }
     webServiceRequest('https://api.opencagedata.com/geocode/v1/json', data);
 }
 
-function onDragEnd(marker)
-{
+function onDragEnd(marker) {
     let coordinates = marker.target._lngLat;
     centrepointLocation = coordinates;
     reverseGeocode(coordinates.lat, coordinates.lng, false, true);
 }
 
 //REFRESH MAP
-function refreshMap()
-{
+function refreshMap() {
     //refresh map
     let mapCentre = map.getCenter();
     let mapZoom = map.getZoom();
@@ -390,13 +381,10 @@ function refreshMap()
 
     globalThis.map;
 
-    map.on('style.load', function ()
-    {
+    map.on('style.load', function () {
         //make sure that the map is clickable if there is no centrepoint
-        if (!centrepointSet && locationConfirmed)
-        {
-            map.on('click', function (click)
-            {
+        if (!centrepointSet && locationConfirmed) {
+            map.on('click', function (click) {
                 locationConfirmed = false;
                 let coordinates = click.lngLat;
                 let x = coordinates.lat;
@@ -404,8 +392,7 @@ function refreshMap()
                 reverseGeocode(x, y);
             });
         }
-        else
-        {
+        else {
             //recreate centrepoint location
             let marker = staticMarker(centrepointLocation.lat, centrepointLocation.lng); //change based on class
 
@@ -424,10 +411,9 @@ function refreshMap()
         }
 
         //recreate result locations
-        for (let i = 0; i < resultList.length; i++)
-        {
+        for (let i = 0; i < resultList.length; i++) {
             //initiate marker
-            let markerResult = resultMarker(resultList[i].lat,resultList[i].lng);
+            let markerResult = resultMarker(resultList[i].lat, resultList[i].lng);
 
             //add marker to map
             markerResult.addTo(map);
@@ -446,8 +432,7 @@ function refreshMap()
 }
 
 //CONFIRM LOCATION
-function confirmLocation()
-{
+function confirmLocation() {
     centrepointLocation = newLocation;
     centrepointSet = true;
     locationConfirmed = true;
@@ -462,8 +447,7 @@ function confirmLocation()
 }
 
 //CANCEL LOCATION
-function cancelLocation()
-{
+function cancelLocation() {
     centrepointLocation = {};
     centrepointSet = false;
     locationConfirmed = true;
@@ -478,26 +462,21 @@ function cancelLocation()
 }
 
 //CURRENT LOCATION
-function getCurrentLocation()
-{
-    if ('geolocation' in navigator)
-    {
+function getCurrentLocation() {
+    if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
         locationConfirmed = false;
-        navigator.geolocation.getCurrentPosition((position) =>
-        {
+        navigator.geolocation.getCurrentPosition((position) => {
             reverseGeocode(position.coords.latitude, position.coords.longitude);
         });
     }
-    else
-    {
+    else {
         console.log('Geolocation is not available.')
     }
 }
 
 //CHANGE MAP STYLE
-function changeMapStyle(style)
-{
+function changeMapStyle(style) {
     mapStyle = style;
     refreshMap();
 }
@@ -516,7 +495,6 @@ function testResults()
 
 
 //test buttons
-function sayTest()
-{
+function sayTest() {
     console.log('test');
 }

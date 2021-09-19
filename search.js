@@ -41,36 +41,6 @@ function drawResult() {
     }*/
     for (let i = 0; i < resultInstanceList.length; i++)
     {
-        //displaySearchResults(resultInstanceList[i]);
-        createMarker(resultInstanceList[i].lng,resultInstanceList[i].lat)
-    }
-}
-
-function createMarker(lng,lat){
-    let geojson = {
-        type: 'FeatureCollection',
-        features: [
-            {
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: [lng, lat]
-                },
-            },
-        ]
-    };
-
-    for (const { geometry, properties } of geojson.features) {
-        // create a HTML element for each feature
-        const el = document.createElement('div');
-        el.className = 'marker';
-
-        // make a marker for each feature and add to the map
-        new mapboxgl.Marker(el).setLngLat(geometry.coordinates).addTo(map).setPopup(
-            new mapboxgl.Popup({ offset: 25 }) // add popups
-                .setHTML(`<span style="font-size: 1.5em; color: Tomato;">
-            <i class="fas fa-bookmark"></i>
-        </span>`)
-        )
+        displaySearchResults(resultInstanceList[i]);
     }
 }

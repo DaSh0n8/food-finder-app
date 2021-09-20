@@ -22,6 +22,11 @@
     <script type="text/javascript" src="https://unpkg.com/ol-mapbox-style@6.1.0/dist/olms.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+
+    <!-- Linking google icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
     <style>
         /* Define any CSS here */
         #map {
@@ -51,6 +56,20 @@
                             <div id='map'>
                             </div>
                         </div>
+                        
+                        <div class="mdl-cell mdl-cell--5-col">
+                            <!-- Confirm Location Button -->
+                        </div>
+
+
+                        <div class="mdl-cell mdl-cell--2-col">
+                            <!-- Colored mini FAB button -->
+                            <button 
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" onclick="getCurrentLocation()" title="click here">
+                                <i class="material-icons">my_location</i></button>
+
+                        </div>
+
                     </div>
                 </div>
                 <div class="bottom">

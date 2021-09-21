@@ -213,10 +213,10 @@ class SearchResult {
     getDistance(centrepoint){
         // Calculates the distance between the search reseult and a centrePoint
         const R = 6371e3; // metres
-        const φ1 = centrepoint.getLat() * Math.PI/180; // φ, λ in radians 
-        const φ2 = this.getLat() * Math.PI/180;
-        const Δφ = (this.getLat() - CentrePoint.getLat()) * Math.PI/180;
-        const Δλ = (this.getLng() - CentrePoint.getLng()) * Math.PI/180;
+        const φ1 = centrepoint.lat * Math.PI/180; // φ, λ in radians 
+        const φ2 = this.lat * Math.PI/180;
+        const Δφ = (this.lat - centrepoint.lat) * Math.PI/180;
+        const Δλ = (this.lng - centrepoint.lng) * Math.PI/180;
 
         const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
           Math.cos(φ1) * Math.cos(φ2) *

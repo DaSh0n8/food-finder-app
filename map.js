@@ -1,12 +1,14 @@
 "use strict";
 
-let centrepointLocation = {}; //centrepoint object (contains lat and lng)
+let centrepointLocation = null; //centrepoint instance, initiated as null
 let newLocation = {}; //after clicking on the map, but not confirmed
 let centrepointSet = false;
 let markerList = [];
 let resultList = [];
 let resultInstanceList = [];
 let locationConfirmed = true;
+let searchRadius = 500; //radius in m to search for
+let searchLimit = 5; //number of searches to show
 
 const APPDATA_KEY = 'appdatakey';
 const INCOMPLETE_KEY = 'incompletekey';
@@ -245,42 +247,6 @@ function getDataSearch(result)
     buttonsRef.innerHTML = displayButtons;
 }
 
-//Displaying searach results
-function displaySearchResults(result) //result should be an instance of SearchResult
-{
-    let name = result.name;
-    let lat = result.lat;
-    let lng = result.lng;
-    let address = result.formatted;
-    let categories = result.categories;
-    
-    //Show Marker
-    //set marker position
-    let marker = resultMarker(lat, lng);
-    marker.setLngLat([lng, lat]);
-
-    //popup with formated information
-    let popup = new mapboxgl.Popup({ offset: 45 });
-    popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
-
-    //set popup to marker
-    marker.setPopup(popup);
-
-    //add marker to map
-    marker.addTo(map);
-
-    //add popup to map
-    popup.addTo(map);
-}
-
-//Bookmark Search Result
-function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
-{
-    console.log(resultPosition);
-    resultInstanceList[resultPosition]._bookmarked = true;
-    console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
-}
-
 
 //Initialising map
 let mapStyle = 'osm-carto'
@@ -414,7 +380,7 @@ function refreshMap()
 
             //popup with formated information
             let popup = new mapboxgl.Popup({ offset: 45 });
-            popup.setHTML(`<button type="button" onclick="sayTest()">INSERT INFORMATION HERE FOR MARKER ${marker}</button>`);
+            popup.setHTML(`<p>${centrepointLocation.address}</p><button type="button" onclick="bookmarkCentrepoint()">Bookmark</button>`);
 
             //set popup to marker
             marker.setPopup(popup);
@@ -448,7 +414,7 @@ function refreshMap()
 //CONFIRM LOCATION
 function confirmLocation()
 {
-    centrepointLocation = newLocation;
+    centrepointLocation = new Centrepoint(newLocation.lat,newLocation.lng,newLocation.address);
     centrepointSet = true;
     locationConfirmed = true;
 
@@ -475,6 +441,48 @@ function cancelLocation()
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
     buttonsRef.innerHTML = displayButtons;
+}
+
+//Displaying searach results
+function displaySearchResults(result) //result should be an instance of SearchResult
+{
+    let name = result.name;
+    let lat = result.lat;
+    let lng = result.lng;
+    let address = result.formatted;
+    let categories = result.categories;
+    
+    //Show Marker
+    //set marker position
+    let marker = resultMarker(lat, lng);
+    marker.setLngLat([lng, lat]);
+
+    //popup with formated information
+    let popup = new mapboxgl.Popup({ offset: 45 });
+    popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
+
+    //set popup to marker
+    marker.setPopup(popup);
+
+    //add marker to map
+    marker.addTo(map);
+
+    //add popup to map
+    popup.addTo(map);
+}
+
+//Bookmark Search Result
+function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
+{
+    resultInstanceList[resultPosition]._bookmarked = true;
+    console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
+}
+
+//Bookmark Centrepoint
+function bookmarkCentrepoint()
+{
+    centrepointLocation.bookmarked = true;
+    console.log(`${centrepointLocation.address} has been bookmarked.`);
 }
 
 //CURRENT LOCATION
@@ -557,10 +565,4 @@ for (const { geometry, properties } of geojson.features) {
         </span>`)
     )
 
-}
-
-//test buttons
-function sayTest()
-{
-    console.log('test');
 }

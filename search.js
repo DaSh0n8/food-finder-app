@@ -58,6 +58,7 @@ function limitData(filteredList)
                 minIndex = j;
             }
         }
+        filteredList[minIndex].position = i;
         resultInstanceList.push(filteredList[minIndex]);
         filteredList.splice(minIndex,1);
     }

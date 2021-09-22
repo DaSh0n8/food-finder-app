@@ -206,6 +206,11 @@ class SearchResult {
         return this._position;
     }
 
+    set position(position)
+    {
+        this._position = position;
+    }
+
     addReview(review){
         this._review = review
     }

@@ -3,6 +3,7 @@
 
 //Local Storage Keys
 const CENTREPOINT_LIST_KEY = 'centrepointList';
+const SEARCH_RESULT_LIST_KEY = 'searchResultListKey;'
 
 
 
@@ -131,23 +132,6 @@ function getLocalStorage(key)
 
 
 
-//Initialises centrepoint list if none exists
-let centrepointList = new CentrepointList();
-if (typeof Storage !== 'undefined')
-{
-    if (checkLocalStorage(CENTREPOINT_LIST_KEY) == true)
-    {
-        let centrepointListData = getLocalStorage(CENTREPOINT_LIST_KEY);
-        centrepointList.fromData(centrepointListData);
-    }
-    else
-    {
-        setLocalStorage(CENTREPOINT_LIST_KEY, centrepointList);
-    }
-}
-
-
-
 //centrepoint test function
 function testCentrepoints()
 {
@@ -231,6 +215,66 @@ class SearchResult {
         const d = R * c; // in metres
   
         return d
+    }
+}
+
+//Search Result List Class
+class SearchResultList
+{
+    constructor()
+    {
+        this._list = [];
+    }
+
+    get list()
+    {
+        return this._list;
+    }
+
+    addSearchResult(searchResultInstance)
+    {
+        this._list.push(searchResultInstance);
+    }
+
+    fromData(dataObject)
+    {
+        for (let i = 0; i < dataObject._list.length; i++)
+        {
+            let searchResultInstance = new SearchResult;
+            searchResultInstance.fromData(dataObject._list[i]);
+            this.addSearchResult(searchResultInstance);
+        }
+    }
+}
+
+
+
+//Initialises centrepoint list if none exists
+let centrepointList = new CentrepointList();
+if (typeof Storage !== 'undefined')
+{
+    if (checkLocalStorage(CENTREPOINT_LIST_KEY) == true)
+    {
+        let centrepointListData = getLocalStorage(CENTREPOINT_LIST_KEY);
+        centrepointList.fromData(centrepointListData);
+    }
+    else
+    {
+        setLocalStorage(CENTREPOINT_LIST_KEY, centrepointList);
+    }
+}
+
+//Initialise search result list if none exists
+let searchResultList = new SearchResultList();
+{
+    if (checkLocalStorage(SEARCH_RESULT_LIST_KEY) == true)
+    {
+        let searchResultListData = getLocalStorage(SEARCH_RESULT_LIST_KEY);
+        searchResultList.fromData(searchResultListData);
+    }
+    else
+    {
+        setLocalStorage(SEARCH_RESULT_LIST_KEY, searchResultList);
     }
 }
 

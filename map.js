@@ -490,13 +490,29 @@ function bookmarkSearchResult(resultPosition) //result is an instance of SearchR
     searchResultBookmarkList.addSearchResult(resultInstanceList[resultPosition]);
     setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
     console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
+    displaySearchResultBookmark();
 }
 
 //Bookmark Centrepoint
 function bookmarkCentrepoint()
 {
     centrepointLocation.bookmarked = true;
+    centrepointBookmarkList.addSearchResult(centrepointLocation);
+    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
     console.log(`${centrepointLocation.address} has been bookmarked.`);
+}
+
+//Display Search Result Bookmark List
+function displaySearchResultBookmark()
+{
+    let bookmarkRef = document.getElementById('bookmarkList')
+    let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarks:\n</p>';
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+    {
+        list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
+    }
+    console.log(bookmarkRef);
+    bookmarkRef.innerHTML = list;
 }
 
 //CURRENT LOCATION

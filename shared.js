@@ -3,7 +3,7 @@
 
 //Local Storage Keys
 const CENTREPOINT_LIST_KEY = 'centrepointList';
-const SEARCH_RESULT_LIST_KEY = 'searchResultListKey;'
+const SEARCH_RESULT_LIST_KEY = 'searchResultList';
 
 
 
@@ -215,6 +215,18 @@ class SearchResult {
         const d = R * c; // in metres
   
         return d
+    }
+
+    //(name, lat, lng, address, category, position, bookmarked = false, review = 0)
+    fromData(dataObject)
+    {
+        this._name = dataObject._name;
+        this._lat = dataObject._lat;
+        this._lng = dataObject._lng;
+        this._address = dataObject._address;
+        this._category = dataObject._category;
+        this._bookmarked = dataObject._bookmarked;
+        this._review = dataObject._review;
     }
 }
 

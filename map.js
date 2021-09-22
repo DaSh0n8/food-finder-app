@@ -277,14 +277,6 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     }
 }
 
-//Bookmark Search Result
-function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
-{
-    console.log(resultPosition);
-    resultInstanceList[resultPosition]._bookmarked = true;
-    console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
-}
-
 
 //Initialising map
 let mapStyle = 'osm-carto'
@@ -495,6 +487,8 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
 {
     resultInstanceList[resultPosition]._bookmarked = true;
+    searchResultList.addSearchResult(resultInstanceList[resultPosition]);
+    setLocalStorage(SEARCH_RESULT_LIST_KEY, searchResultList);
     console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
 }
 

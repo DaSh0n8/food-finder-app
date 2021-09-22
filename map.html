@@ -56,17 +56,18 @@
                             <div id='map'>
                             </div>
                         </div>
-                        
+
                         <div class="mdl-cell mdl-cell--5-col">
                             <!-- Confirm Location Button -->
                         </div>
-                        
+
 
                         <div class="mdl-cell mdl-cell--2-col">
                             <!-- Colored mini FAB button -->
-                            <button 
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored" title="Use Current Location" onclick="getCurrentLocation()">
-    
+                            <button
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                title="Use Current Location" onclick="getCurrentLocation()">
+
                                 <i class="material-icons">my_location</i></button>
 
                         </div>
@@ -109,40 +110,44 @@
                         <span id="addDest_msg" class="mdl-textfield__error"></span>
                     </div>
                 </form>
-                <select class="form-select" aria-label="Default select example" id="select">
-                    <option selected>Open this select menu</option>
-                    <option value="Restaurant">Restaurant</option>
-                    <option value="Fast food">Fast Food</option>
-                    <option value="Food court">Food Court</option>
-                    <option value="Bar">Bar</option>
-                    <option value="Pub">Pub</option>
-                    <option value="Ice cream">Ice Cream</option>
-                    <option value="Coffee">Cafe</option>
-                </select>
+                <div class="searchInfo">
+                    <select class="form-select" aria-label="Default select example" id="select">
+                        <option selected>Open this select menu</option>
+                        <option value="Restaurant">Restaurant</option>
+                        <option value="Fast food">Fast Food</option>
+                        <option value="Food court">Food Court</option>
+                        <option value="Bar">Bar</option>
+                        <option value="Pub">Pub</option>
+                        <option value="Ice cream">Ice Cream</option>
+                        <option value="Coffee">Cafe</option>
+                    </select>
+                    <div class="radius">
+                        <div class="input-group">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id ="radius">
+                            <div class="input-group-append">
+                                <span class="input-group-text">meters</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <br>
                 <br>
                 <br>
                 <button type="button" class="btn btn-success" onclick="searchMap()">Start searching !</button>
                 <br>
-                <ol class="gradient-list">
-                    <li>Location 1</li>
-                    <li>Location 2</li>
-                    <li>Location 3</li>
-                    <li>Location 4</li>
-                    <li>Location 5</li>
-                </ol>
+                <br>
                 <span style="font-size: 1.5em; color: Tomato;">
                     <i class="fas fa-bookmark"></i>
                 </span>
             </div>
         </main>
-
-        <script src="shared.js"></script>
-        <script src="map.js"></script>
-        <script src="search.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-            crossorigin="anonymous"></script>
+    </div>
+    <script src="shared.js"></script>
+    <script src="map.js"></script>
+    <script src="search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

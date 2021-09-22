@@ -3,6 +3,7 @@ function searchMap() {
         method: 'GET',
       };
       let select = document.getElementById('select').value;
+      let radius = document.getElementById('radius').value;
       switch (select)
       {
         case 'Restaurant':
@@ -32,7 +33,7 @@ function searchMap() {
       }
       //fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},2000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
       //there is a max 500 limit for search results
-      fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},10000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=500&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
+      fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},${radius}&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=500&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
         .then(response => response.json())
         .then(result => filterData(result))
         .catch(error => console.log('error', error));

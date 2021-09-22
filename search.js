@@ -3,15 +3,32 @@ function searchMap() {
         method: 'GET',
       };
       let select = document.getElementById('select').value;
-      if (select == "Restaurant") {
-        select = "catering.restaurant"
-      }
-      else if (select == "Coffee") {
-        select = "catering.cafe";	
-      }
-      else {
-        window.alert("Please select what you want to search!");
-        return;
+      switch (select)
+      {
+        case 'Restaurant':
+            select = 'catering.restaurant';
+            break;
+        case 'Fast food':
+            select = 'catering.fast_food';
+            break;
+        case 'Coffee':
+            select = 'catering.cafe';
+            break;
+        case 'Food court':
+            select = 'catering.foot_court';
+            break;
+        case 'Bar':
+            select = 'catering.bar';
+            break;
+        case 'Pub':
+            select = 'catering.pub';
+            break;
+        case 'Ice cream':
+            select = 'catering.ice_cream';
+            break;
+        default:
+            window.alert('Please select a category to search.');
+            return;
       }
       //fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},2000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
       //there is a max 500 limit for search results
@@ -45,6 +62,7 @@ function filterData(results)
 //Adam: limitData function; O(n^2), yikes!
 function limitData(filteredList)
 {
+    resultInstanceList = [];
     for (let i = 0; i < searchLimit; i++)
     {
         minDistance = filteredList[0].getDistance(centrepointLocation)
@@ -89,6 +107,7 @@ function drawResult() {
       resultList.push({lat:result.features[i].properties.lat,lng:result.features[i].properties.lon})
       reverseGeocode(result.features[i].properties.lat,result.features[i].properties.lon,true,false)
     }*/
+    refreshMap();
     for (let i = 0; i < resultInstanceList.length; i++)
     {
         displaySearchResults(resultInstanceList[i]);

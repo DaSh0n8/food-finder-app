@@ -487,8 +487,8 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
 {
     resultInstanceList[resultPosition]._bookmarked = true;
-    searchResultList.addSearchResult(resultInstanceList[resultPosition]);
-    setLocalStorage(SEARCH_RESULT_LIST_KEY, searchResultList);
+    searchResultBookmarkList.addSearchResult(resultInstanceList[resultPosition]);
+    setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
     console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
 }
 
@@ -518,17 +518,6 @@ function changeMapStyle(style) {
     mapStyle = style;
     refreshMap();
 }
-
-/*//Test location markers
-function testResults()
-{
-    resultList.push({lat:-37.8337851,lng:145.0059866})
-    reverseGeocode(-37.8337851,145.0059866,true,false)
-    resultList.push({lat:-37.8349175,lng:145.018526})
-    reverseGeocode(-37.8349175,145.018526,true,false)
-    resultList.push({lat:-37.8405046,lng:145.0245795})
-    reverseGeocode(-37.8405046,145.0245795,true,false)
-}*/
 
 //test buttons
 function sayTest() {

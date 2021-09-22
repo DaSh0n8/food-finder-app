@@ -3,7 +3,7 @@
 
 //Local Storage Keys
 const CENTREPOINT_LIST_KEY = 'centrepointList';
-const SEARCH_RESULT_LIST_KEY = 'searchResultList';
+const SEARCH_RESULT_BOOKMARK_LIST_KEY = 'searchResultBookmarkList';
 
 
 
@@ -178,7 +178,7 @@ class SearchResult {
         return this._category;
     }
 
-    get bookMarked(){
+    get bookmarked(){
         return this._bookmarked;
     }
     
@@ -190,8 +190,11 @@ class SearchResult {
         return this._position;
     }
 
-    set position(position)
-    {
+    set bookmarked(bookmarked){
+        this._bookmarked = bookmarked;
+    }
+
+    set position(position){
         this._position = position;
     }
 
@@ -231,7 +234,7 @@ class SearchResult {
 }
 
 //Search Result List Class
-class SearchResultList
+class SearchResultBookmarkList
 {
     constructor()
     {
@@ -277,16 +280,16 @@ if (typeof Storage !== 'undefined')
 }
 
 //Initialise search result list if none exists
-let searchResultList = new SearchResultList();
+let searchResultBookmarkList = new SearchResultBookmarkList();
 {
-    if (checkLocalStorage(SEARCH_RESULT_LIST_KEY) == true)
+    if (checkLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY) == true)
     {
-        let searchResultListData = getLocalStorage(SEARCH_RESULT_LIST_KEY);
-        searchResultList.fromData(searchResultListData);
+        let searchResultBookmarkListData = getLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY);
+        searchResultBookmarkList.fromData(searchResultBookmarkListData);
     }
     else
     {
-        setLocalStorage(SEARCH_RESULT_LIST_KEY, searchResultList);
+        setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
     }
 }
 

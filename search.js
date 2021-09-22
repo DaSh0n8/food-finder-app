@@ -49,7 +49,7 @@ function limitData(filteredList)
     {
         minDistance = filteredList[0].getDistance(centrepointLocation)
         minIndex = 0;
-        for (let j = 0; j< filteredList.length; j++)
+        for (let j = 0; j < filteredList.length; j++)
         {
             distance = filteredList[j].getDistance(centrepointLocation);
             if (distance < minDistance)
@@ -59,10 +59,26 @@ function limitData(filteredList)
             }
         }
         filteredList[minIndex].position = i;
+        if (checkInSearchResultBookmarkList(filteredList[minIndex]))
+        {
+            filteredList[minIndex].bookmarked = true;
+        }
         resultInstanceList.push(filteredList[minIndex]);
         filteredList.splice(minIndex,1);
     }
     drawResult()
+}
+
+function checkInSearchResultBookmarkList(searchResult)
+{
+    for (let i = 0; i < searchResultBookmarkList._list.length; i++)
+    {
+        if (searchResult.address == searchResultBookmarkList._list[i].address)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 function drawResult() {

@@ -427,7 +427,7 @@ function refreshMap() {
 
 //CONFIRM LOCATION
 function confirmLocation() {
-    centrepointLocation = newLocation;
+    centrepointLocation = new Centrepoint(newLocation.lat,newLocation.lng,newLocation.address);
     centrepointSet = true;
     locationConfirmed = true;
 
@@ -455,7 +455,7 @@ function cancelLocation() {
     buttonsRef.innerHTML = displayButtons;
 }
 
-//Displaying searach results
+/*//Displaying searach results
 function displaySearchResults(result) //result should be an instance of SearchResult
 {
     let name = result.name;
@@ -481,11 +481,19 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
     //add popup to map
     popup.addTo(map);
-}
+}*/
 
 //Bookmark Search Result
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
 {
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+    {
+        if (searchResultBookmarkList.list[i].address == resultInstanceList[resultPosition].address)
+        {
+            window.alert('Place already bookmarked.');
+            return;
+        }
+    }
     resultInstanceList[resultPosition]._bookmarked = true;
     searchResultBookmarkList.addSearchResult(resultInstanceList[resultPosition]);
     setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
@@ -496,17 +504,39 @@ function bookmarkSearchResult(resultPosition) //result is an instance of SearchR
 //Bookmark Centrepoint
 function bookmarkCentrepoint()
 {
+    for (let i = 0; i < centrepointBookmarkList.list.length; i++)
+    {
+        if (centrepointBookmarkList.list[i].address == centrepointLocation.address)
+        {
+            window.alert('Centrepoint already bookmarked.');
+            return;
+        }
+    }
     centrepointLocation.bookmarked = true;
     centrepointBookmarkList.addCentrepoint(centrepointLocation);
     setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
     console.log(`${centrepointLocation.address} has been bookmarked.`);
 }
 
+//Display Centrepoint Bookmark List
+function displayCentrepointBookmark()
+{
+    let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
+    //Display Bookmarked Centrepoints
+    let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
+    for (let i = 0; i < centrepointBookmarkList._list.length; i++)
+    {
+        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>`;
+    }
+    console.log(bookmarkRef);
+    bookmarkCentrepointRef.innerHTML = listCentrepoints;
+}
+
 //Display Search Result Bookmark List
 function displaySearchResultBookmark()
 {
     let bookmarkRef = document.getElementById('bookmarkList')
-    let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarks:\n</p>';
+    let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
     for (let i = 0; i < searchResultBookmarkList.list.length; i++)
     {
         list += `<p>${searchResultBookmarkList.list[i].address}</p>`;

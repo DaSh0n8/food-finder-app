@@ -46,10 +46,10 @@ class Centrepoint
 
     fromData(dataObject)
     {
-        this._lat = dataObject.lat;
-        this._lng = dataObject.lng;
-        this._address = dataObject.address;
-        this._bookmarked = dataObject.bookmarked;
+        this._lat = dataObject._lat;
+        this._lng = dataObject._lng;
+        this._address = dataObject._address;
+        this._bookmarked = dataObject._bookmarked;
     }
 }
 
@@ -293,14 +293,22 @@ let searchResultBookmarkList = new SearchResultBookmarkList();
     }
 }
 
-//Display bookmarks
+//Display centrepoint bookmarks
+let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
+let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
+for (let i = 0; i < centrepointBookmarkList.list.length; i++)
+{
+    listCentrepoints += `<p>${centrepointBookmarkList.list[i].address}</p>`;
+}
+bookmarkCentrepointRef.innerHTML = listCentrepoints;
+
+//Display search results bookmarks
 let bookmarkRef = document.getElementById('bookmarkList')
-let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarks:\n</p>';
+let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
 for (let i = 0; i < searchResultBookmarkList.list.length; i++)
 {
     list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
 }
-console.log(bookmarkRef);
 bookmarkRef.innerHTML = list;
 
 //>>>>>>> 8c7c1301d9bc431f28317d6b644614957730f726

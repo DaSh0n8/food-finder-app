@@ -46,10 +46,10 @@ class Centrepoint
 
     fromData(dataObject)
     {
-        this._lat = dataObject._lat;
-        this._lng = dataObject._lng;
-        this._address = dataObject._address;
-        this._bookmarked = dataObject._bookmarked;
+        this._lat = dataObject.lat;
+        this._lng = dataObject.lng;
+        this._address = dataObject.address;
+        this._bookmarked = dataObject.bookmarked;
     }
 }
 
@@ -265,17 +265,17 @@ class SearchResultBookmarkList
 
 
 //Initialises centrepoint list if none exists
-let centrepointList = new CentrepointList();
+let centrepointBookmarkList = new CentrepointList();
 if (typeof Storage !== 'undefined')
 {
     if (checkLocalStorage(CENTREPOINT_LIST_KEY) == true)
     {
-        let centrepointListData = getLocalStorage(CENTREPOINT_LIST_KEY);
-        centrepointList.fromData(centrepointListData);
+        let centrepointBookmarkListData = getLocalStorage(CENTREPOINT_LIST_KEY);
+        centrepointBookmarkList.fromData(centrepointBookmarkListData);
     }
     else
     {
-        setLocalStorage(CENTREPOINT_LIST_KEY, centrepointList);
+        setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
     }
 }
 

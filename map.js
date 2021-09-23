@@ -497,7 +497,7 @@ function bookmarkSearchResult(resultPosition) //result is an instance of SearchR
 function bookmarkCentrepoint()
 {
     centrepointLocation.bookmarked = true;
-    centrepointBookmarkList.addSearchResult(centrepointLocation);
+    centrepointBookmarkList.addCentrepoint(centrepointLocation);
     setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
     console.log(`${centrepointLocation.address} has been bookmarked.`);
 }

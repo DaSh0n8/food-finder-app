@@ -2,7 +2,7 @@ This submission contains:
 - Code for bookmarking functionality
 - Code for Search Results Functionality
 - Code for searching using radius functionality
-- Added popup markers for 
+- Added popup markers for restaurants
 - Sprint 2 Retrospective
 - Updated Risk Register Document
 

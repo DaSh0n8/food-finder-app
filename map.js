@@ -241,7 +241,6 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     let lng = result.lng;
     let address = result.formatted;
     let categories = result.categories;
-    //hello there! general kenobi!
 
     //Show Marker
     let geojson = {

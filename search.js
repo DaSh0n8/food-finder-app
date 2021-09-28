@@ -49,6 +49,23 @@ function searchMap() {
         .catch(error => console.log('error', error));
 }
 
+function searchCenterPoint(){
+    // Obtain the text entered by the user
+    var searchCenterPoint =  document.getElementById('addDest').value;
+    // Valids the input, ensure it is not empty string
+    if (searchCenterPoint == ""){
+        window.alert('Please enter a destination');
+        return;
+    }
+    
+    // need to encode the query 
+    searchCenterPoint = encodeURIComponent(searchCenterPoint);
+    fetch(`https://api.geoapify.com/v1/geocode/search?text=${searchCenterPoint}}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
+        .then(response => response.json())
+        .then(result => filterData(result))
+        .catch(error => console.log('error', error))
+}
+
 //Adam: filter data (for the project's requirements and show dem marks)
 function filterData(results)
 {

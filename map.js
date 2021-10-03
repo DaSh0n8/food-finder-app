@@ -435,13 +435,23 @@ function confirmLocation() {
     //refresh map
     refreshMap();
 
-    //remove buttons
+    /*//remove buttons
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
+    buttonsRef.innerHTML = displayButtons;*/
+
+    //delete location button
+    let buttonsRef = document.getElementById('buttons');
+    let displayButtons = '';
+    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
+    displayButtons += `</div>`;
+    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
+    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Remove Centrepoint</button>`;
+    displayButtons += `</div>`;
     buttonsRef.innerHTML = displayButtons;
 }
 
-//CANCEL LOCATION
+//CANCEL LOCATION AND DELETE LOCATION
 function cancelLocation() {
     centrepointLocation = {};
     centrepointSet = false;
@@ -564,9 +574,4 @@ function getCurrentLocation() {
 function changeMapStyle(style) {
     mapStyle = style;
     refreshMap();
-}
-
-//test buttons
-function sayTest() {
-    console.log('test');
 }

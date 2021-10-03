@@ -7,6 +7,10 @@ function searchMap() {
           window.alert('Please confirm a centrepoint.');
           return;
       }
+      if (!centrepointSet)
+      {
+          window.alert('Please select a centrepoint by clicking on the map interface.')
+      }
       let select = document.getElementById('select').value;
       switch (select)
       {
@@ -71,7 +75,25 @@ function filterData(results)
     limitData(filteredList)
 }
 
-//Adam: limitData function; O(n^2), yikes!
+//comparison function for sorting
+function compare(inst1,inst2)
+{
+    let dist1 = inst1.getDistance(centrepointLocation);
+    let dist2 = inst2.getDistance(centrepointLocation);
+    
+    let comparison = 0;
+    if (dist1 > dist2)
+    {
+        comparison = 1;
+    }
+    else if (dist2 > dist1)
+    {
+        comparison = -1;
+    }
+    return comparison;
+}
+
+//Adam: limitData function
 function limitData(filteredList)
 {
     if (filteredList.length == 0)
@@ -80,7 +102,12 @@ function limitData(filteredList)
         return;
     }
     resultInstanceList = [];
+    filteredList.sort(compare);
     for (let i = 0; i < searchLimit; i++)
+    {
+        resultInstanceList.push(filteredList[i]);
+    }
+    /*for (let i = 0; i < searchLimit; i++)
     {
         minDistance = filteredList[0].getDistance(centrepointLocation)
         minIndex = 0;
@@ -100,7 +127,7 @@ function limitData(filteredList)
         }
         resultInstanceList.push(filteredList[minIndex]);
         filteredList.splice(minIndex,1);
-    }
+    }*/
     drawResult()
 }
 

@@ -38,22 +38,26 @@
     <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="jsforUI.js"></script>
 </head>
 
-<body style="background-color: lavender">
+<body style="background-color: lavender">  
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row"> <span class="mdl-layout__title">Accessible Food Widget</span>
             </div>
         </header>
         <main class="mdl-layout__content">
+            <div class="nav-overlay">
+            </div>
             <!-- results -->
             <div class="main-left">
                 <div class="top">
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--5-col">
                             <!-- Map div -->
-                            <div id='map'>
+                            <div id='map' >
                             </div>
                         </div>
 

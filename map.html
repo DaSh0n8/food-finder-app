@@ -125,7 +125,8 @@
                     </select>
                     <div class="radius">
                         <div class="input-group">
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id ="radius">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                                id="radius">
                             <div class="input-group-append">
                                 <span class="input-group-text">metres</span>
                             </div>
@@ -134,8 +135,23 @@
                 </div>
                 <br>
                 <br>
+                <p>Number of search result: <span id="demo"></span></p>
+                <br>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="500" value="5" class="slider" id="myRange">
+                </div>
+                <br>
+                <br>
                 <br>
                 <button type="button" class="btn btn-success" onclick="searchMap()">Start searching!</button>
+                <br>
+                <br>               
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-success" onclick="set5result()">5</button>
+                    <button type="button" class="btn btn-warning" onclick="set50result()">50</button>
+                    <button type="button" class="btn btn-danger" onclick="set500result()">500</button>
+                </div>
+                <br>
                 <br>
                 <br>
                 <div style="font-size: 1.5em; color: Tomato;" id='bookmarkList'>

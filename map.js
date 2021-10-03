@@ -8,7 +8,6 @@ let resultList = [];
 let resultInstanceList = [];
 let locationConfirmed = true;
 //let searchRadius = 500; //radius in m to search for
-let searchLimit = 5; //number of searches to show
 
 const APPDATA_KEY = 'appdatakey';
 const INCOMPLETE_KEY = 'incompletekey';

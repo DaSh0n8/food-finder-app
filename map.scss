@@ -68,7 +68,7 @@
         -webkit-transition: 0.2s;
         transition: opacity 0.2s;
       }
-  
+
       .slider::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
@@ -78,7 +78,7 @@
         background: #04aa6d;
         cursor: pointer;
       }
-  
+
       .slider::-moz-range-thumb {
         width: 25px;
         height: 25px;
@@ -97,7 +97,27 @@
         width: 150px;
       }
     }
-    
+    .Button {
+      position: relative;
+      padding: 1.5rem 2rem;
+      border: 0;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: linear-gradient(to right, #ff512f, #dd2476);
+      border-radius: 15px;
+      transition: all 0.2s;
+      cursor: pointer;
+      box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+    }
+    .Button:hover {
+      box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+      transform: scale(1.05);
+    }
+    .Button:active {
+      box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+      transform: scale(1.025);
+    }
   }
 }
 .marker {

@@ -141,6 +141,37 @@
   width: 150px;
 }
 
+.mdl-layout__content .main-right .Button {
+  position: relative;
+  padding: 1.5rem 2rem;
+  border: 0;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: -webkit-gradient(linear, left top, right top, from(#ff512f), to(#dd2476));
+  background: linear-gradient(to right, #ff512f, #dd2476);
+  border-radius: 15px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
+  -webkit-box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+          box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+}
+
+.mdl-layout__content .main-right .Button:hover {
+  -webkit-box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+          box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.mdl-layout__content .main-right .Button:active {
+  -webkit-box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+          box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+}
+
 .marker {
   background-image: url("../blim0014/images/restaurant-icon.png");
   background-size: cover;

@@ -64,17 +64,18 @@ function searchMap() {
 }
 
 function searchCenterPointData(result){
-    console.log("Here has been reached")
-    for (let i = 0; i < result.features.length; i++)
-    {
-        let properties = result.features[i].properties;
-        let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
-        reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
-    }
+    // Get the first result (this will be the most relevant result)
+    let properties = result.features[0].properties
+    // Obtain the information for the new center point
+    let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
+    // Call reverse geocode to put the marker on the map 
+    reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
 
 }
 
 function searchCenterPoint(){
+    // First make sure no centerpoint has been confirmed before searching
+    cancelLocation()
     var requestOptions = {
         method: 'GET',
       };

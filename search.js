@@ -1,3 +1,13 @@
+var searchCenter = document.getElementById('addDest');
+searchCenter.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+        searchCenterPoint();
+    }
+});
+
+
+
+
 function searchMap() {
     var requestOptions = {
         method: 'GET',
@@ -46,6 +56,37 @@ function searchMap() {
       fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},10000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=500&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
         .then(response => response.json())
         .then(result => filterData(result))
+        .catch(error => console.log('error', error));
+}
+
+function searchCenterPointData(result){
+    console.log("Here has been reached")
+    for (let i = 0; i < result.features.length; i++)
+    {
+        let properties = result.features[i].properties;
+        let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
+        reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
+    }
+
+}
+
+function searchCenterPoint(){
+    var requestOptions = {
+        method: 'GET',
+      };
+    // Obtain the text entered by the user
+    var searchCenterPoint =  document.getElementById('addDest').value;
+    // Valids the input, ensure it is not empty string
+    if (searchCenterPoint == ""){
+        window.alert('Please enter a destination');
+        return;
+    }
+    
+    // need to encode the query 
+    searchCenterPoint = encodeURIComponent(searchCenterPoint);
+    fetch(`https://api.geoapify.com/v1/geocode/search?text=${searchCenterPoint}}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
+        .then(response => response.json())
+        .then(result => searchCenterPointData(result))
         .catch(error => console.log('error', error));
 }
 

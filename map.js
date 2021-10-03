@@ -557,6 +557,8 @@ function displaySearchResultBookmark()
 
 //CURRENT LOCATION
 function getCurrentLocation() {
+    // Before getting current location, make sure no center point has been confirmed
+    cancelLocation()
     if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
         locationConfirmed = false;

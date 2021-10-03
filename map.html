@@ -42,7 +42,7 @@
     <script src="jsforUI.js"></script>
 </head>
 
-<body style="background-color: lavender">  
+<body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row"> <span class="mdl-layout__title">Accessible Food Widget</span>
@@ -57,7 +57,7 @@
                     <div class="mdl-grid">
                         <div class="mdl-cell mdl-cell--5-col">
                             <!-- Map div -->
-                            <div id='map' >
+                            <div id='map'>
                             </div>
                         </div>
 
@@ -139,11 +139,14 @@
                 </div>
                 <br>
                 <br>
-                <p>Number of search result: <span id="demo"></span></p>
-                <br>
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="500" value="5" class="slider" id="myRange">
+                <div class="searchResult">
+                    <p>Number of search result: <span id="demo"></span></p>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="500" value="5" class="slider" id="myRange">
+                    </div>
                 </div>
+                <br>
+                
                 <br>
                 <br>
                 <p>Travel vehicle:</p>
@@ -157,11 +160,11 @@
                 <br>
                 <button type="button" class="btn btn-success" onclick="searchMap()">Start searching!</button>
                 <br>
-                <br>               
                 <br>
-                <div style="font-size: 1.5em; color: Tomato;" id='bookmarkList'>
+                <br>
+                <!-- <div style="font-size: 1.5em; color: Tomato;" id='bookmarkList'>
                     <i class="fas fa-bookmark"></i>
-                </div>
+                </div> -->
             </div>
         </main>
     </div>

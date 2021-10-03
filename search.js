@@ -82,6 +82,28 @@ slider.oninput = function() {
   searchLimit = this.value;
 }
 
+// set vehicle
+let vehicleSpeed = "";
+function setWalk() 
+{
+    vehicleSpeed = 5;
+}
+function setBike() 
+{
+    vehicleSpeed = 55;
+}
+function setCar() 
+{
+    vehicleSpeed = 555;
+}
+
+// travel distance based on vehicle speed
+function travelDistance()
+{
+    let distance = 0;
+    console.log(distance);
+}
+
 //Adam: limitData function; O(n^2), yikes!
 function limitData(filteredList)
 {

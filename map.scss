@@ -6,6 +6,10 @@
     font-size: 200%;
     font-weight: 700;
   }
+  #iconHeader {
+    margin-left: 9px;
+    height: 50px;
+  }
 }
 .mdl-layout__content {
   display: flex;
@@ -47,7 +51,7 @@
     margin-left: -50px;
     padding: 20px;
     .searchResult {
-      height: 70px;
+      height: 170px;
       border-radius: 10px;
       width: 80%;
       padding: 5px;
@@ -56,6 +60,9 @@
         color: rgba(85, 84, 84, 0.87);
         font-size: 19;
         font-weight: 700;
+        #radius-icon {
+          height: 50px;
+        }
       }
       .slider {
         -webkit-appearance: none;
@@ -90,15 +97,21 @@
     .searchInfo {
       display: flex;
       flex-direction: row;
+      #menu_icon {
+        height: 50px;
+      }
       .form-select {
         width: 300px;
       }
       .radius {
         width: 150px;
+        display: none;
       }
     }
     .Button {
       position: relative;
+      display: flex;
+      justify-self: center;
       padding: 1.5rem 2rem;
       border: 0;
       color: white;
@@ -109,6 +122,9 @@
       transition: all 0.2s;
       cursor: pointer;
       box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+      #search_icon {
+        height: 20px;
+      }
     }
     .Button:hover {
       box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);

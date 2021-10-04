@@ -70,6 +70,21 @@ function filterData(results)
     }
     limitData(filteredList)
 }
+// limit radius
+let radius = 0;
+var slideRadius = document.getElementById("myRadius");
+var outputRadius = document.getElementById("demoRadius");
+outputRadius.innerHTML = slideRadius.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slideRadius.oninput = function() {
+  outputRadius.innerHTML = this.value;
+  radius = this.value;
+}
+
+/**
+ * 
+ */
 // limit data
 let searchLimit = 0;
 var slider = document.getElementById("myRange");

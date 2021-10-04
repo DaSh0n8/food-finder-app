@@ -87,7 +87,7 @@
 }
 
 .mdl-layout__content .main-right .searchResult p {
-  color: white;
+  color: rgba(85, 84, 84, 0.87);
   font-size: 19;
   font-weight: 700;
 }

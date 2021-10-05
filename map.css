@@ -67,4 +67,33 @@
   cursor: pointer;
 }
 
+/* .review {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 10;
+  width: 500px;
+  max-width: 80%;
+} */
+
+.review-header{
+  padding: 10px, 15px;
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid black;
+}
+
+.review-header .title{
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.review-body{
+  padding: 10px 15px;
+}
+
 /*# sourceMappingURL=map.css.map */

@@ -8,35 +8,6 @@ let resultList = [];
 let resultInstanceList = [];
 let locationConfirmed = true;
 
-const openReviewButtons = document.querySelectorAll('[data-review-taarget]')
-const closeReviewButtons = document.querySelectorAll('[data-close-button]')
-const overlay = document.getElementById('overlay')
-
-openReviewButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const review = document.querySelector(button.dataset.reviewTarget)
-        openReview(review)
-    })
-})
-
-closeReviewButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const review = button.closest('.review')
-        closeReview(review)
-    })
-})
-
-function openReview(review) {
-    if (review == null) return;
-    review.classList.add('active')
-    overlay.classList.add('active')
-}
-function closeReview(review) {
-    if (review == null) return;
-    review.classList.remove('active')
-    overlay.classList.remove('active')
-}
-
 
 //let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
@@ -296,7 +267,9 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         //popup with formated information
         let popup = new mapboxgl.Popup({ offset: 45 });
         popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
-        <button type="button" onclick="reviewSearchResult()">Review</button>`);
+        <button type="button" onclick="reviewSearchResult(${result._position})">Review</button>
+        <div class="review" id="review">
+        </div>`);
 
         //set popup to marker
         marker.setPopup(popup);
@@ -525,9 +498,42 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     popup.addTo(map);
 }*/
 
+
 // Review Search Result
-function reviewSearchResult(){
+function reviewSearchResult(resultPosition){ // result is an instance of SearchResult
     console.log("Review Search Result")
+    document.getElementById("review").innerHTML = `
+    <div class="review-header">
+        <div class="title">Reviews</div>
+    </div>
+    <div class="review-body">
+        <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="number" id="addReview">
+                <label class="mdl-textfield__label" for="addReview" id="addReview">Add Review</label>
+                <span id="addReview_number" class="mdl-textfield__error"></span>
+        
+            </div>
+            <button
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                title="Use Current Location" onclick="addingReviews(${resultPosition})">
+
+                                <i class="material-icons">search</i></button>
+            Please rate your experience!
+        </form>
+    </div>
+    `;
+    
+}
+
+function addingReviews(resultPosition){
+    var reviewValue = document.getElementById("addReview").value;
+    reviewValue = parseInt(reviewValue);
+    var sm = resultInstanceList[resultPosition]
+    sm.addReview(reviewValue);
+    console.log(sm)
+    
+
 }
 
 //Bookmark Search Result

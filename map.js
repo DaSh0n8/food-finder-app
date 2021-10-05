@@ -7,6 +7,37 @@ let markerList = [];
 let resultList = [];
 let resultInstanceList = [];
 let locationConfirmed = true;
+
+const openReviewButtons = document.querySelectorAll('[data-review-taarget]')
+const closeReviewButtons = document.querySelectorAll('[data-close-button]')
+const overlay = document.getElementById('overlay')
+
+openReviewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const review = document.querySelector(button.dataset.reviewTarget)
+        openReview(review)
+    })
+})
+
+closeReviewButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const review = button.closest('.review')
+        closeReview(review)
+    })
+})
+
+function openReview(review) {
+    if (review == null) return;
+    review.classList.add('active')
+    overlay.classList.add('active')
+}
+function closeReview(review) {
+    if (review == null) return;
+    review.classList.remove('active')
+    overlay.classList.remove('active')
+}
+
+
 //let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
 
@@ -264,7 +295,8 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         let marker = new mapboxgl.Marker(el).setLngLat(geometry.coordinates);
         //popup with formated information
         let popup = new mapboxgl.Popup({ offset: 45 });
-        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
+        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
+        <button type="button" onclick="reviewSearchResult()">Review</button>`);
 
         //set popup to marker
         marker.setPopup(popup);
@@ -492,6 +524,11 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     //add popup to map
     popup.addTo(map);
 }*/
+
+// Review Search Result
+function reviewSearchResult(){
+    console.log("Review Search Result")
+}
 
 //Bookmark Search Result
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult

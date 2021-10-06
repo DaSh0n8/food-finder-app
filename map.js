@@ -503,31 +503,42 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 function reviewSearchResult(resultPosition){ // result is an instance of SearchResult
     console.log("Review Search Result")
     document.getElementById("review").innerHTML = `
+
     <div class="review-header">
         <div class="title">Reviews</div>
     </div>
     <div class="review-body">
-        <form action="#">
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                <input class="mdl-textfield__input" type="number" id="addReview">
-                <label class="mdl-textfield__label" for="addReview" id="addReview">Add Review</label>
-                <span id="addReview_number" class="mdl-textfield__error"></span>
-        
-            </div>
+        Please rate your experience!
+        <div class="wrapper">
+            <input type="radio" name="rate" id="r1" value="5">
+            <label for="r1">&#10038;</label>
+            <input type="radio" name="rate" id="r2" value="4">
+            <label for="r2">&#10038;</label>
+            <input type="radio" name="rate" id="r3" value="3">
+            <label for="r3">&#10038;</label>
+            <input type="radio" name="rate" id="r4" value="2">
+            <label for="r4">&#10038;</label>
+            <input type="radio" name="rate" id="r5" value="1">
+            <label for="r5">&#10038;</label>
+        </div>
             <button
                                 class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                                 title="Use Current Location" onclick="addingReviews(${resultPosition})">
 
-                                <i class="material-icons">search</i></button>
-            Please rate your experience!
-        </form>
+                                <i class="material-icons">rate_review</i></button>
     </div>
-    `;
-    
+    `; 
 }
 
 function addingReviews(resultPosition){
-    var reviewValue = document.getElementById("addReview").value;
+    var reviewValue;
+    console.log(resultInstanceList[resultPosition]._name)
+    var ele = document.getElementsByName('rate');
+    for(var i = 0; i < ele.length; i++) {
+         if(ele[i].checked){
+              reviewValue = ele[i].value;
+            }
+        }
     reviewValue = parseInt(reviewValue);
     var sm = resultInstanceList[resultPosition]
     sm.addReview(reviewValue);

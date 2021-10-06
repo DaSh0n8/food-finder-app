@@ -96,4 +96,45 @@
   padding: 10px 15px;
 }
 
+
+.wrapper {
+  padding-top: 30px;
+  display: inline-block;
+}
+.wrapper * {
+  float: right;
+}
+input {
+  display: none;
+}
+label {
+  font-size: 30px;
+}
+
+input:checked ~ label {
+  color: red;
+}
+
+
+
+/* .star-widget input{
+  display: none;
+}
+
+.star-widget label{
+  font-size: 40px;
+  color: #444;
+  padding: 10px;
+  float: right;
+  transition: all 0.2s ease;
+}
+
+.star-widget input:not(:checked) ~ label:hover,
+.star-widget input:not(:checked) ~ label:hover ~ label{
+  color: #fd4;
+}
+
+input:checked ~ label{
+  color: #fd4;
+} */
 /*# sourceMappingURL=map.css.map */

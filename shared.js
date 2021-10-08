@@ -191,6 +191,11 @@ class SearchResult {
         return this._position;
     }
 
+    get roadDistance()
+    {
+        return this._roadDistance;
+    }
+
     set bookmarked(bookmarked){
         this._bookmarked = bookmarked;
     }

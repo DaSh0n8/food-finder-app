@@ -38,14 +38,21 @@
     <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="jsforUI.js"></script>
 </head>
-<body style="background-color: lavender">
+
+<body>
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
-            <div class="mdl-layout__header-row"> <span class="mdl-layout__title">Accessible Food Widget</span>
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout__title">Accessible Food Widget</span>
+                <img src="./images/icon_header.png" alt="image_header" id="iconHeader">
             </div>
         </header>
         <main class="mdl-layout__content">
+            <div class="nav-overlay">
+            </div>
             <!-- results -->
             <div class="main-left">
                 <div class="top">
@@ -134,6 +141,7 @@
                                 <i class="material-icons">search</i></button>
                 </form>
                 <div class="searchInfo">
+                    <img src="./images/menu_icon.jpg" alt="menu_icon" id="menu_icon">
                     <select class="form-select" aria-label="Default select example" id="select">
                         <option selected>Open this select menu</option>
                         <option value="Restaurant">Restaurant</option>
@@ -146,7 +154,8 @@
                     </select>
                     <div class="radius">
                         <div class="input-group">
-                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id ="radius">
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"
+                                id="radius">
                             <div class="input-group-append">
                                 <span class="input-group-text">metres</span>
                             </div>
@@ -155,13 +164,37 @@
                 </div>
                 <br>
                 <br>
-                <br>
-                <button type="button" class="btn btn-success" onclick="searchMap()">Start searching!</button>
-                <br>
-                <br>
-                <div style="font-size: 1.5em; color: Tomato;" id='bookmarkList'>
-                    <i class="fas fa-bookmark"></i>
+                <div class="searchResult">
+                    <p>
+                        <img src="./images/radius-icon.jpg" alt="radius-icon" id="radius-icon">
+                        Maximum radius: <span id="demoRadius"></span>
+                    </p>
+                    <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="25" tabindex="0"
+                        id="myRadius">
+                    <p>Number of search result: <span id="demo"></span></p>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="500" value="5" class="slider" id="myRange">
+                    </div>
                 </div>
+                <br>
+                <br>
+                <p>Travel vehicle:</p>
+                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                    <button type="button" class="btn btn-success" onclick="setWalk()">Walk</button>
+                    <button type="button" class="btn btn-warning" onclick="setBike()">Bike</button>
+                    <button type="button" class="btn btn-danger" onclick="setCar()">Car</button>
+                </div>
+                <br>
+                <br>
+                <button class="Button" onclick="searchMap()">
+                    <img src="./images/search-icon.png" alt="search_icon" id="search_icon">
+                    Start searching!
+                </button>
+                <br>
+                <br>
+                <!-- <div style="font-size: 1.5em; color: Tomato;" id='bookmarkList'>
+                    <i class="fas fa-bookmark"></i>
+                </div> -->
             </div>
         </main>
     </div>

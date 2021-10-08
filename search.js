@@ -116,6 +116,54 @@ function filterData(results)
     }
     limitData(filteredList)
 }
+// limit radius
+let radius = 0;
+var slideRadius = document.getElementById("myRadius");
+var outputRadius = document.getElementById("demoRadius");
+outputRadius.innerHTML = slideRadius.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slideRadius.oninput = function() {
+  outputRadius.innerHTML = this.value;
+  radius = this.value;
+}
+
+/**
+ * 
+ */
+// limit data
+let searchLimit = 0;
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+  searchLimit = this.value;
+}
+
+// set vehicle
+let vehicleSpeed = "";
+function setWalk() 
+{
+    vehicleSpeed = 5;
+}
+function setBike() 
+{
+    vehicleSpeed = 55;
+}
+function setCar() 
+{
+    vehicleSpeed = 555;
+}
+
+// travel distance based on vehicle speed
+function travelDistance()
+{
+    let distance = 0;
+    console.log(distance);
+}
 
 //comparison function for sorting
 function compare(inst1,inst2)

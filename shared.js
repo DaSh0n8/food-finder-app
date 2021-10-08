@@ -132,7 +132,7 @@ function getLocalStorage(key)
 
 
 
-//centrepoint test function
+/*//centrepoint test function
 function testCentrepoints()
 {
     let test = new Centrepoint(1, 2 ,'d');
@@ -141,7 +141,7 @@ function testCentrepoints()
     centrepointList.addCentrepoint(test);
     test = new Centrepoint(8, 5, 'my house');
     centrepointList.addCentrepoint(test);
-}
+}*/
 
 
 
@@ -156,6 +156,7 @@ class SearchResult {
         this._bookmarked = bookmarked;
         this._review = review;
         this._position = position;
+        this._roadDistance = 0;
     }
 
     get name(){
@@ -190,6 +191,11 @@ class SearchResult {
         return this._position;
     }
 
+    get roadDistance()
+    {
+        return this._roadDistance;
+    }
+
     set bookmarked(bookmarked){
         this._bookmarked = bookmarked;
     }
@@ -218,6 +224,27 @@ class SearchResult {
         const d = R * c; // in metres
   
         return d
+    }
+
+    //Function to send request to get road distance
+    getRoadDistance(centrepoint)
+    {
+        let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${this._lng},${this._lat}?access_token=${MAPBOX_TOKEN}`
+        fetch(url)
+            .then(response => response.json())
+            .then(result => this.dataRoadDistance(result))
+            .catch(error => console.log('error', error));
+    }
+
+    //Function to receive result from road distance request
+    dataRoadDistance(result)
+    {
+        this._roadDistance = result.routes[0].distance;
+    }
+
+    getTimeTaken()
+    {
+        return this._roadDistance/vehicleSpeed;
     }
 
     //(name, lat, lng, address, category, position, bookmarked = false, review = 0)

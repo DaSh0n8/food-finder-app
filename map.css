@@ -52,6 +52,7 @@
       -ms-flex-direction: column;
           flex-direction: column;
   width: 150%;
+  height: 100%;
 }
 
 .mdl-layout__content .main-left .bottom {

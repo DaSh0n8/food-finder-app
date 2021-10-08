@@ -75,6 +75,10 @@
   width: 1000px;
 }
 
+.mdl-layout__content .main-left #menu {
+  z-index: 1;
+}
+
 .mdl-layout__content .main-right {
   width: 45%;
   background-color: white;

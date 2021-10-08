@@ -9,6 +9,7 @@ let resultInstanceList = [];
 let locationConfirmed = true;
 //let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
+let travelMethod = 'driving';
 
 const APPDATA_KEY = 'appdatakey';
 const INCOMPLETE_KEY = 'incompletekey';
@@ -288,7 +289,7 @@ let map = new mapboxgl.Map(
         container: 'map',
         style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 17 // starting zoom
+        zoom: 15 // starting zoom
     });
 globalThis.map;
 
@@ -560,10 +561,17 @@ function displaySearchResultBookmark()
 function getCurrentLocation() {
     if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
-        locationConfirmed = false;
-        navigator.geolocation.getCurrentPosition((position) => {
-            reverseGeocode(position.coords.latitude, position.coords.longitude);
-        });
+        if (!centrepointSet && locationConfirmed)
+        {
+            locationConfirmed = false;
+            navigator.geolocation.getCurrentPosition((position) => {
+                reverseGeocode(position.coords.latitude, position.coords.longitude);
+            });
+        }
+        else
+        {
+            alert('Current centrepoint is already set. Cannot use current location for centrepoint.')
+        }
     }
     else {
         console.log('Geolocation is not available.')

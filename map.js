@@ -265,7 +265,10 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         let marker = new mapboxgl.Marker(el).setLngLat(geometry.coordinates);
         //popup with formated information
         let popup = new mapboxgl.Popup({ offset: 45 });
-        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
+        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
+        <button type="button" onclick="reviewSearchResult(${result._position})">Review</button>
+        <div class="review" id="review">
+        </div>`);
 
         //set popup to marker
         marker.setPopup(popup);
@@ -493,6 +496,55 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     //add popup to map
     popup.addTo(map);
 }*/
+
+
+// Review Search Result
+function reviewSearchResult(resultPosition){ // result is an instance of SearchResult
+    console.log("Review Search Result")
+    document.getElementById("review").innerHTML = `
+
+    <div class="review-header">
+        <div class="title">Reviews</div>
+    </div>
+    <div class="review-body">
+        Please rate your experience!
+        <div class="wrapper">
+            <input type="radio" name="rate" id="r1" value="5">
+            <label for="r1">&#10038;</label>
+            <input type="radio" name="rate" id="r2" value="4">
+            <label for="r2">&#10038;</label>
+            <input type="radio" name="rate" id="r3" value="3">
+            <label for="r3">&#10038;</label>
+            <input type="radio" name="rate" id="r4" value="2">
+            <label for="r4">&#10038;</label>
+            <input type="radio" name="rate" id="r5" value="1">
+            <label for="r5">&#10038;</label>
+        </div>
+            <button
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                title="Use Current Location" onclick="addingReviews(${resultPosition})">
+
+                                <i class="material-icons">rate_review</i></button>
+    </div>
+    `; 
+}
+
+function addingReviews(resultPosition){
+    var reviewValue;
+    console.log(resultInstanceList[resultPosition]._name)
+    var ele = document.getElementsByName('rate');
+    for(var i = 0; i < ele.length; i++) {
+         if(ele[i].checked){
+              reviewValue = ele[i].value;
+            }
+        }
+    reviewValue = parseInt(reviewValue);
+    var sm = resultInstanceList[resultPosition]
+    sm.addReview(reviewValue);
+    console.log(sm)
+    
+
+}
 
 //Bookmark Search Result
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult

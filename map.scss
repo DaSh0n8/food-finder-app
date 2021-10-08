@@ -31,7 +31,7 @@
   .main-left {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 150%;
     .bottom {
       width: 800px;
       .mdl-grid {
@@ -41,7 +41,7 @@
       }
     }
     #map {
-      width: 1000px;
+      width: 235%;
     }
     #menu {
       position: absolute;
@@ -52,7 +52,7 @@
   }
 
   .main-right {
-    width: 45%;
+    width: 40%;
     background-color: white;
     border-radius: 25px;
     margin-top: 20px;

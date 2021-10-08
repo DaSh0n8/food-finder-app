@@ -5,8 +5,7 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background: -webkit-gradient(linear, left top, right top, from(#654ea3), to(#eaafc8));
-  background: linear-gradient(to right, #654ea3, #eaafc8);
+  background: #fc5757;
 }
 
 .mdl-layout__header-row .mdl-layout__title {
@@ -27,9 +26,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  background-color: aliceblue;
-  background: -webkit-gradient(linear, left top, right top, from(#74ebd5), to(#acb6e5));
-  background: linear-gradient(to right, #74ebd5, #acb6e5);
+  background: #FFEBCD;
 }
 
 .mdl-layout__content .nav-overlay {
@@ -54,6 +51,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  width: 100%;
 }
 
 .mdl-layout__content .main-left .bottom {
@@ -73,6 +71,10 @@
           justify-content: space-between;
 }
 
+.mdl-layout__content .main-left #map {
+  width: 1000px;
+}
+
 .mdl-layout__content .main-right {
   width: 45%;
   background-color: white;
@@ -88,7 +90,7 @@
   border-radius: 10px;
   width: 80%;
   padding: 5px;
-  background-color: #78ffd6;
+  background-color: #FAEBD7;
 }
 
 .mdl-layout__content .main-right .searchResult p {
@@ -166,8 +168,7 @@
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
-  background: -webkit-gradient(linear, left top, right top, from(#ff512f), to(#dd2476));
-  background: linear-gradient(to right, #ff512f, #dd2476);
+  background: #fc5757;
   border-radius: 15px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;

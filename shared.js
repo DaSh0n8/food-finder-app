@@ -239,8 +239,12 @@ class SearchResult {
     //Function to receive result from road distance request
     dataRoadDistance(result)
     {
-        console.log(result);
         this._roadDistance = result.routes[0].distance;
+    }
+
+    getTimeTaken()
+    {
+        return this._roadDistance/vehicleSpeed;
     }
 
     //(name, lat, lng, address, category, position, bookmarked = false, review = 0)

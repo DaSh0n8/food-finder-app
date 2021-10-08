@@ -5,9 +5,6 @@ searchCenter.addEventListener("keydown", function (e) {
     }
 });
 
-
-
-
 function searchMap() {
     var requestOptions = {
         method: 'GET',
@@ -49,12 +46,13 @@ function searchMap() {
             window.alert('Please select a category to search.');
             return;
       }
-      let searchRadius = document.getElementById('radius').value;
-      if (searchRadius == '')
+      searchRadius = document.getElementById('myRadius').value;
+      searchRadius = parseInt(searchRadius);
+      /*if (searchRadius == '')
       {
         window.alert('Please enter a search radius.');
         return;
-      }
+      }*/
       //fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},2000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
       //there is a max 500 limit for search results
       fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},10000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=500&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
@@ -95,10 +93,22 @@ function searchCenterPoint(){
         .catch(error => console.log('error', error));
 }
 
+// limit radius
+var slideRadius = document.getElementById("myRadius");
+var outputRadius = document.getElementById("demoRadius");
+outputRadius.innerHTML = slideRadius.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slideRadius.oninput = function() {
+  outputRadius.innerHTML = this.value;
+  searchRadius = this.value;
+}
+
 //Adam: filter data (for the project's requirements and show dem marks)
 function filterData(results)
 {
-    let searchRadius = document.getElementById('radius').value;
+    searchRadius = document.getElementById('myRadius').value;
+    searchRadius = parseInt(searchRadius);
     filteredList = [];
     //filter categories
     for (let i = 0; i < results.features.length; i++)
@@ -116,23 +126,8 @@ function filterData(results)
     }
     limitData(filteredList)
 }
-// limit radius
-let radius = 0;
-var slideRadius = document.getElementById("myRadius");
-var outputRadius = document.getElementById("demoRadius");
-outputRadius.innerHTML = slideRadius.value; // Display the default slider value
 
-// Update the current slider value (each time you drag the slider handle)
-slideRadius.oninput = function() {
-  outputRadius.innerHTML = this.value;
-  radius = this.value;
-}
-
-/**
- * 
- */
 // limit data
-let searchLimit = 0;
 var slider = document.getElementById("myRange");
 var output = document.getElementById("demo");
 output.innerHTML = slider.value; // Display the default slider value
@@ -144,18 +139,18 @@ slider.oninput = function() {
 }
 
 // set vehicle
-let vehicleSpeed = "";
+let vehicleSpeed = 60; //km h^-1
 function setWalk() 
 {
-    vehicleSpeed = 5;
+    vehicleSpeed = 5; //km h^-1
 }
 function setBike() 
 {
-    vehicleSpeed = 55;
+    vehicleSpeed = 24; //km h^-1
 }
 function setCar() 
 {
-    vehicleSpeed = 555;
+    vehicleSpeed = 60; //km h^-1
 }
 
 // travel distance based on vehicle speed
@@ -201,8 +196,9 @@ function limitData(filteredList)
     }
     for (let i = 0; i < limit; i++)
     {
-        resultInstanceList.push(filteredList[i]);
         filteredList[i].position = i;
+        filteredList[i].getRoadDistance(centrepointLocation);
+        resultInstanceList.push(filteredList[i]);
     }
     /*for (let i = 0; i < searchLimit; i++)
     {

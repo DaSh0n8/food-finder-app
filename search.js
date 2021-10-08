@@ -1,3 +1,13 @@
+var searchCenter = document.getElementById('addDest');
+searchCenter.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+        searchCenterPoint();
+    }
+});
+
+
+
+
 function searchMap() {
     var requestOptions = {
         method: 'GET',
@@ -53,6 +63,38 @@ function searchMap() {
         .catch(error => console.log('error', error));
 }
 
+function searchCenterPointData(result){
+    // Get the first result (this will be the most relevant result)
+    let properties = result.features[0].properties
+    // Obtain the information for the new center point
+    let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
+    // Call reverse geocode to put the marker on the map 
+    reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
+
+}
+
+function searchCenterPoint(){
+    // First make sure no centerpoint has been confirmed before searching
+    cancelLocation()
+    var requestOptions = {
+        method: 'GET',
+      };
+    // Obtain the text entered by the user
+    var searchCenterPoint =  document.getElementById('addDest').value;
+    // Valids the input, ensure it is not empty string
+    if (searchCenterPoint == ""){
+        window.alert('Please enter a destination');
+        return;
+    }
+    
+    // need to encode the query 
+    searchCenterPoint = encodeURIComponent(searchCenterPoint);
+    fetch(`https://api.geoapify.com/v1/geocode/search?text=${searchCenterPoint}}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
+        .then(response => response.json())
+        .then(result => searchCenterPointData(result))
+        .catch(error => console.log('error', error));
+}
+
 //Adam: filter data (for the project's requirements and show dem marks)
 function filterData(results)
 {
@@ -73,6 +115,54 @@ function filterData(results)
         }
     }
     limitData(filteredList)
+}
+// limit radius
+let radius = 0;
+var slideRadius = document.getElementById("myRadius");
+var outputRadius = document.getElementById("demoRadius");
+outputRadius.innerHTML = slideRadius.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slideRadius.oninput = function() {
+  outputRadius.innerHTML = this.value;
+  radius = this.value;
+}
+
+/**
+ * 
+ */
+// limit data
+let searchLimit = 0;
+var slider = document.getElementById("myRange");
+var output = document.getElementById("demo");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+  searchLimit = this.value;
+}
+
+// set vehicle
+let vehicleSpeed = "";
+function setWalk() 
+{
+    vehicleSpeed = 5;
+}
+function setBike() 
+{
+    vehicleSpeed = 55;
+}
+function setCar() 
+{
+    vehicleSpeed = 555;
+}
+
+// travel distance based on vehicle speed
+function travelDistance()
+{
+    let distance = 0;
+    console.log(distance);
 }
 
 //comparison function for sorting

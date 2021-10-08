@@ -1,10 +1,37 @@
+.mdl-layout__header-row {
+  display: flex;
+  justify-content: center;
+  background: rgb(252, 87, 87);
+  .mdl-layout__title {
+    font-size: 200%;
+    font-weight: 700;
+  }
+  #iconHeader {
+    margin-left: 9px;
+    height: 50px;
+  }
+}
 .mdl-layout__content {
   display: flex;
   flex-direction: row;
-  background-color: aliceblue;
+  background: #FFEBCD;
+  .nav-overlay {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0;
+    cursor: pointer;
+  }
   .main-left {
     display: flex;
     flex-direction: column;
+    width: 100%;
     .bottom {
       width: 800px;
       .mdl-grid {
@@ -13,28 +40,116 @@
         justify-content: space-between;
       }
     }
+    #map {
+      width: 1000px;
+    }
+    #menu {
+      position: absolute;
+      top: 650px;
+      left: 20px;
+      z-index: 1;
+    }
   }
 
   .main-right {
-    width: 500px;
+    width: 45%;
+    background-color: white;
+    border-radius: 25px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: -50px;
+    padding: 20px;
+    .searchResult {
+      height: 170px;
+      border-radius: 10px;
+      width: 80%;
+      padding: 5px;
+      background-color: #FAEBD7;
+      p {
+        color: rgba(85, 84, 84, 0.87);
+        font-size: 19;
+        font-weight: 700;
+        #radius-icon {
+          height: 50px;
+        }
+      }
+      .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 15px;
+        border-radius: 5px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: 0.2s;
+        transition: opacity 0.2s;
+      }
+
+      .slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #04aa6d;
+        cursor: pointer;
+      }
+
+      .slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #04aa6d;
+        cursor: pointer;
+      }
+    }
     .searchInfo {
       display: flex;
       flex-direction: row;
+      #menu_icon {
+        height: 50px;
+      }
       .form-select {
         width: 300px;
       }
       .radius {
         width: 150px;
+        display: none;
       }
+    }
+    .Button {
+      position: relative;
+      display: flex;
+      justify-self: center;
+      padding: 1.5rem 2rem;
+      border: 0;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      background: rgb(252, 87, 87);
+      border-radius: 15px;
+      transition: all 0.2s;
+      cursor: pointer;
+      box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+      #search_icon {
+        height: 20px;
+      }
+    }
+    .Button:hover {
+      box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+      transform: scale(1.05);
+    }
+    .Button:active {
+      box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+      transform: scale(1.025);
     }
   }
 }
 .marker {
-  background-image: url('../blim0014/images/restaurant-icon.png');
+  background-image: url("../blim0014/images/restaurant-icon.png");
   background-size: cover;
   width: 50px;
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
 }
-

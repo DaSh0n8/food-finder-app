@@ -242,7 +242,6 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     let lng = result.lng;
     let address = result.formatted;
     let categories = result.categories;
-    //hello there! general kenobi!
 
     //Show Marker
     let geojson = {
@@ -559,6 +558,8 @@ function displaySearchResultBookmark()
 
 //CURRENT LOCATION
 function getCurrentLocation() {
+    // Before getting current location, make sure no center point has been confirmed
+    cancelLocation()
     if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
         if (!centrepointSet && locationConfirmed)
@@ -582,4 +583,14 @@ function getCurrentLocation() {
 function changeMapStyle(style) {
     mapStyle = style;
     refreshMap();
+}
+
+const layerList = document.getElementById('menu');
+const inputs = layerList.getElementsByTagName('input');
+
+for (const input of inputs) {
+    input.onclick = (layer) => {
+        const layerId = layer.target.id;
+        map.setStyle('mapbox://styles/mapbox/' + layerId);
+    };
 }

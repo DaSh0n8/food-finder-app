@@ -433,13 +433,23 @@ function confirmLocation() {
     //refresh map
     refreshMap();
 
-    //remove buttons
+    /*//remove buttons
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
+    buttonsRef.innerHTML = displayButtons;*/
+
+    //delete location button
+    let buttonsRef = document.getElementById('buttons');
+    let displayButtons = '';
+    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
+    displayButtons += `</div>`;
+    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
+    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Remove Centrepoint</button>`;
+    displayButtons += `</div>`;
     buttonsRef.innerHTML = displayButtons;
 }
 
-//CANCEL LOCATION
+//CANCEL LOCATION AND DELETE LOCATION
 function cancelLocation() {
     centrepointLocation = {};
     centrepointSet = false;
@@ -546,6 +556,8 @@ function displaySearchResultBookmark()
 
 //CURRENT LOCATION
 function getCurrentLocation() {
+    // Before getting current location, make sure no center point has been confirmed
+    cancelLocation()
     if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
         locationConfirmed = false;
@@ -564,7 +576,12 @@ function changeMapStyle(style) {
     refreshMap();
 }
 
-//test buttons
-function sayTest() {
-    console.log('test');
+const layerList = document.getElementById('menu');
+const inputs = layerList.getElementsByTagName('input');
+
+for (const input of inputs) {
+    input.onclick = (layer) => {
+        const layerId = layer.target.id;
+        map.setStyle('mapbox://styles/mapbox/' + layerId);
+    };
 }

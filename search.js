@@ -1,3 +1,13 @@
+var searchCenter = document.getElementById('addDest');
+searchCenter.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+        searchCenterPoint();
+    }
+});
+
+
+
+
 function searchMap() {
     var requestOptions = {
         method: 'GET',
@@ -6,6 +16,10 @@ function searchMap() {
       {
           window.alert('Please confirm a centrepoint.');
           return;
+      }
+      if (!centrepointSet)
+      {
+          window.alert('Please select a centrepoint by clicking on the map interface.')
       }
       let select = document.getElementById('select').value;
       switch (select)
@@ -46,6 +60,38 @@ function searchMap() {
       fetch(`https://api.geoapify.com/v2/places?categories=${select}&filter=circle:${centrepointLocation.lng},${centrepointLocation.lat},10000&bias=proximity:${centrepointLocation.lng},${centrepointLocation.lat}&limit=500&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
         .then(response => response.json())
         .then(result => filterData(result))
+        .catch(error => console.log('error', error));
+}
+
+function searchCenterPointData(result){
+    // Get the first result (this will be the most relevant result)
+    let properties = result.features[0].properties
+    // Obtain the information for the new center point
+    let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
+    // Call reverse geocode to put the marker on the map 
+    reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
+
+}
+
+function searchCenterPoint(){
+    // First make sure no centerpoint has been confirmed before searching
+    cancelLocation()
+    var requestOptions = {
+        method: 'GET',
+      };
+    // Obtain the text entered by the user
+    var searchCenterPoint =  document.getElementById('addDest').value;
+    // Valids the input, ensure it is not empty string
+    if (searchCenterPoint == ""){
+        window.alert('Please enter a destination');
+        return;
+    }
+    
+    // need to encode the query 
+    searchCenterPoint = encodeURIComponent(searchCenterPoint);
+    fetch(`https://api.geoapify.com/v1/geocode/search?text=${searchCenterPoint}}&limit=5&apiKey=89c1dc776459400bb23c1c7ec8189025`, requestOptions)
+        .then(response => response.json())
+        .then(result => searchCenterPointData(result))
         .catch(error => console.log('error', error));
 }
 
@@ -119,7 +165,25 @@ function travelDistance()
     console.log(distance);
 }
 
-//Adam: limitData function; O(n^2), yikes!
+//comparison function for sorting
+function compare(inst1,inst2)
+{
+    let dist1 = inst1.getDistance(centrepointLocation);
+    let dist2 = inst2.getDistance(centrepointLocation);
+    
+    let comparison = 0;
+    if (dist1 > dist2)
+    {
+        comparison = 1;
+    }
+    else if (dist2 > dist1)
+    {
+        comparison = -1;
+    }
+    return comparison;
+}
+
+//Adam: limitData function
 function limitData(filteredList)
 {
     if (filteredList.length == 0)
@@ -128,7 +192,12 @@ function limitData(filteredList)
         return;
     }
     resultInstanceList = [];
+    filteredList.sort(compare);
     for (let i = 0; i < searchLimit; i++)
+    {
+        resultInstanceList.push(filteredList[i]);
+    }
+    /*for (let i = 0; i < searchLimit; i++)
     {
         minDistance = filteredList[0].getDistance(centrepointLocation)
         minIndex = 0;
@@ -148,7 +217,7 @@ function limitData(filteredList)
         }
         resultInstanceList.push(filteredList[minIndex]);
         filteredList.splice(minIndex,1);
-    }
+    }*/
     drawResult()
 }
 

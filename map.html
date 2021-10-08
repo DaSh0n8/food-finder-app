@@ -79,7 +79,23 @@
                         </div>
 
                     </div>
-
+                <!-- adding map styles -->
+                </div>
+                <div id="menu">
+                    <input id="streets-v11" type="radio" name="rtoggle" value="streets" checked="checked">
+                    <label for="streets-v11"><img src="images/streets.JPG" alt="streets" style="max-width: 70px; max-height: 70px;"></label>
+                    <input id="light-v10" type="radio" name="rtoggle" value="light">
+                    <label for="light-v10"><img src="images/light.JPG" alt="light" style="max-width: 70px; max-height: 70px;"></label>
+                    <input id="dark-v10" type="radio" name="rtoggle" value="dark">
+                    <label for="dark-v10"><img src="images/dark.JPG" alt="dark" style="max-width: 70px; max-height: 70px;"></label>
+                    <input id="satellite-v9" type="radio" name="rtoggle" value="satellite">
+                    <label for="satellite-v9"><img src="images/satellite.JPG" alt="satellite" style="max-width: 70px; max-height: 70px;"></label>
+                    <input id="satellite-streets-v11" type="radio" name="rtoggle" value="satellite-streets">
+                    <label for="satellite-streets-v11"><img src="images/satellite-streets.JPG" alt="satellite-streets" style="max-width: 70px; max-height: 70px;"></label>
+                    <input id="navigation-day-v1" type="radio" name="rtoggle" value="navigation-day">
+                    <label for="navigation-day-v1"><img src="images/navigation-day.JPG" alt="navigation-day" style="max-width: 70px; max-height: 70px;"></label>
+                    <input id="navigation-night-v1" type="radio" name="rtoggle" value="navigation-night">
+                    <label for="navigation-night-v1"><img src="images/navigation-night.JPG" alt="navigation-night" style="max-width: 70px; max-height: 70px;"></label>
                 </div>
                 <div class="bottom">
 
@@ -110,13 +126,19 @@
                 <br>
                 <span class="mdl-layout-title"><strong>Search nearest Restaurant / Café</strong> </span>
                 <br>
-                <h7 style="color: crimson;"> <i>Use the text field or pinpoint map to add destination </i> </h7>
+                <h7 style="color: crimson;"> <i>Use the text field or pinpoint map to add center point </i> </h7>
                 <form action="#">
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" type="text" id="addDest">
                         <label class="mdl-textfield__label" for="addDest" id="addDest">Add destination</label>
                         <span id="addDest_msg" class="mdl-textfield__error"></span>
+                        
                     </div>
+                    <button
+                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                                title="Use Current Location" onclick="searchCenterPoint()">
+
+                                <i class="material-icons">search</i></button>
                 </form>
                 <div class="searchInfo">
                     <img src="./images/menu_icon.jpg" alt="menu_icon" id="menu_icon">

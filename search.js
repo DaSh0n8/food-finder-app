@@ -193,9 +193,16 @@ function limitData(filteredList)
     }
     resultInstanceList = [];
     filteredList.sort(compare);
-    for (let i = 0; i < searchLimit; i++)
+    let limit = searchLimit;
+    //in the event there are less results than the search limit
+    if (searchLimit > filteredList.length)
+    {
+        limit = filteredList.length;
+    }
+    for (let i = 0; i < limit; i++)
     {
         resultInstanceList.push(filteredList[i]);
+        filteredList[i].position = i;
     }
     /*for (let i = 0; i < searchLimit; i++)
     {

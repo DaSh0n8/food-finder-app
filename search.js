@@ -247,6 +247,7 @@ function drawResult() {
     refreshMap();
     for (let i = 0; i < resultInstanceList.length; i++)
     {
+        console.log(resultInstanceList[i]._roadDistance);
         displaySearchResults(resultInstanceList[i]);
     }
 }

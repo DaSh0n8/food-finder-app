@@ -212,74 +212,32 @@
   cursor: pointer;
 }
 
-/* .review {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  z-index: 10;
-  width: 500px;
-  max-width: 80%;
-} */
-
-.review-header{
-  padding: 10px, 15px;
-  padding-top: 20px;
+#bookmarkList {
+  border-radius: 15px;
+  border-color: tomato;
+  background-color: tomato;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid black;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  height: 30px;
+  margin-bottom: 3px;
 }
 
-.review-header .title{
-  font-size: 1.25rem;
-  font-weight: bold;
+#bookmarkList p {
+  margin-left: 3px;
+  color: white;
 }
 
-.review-body{
-  padding: 10px 15px;
+#popup-location {
+  background-color: #FFEBCD;
+  height: 119px;
 }
 
-
-.wrapper {
-  padding-top: 30px;
-  display: inline-block;
+#popup-location b {
+  color: rgba(165, 42, 42, 0.562);
 }
-.wrapper * {
-  float: right;
-}
-input {
-  display: none;
-}
-label {
-  font-size: 30px;
-}
-
-input:checked ~ label {
-  color: red;
-}
-
-
-
-/* .star-widget input{
-  display: none;
-}
-
-.star-widget label{
-  font-size: 40px;
-  color: #444;
-  padding: 10px;
-  float: right;
-  transition: all 0.2s ease;
-}
-
-.star-widget input:not(:checked) ~ label:hover,
-.star-widget input:not(:checked) ~ label:hover ~ label{
-  color: #fd4;
-}
-
-input:checked ~ label{
-  color: #fd4;
-} */
 /*# sourceMappingURL=map.css.map */

@@ -242,7 +242,6 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     let lng = result.lng;
     let address = result.formatted;
     let categories = result.categories;
-
     //Show Marker
     let geojson = {
         type: 'FeatureCollection',
@@ -265,9 +264,18 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         let marker = new mapboxgl.Marker(el).setLngLat(geometry.coordinates);
         //popup with formated information
         let popup = new mapboxgl.Popup({ offset: 45 });
-        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
-        <button type="button" onclick="reviewSearchResult(${result._position})">Review</button>
-        <div class="review" id="review">
+        // <button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
+        popup.setHTML(`
+        <div id='popup-location'>
+        <b>${name} <br><i style="color:gray">${result._roadDistance}km away<i></b>
+        <button onclick="bookmarkSearchResult(${result._position})" id='bookmarkList'>
+                    <i class="fas fa-bookmark" style="font-size: 1.5em; color: white;"></i>
+                    <p>Bookmark<p>
+        </button>
+        <button type="button" onclick="reviewSearchResult(${result._position})" id='bookmarkList'>
+            <i class="fas fa-award" style="font-size: 1.5em; color: white;"></i>
+            <p>Review <p>
+        </button>
         </div>`);
 
         //set popup to marker
@@ -291,7 +299,7 @@ let map = new mapboxgl.Map(
         container: 'map',
         style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 15 // starting zoom
+        zoom: 17 // starting zoom
     });
 globalThis.map;
 
@@ -431,7 +439,7 @@ function refreshMap() {
 
 //CONFIRM LOCATION
 function confirmLocation() {
-    centrepointLocation = new Centrepoint(newLocation.lat,newLocation.lng,newLocation.address);
+    centrepointLocation = new Centrepoint(newLocation.lat, newLocation.lng, newLocation.address);
     centrepointSet = true;
     locationConfirmed = true;
 
@@ -499,7 +507,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
 
 // Review Search Result
-function reviewSearchResult(resultPosition){ // result is an instance of SearchResult
+function reviewSearchResult(resultPosition) { // result is an instance of SearchResult
     console.log("Review Search Result")
     document.getElementById("review").innerHTML = `
 
@@ -526,33 +534,31 @@ function reviewSearchResult(resultPosition){ // result is an instance of SearchR
 
                                 <i class="material-icons">rate_review</i></button>
     </div>
-    `; 
+    `;
 }
 
-function addingReviews(resultPosition){
+function addingReviews(resultPosition) {
     var reviewValue;
     console.log(resultInstanceList[resultPosition]._name)
     var ele = document.getElementsByName('rate');
-    for(var i = 0; i < ele.length; i++) {
-         if(ele[i].checked){
-              reviewValue = ele[i].value;
-            }
+    for (var i = 0; i < ele.length; i++) {
+        if (ele[i].checked) {
+            reviewValue = ele[i].value;
         }
+    }
     reviewValue = parseInt(reviewValue);
     var sm = resultInstanceList[resultPosition]
     sm.addReview(reviewValue);
     console.log(sm)
-    
+
 
 }
 
 //Bookmark Search Result
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
 {
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
-    {
-        if (searchResultBookmarkList.list[i].address == resultInstanceList[resultPosition].address)
-        {
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
+        if (searchResultBookmarkList.list[i].address == resultInstanceList[resultPosition].address) {
             window.alert('Place already bookmarked.');
             return;
         }
@@ -565,12 +571,9 @@ function bookmarkSearchResult(resultPosition) //result is an instance of SearchR
 }
 
 //Bookmark Centrepoint
-function bookmarkCentrepoint()
-{
-    for (let i = 0; i < centrepointBookmarkList.list.length; i++)
-    {
-        if (centrepointBookmarkList.list[i].address == centrepointLocation.address)
-        {
+function bookmarkCentrepoint() {
+    for (let i = 0; i < centrepointBookmarkList.list.length; i++) {
+        if (centrepointBookmarkList.list[i].address == centrepointLocation.address) {
             window.alert('Centrepoint already bookmarked.');
             return;
         }
@@ -582,13 +585,11 @@ function bookmarkCentrepoint()
 }
 
 //Display Centrepoint Bookmark List
-function displayCentrepointBookmark()
-{
+function displayCentrepointBookmark() {
     let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
     //Display Bookmarked Centrepoints
     let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
-    for (let i = 0; i < centrepointBookmarkList._list.length; i++)
-    {
+    for (let i = 0; i < centrepointBookmarkList._list.length; i++) {
         listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>`;
     }
     console.log(bookmarkRef);
@@ -596,12 +597,10 @@ function displayCentrepointBookmark()
 }
 
 //Display Search Result Bookmark List
-function displaySearchResultBookmark()
-{
+function displaySearchResultBookmark() {
     let bookmarkRef = document.getElementById('bookmarkList')
     let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
-    {
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
         list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
     }
     console.log(bookmarkRef);
@@ -614,15 +613,13 @@ function getCurrentLocation() {
     cancelLocation()
     if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
-        if (!centrepointSet && locationConfirmed)
-        {
+        if (!centrepointSet && locationConfirmed) {
             locationConfirmed = false;
             navigator.geolocation.getCurrentPosition((position) => {
                 reverseGeocode(position.coords.latitude, position.coords.longitude);
             });
         }
-        else
-        {
+        else {
             alert('Current centrepoint is already set. Cannot use current location for centrepoint.')
         }
     }

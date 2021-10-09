@@ -198,6 +198,15 @@ function limitData(filteredList)
     {
         filteredList[i].position = i;
         filteredList[i].getRoadDistance(centrepointLocation);
+        if (checkInSearchResultBookmarkList(filteredList[i]))
+        {
+            filteredList[i].bookmarked = true;
+        }
+        let reviewVal = checkInReviewList(filteredList[i]);
+        if (reviewVal != 0)
+        {
+            filteredList[i].review = reviewVal;
+        }
         resultInstanceList.push(filteredList[i]);
     }
     /*for (let i = 0; i < searchLimit; i++)
@@ -234,6 +243,18 @@ function checkInSearchResultBookmarkList(searchResult)
         }
     }
     return false;
+}
+
+function checkInReviewList(searchResult)
+{
+    for (let i = 0; i < reviewList.list.length; i++)
+    {
+        if (searchResult.address == reviewList.list[i].address)
+        {
+            return reviewList.list[i].review;
+        }
+    }
+    return 0
 }
 
 function drawResult() {

@@ -142,15 +142,39 @@ slider.oninput = function() {
 let vehicleSpeed = 5000; //m h^-1
 function setWalk() 
 {
-    vehicleSpeed = 5000; //m h^-1
+    if (vehicleSpeed != 5000)
+    {
+        vehicleSpeed = 5000; //m h^-1
+        refreshMap();
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 function setBike() 
 {
-    vehicleSpeed = 24000; //m h^-1
+    if (vehicleSpeed != 24000)
+    {
+        vehicleSpeed = 24000; //m h^-1
+        refreshMap();
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 function setCar() 
 {
-    vehicleSpeed = 50000; //m h^-1
+    if (vehicleSpeed != 50000)
+    {
+        vehicleSpeed = 50000; //m h^-1
+        refreshMap();
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 
 // travel distance based on vehicle speed

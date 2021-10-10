@@ -4,6 +4,7 @@
 //Local Storage Keys
 const CENTREPOINT_LIST_KEY = 'centrepointList';
 const SEARCH_RESULT_BOOKMARK_LIST_KEY = 'searchResultBookmarkList';
+const REVIEW_LIST_KEY = 'reviewList';
 
 
 
@@ -78,6 +79,35 @@ class CentrepointList
             let centrepointInstance = new Centrepoint;
             centrepointInstance.fromData(dataObject._list[i]);
             this.addCentrepoint(centrepointInstance);
+        }
+    }
+}
+
+//Centrepoint List Class
+class ReviewList
+{
+    constructor()
+    {
+        this._list = [];
+    }
+
+    get list()
+    {
+        return this._list;
+    }
+
+    addReview(searchResult)
+    {
+        this._list.push(searchResult);
+    }
+
+    fromData(dataObject)
+    {
+        for (let i = 0; i < dataObject._list.length; i++)
+        {
+            let searchResultInstance = new SearchResult;
+            searchResultInstance.fromData(dataObject._list[i]);
+            this.addReview(searchResultInstance);
         }
     }
 }
@@ -200,12 +230,18 @@ class SearchResult {
         this._bookmarked = bookmarked;
     }
 
+    set review(review)
+    {
+        this._review = review;
+    }
+
     set position(position){
         this._position = position;
     }
 
     addReview(review){
-        this._review = review
+        this._review = review;
+        updateReviewLocalStorage(this);
     }
 
     getDistance(centrepoint){
@@ -308,6 +344,7 @@ if (typeof Storage !== 'undefined')
 
 //Initialise search result list if none exists
 let searchResultBookmarkList = new SearchResultBookmarkList();
+if (typeof Storage !== 'undefined')
 {
     if (checkLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY) == true)
     {
@@ -318,6 +355,44 @@ let searchResultBookmarkList = new SearchResultBookmarkList();
     {
         setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
     }
+}
+
+//Initialise review list if none
+let reviewList = new ReviewList();
+if (typeof Storage !== 'undefined')
+{
+    if (checkLocalStorage(REVIEW_LIST_KEY) == true)
+    {
+        let reviewData = getLocalStorage(REVIEW_LIST_KEY);
+        reviewList.fromData(reviewData);
+    }
+    else
+    {
+        setLocalStorage(REVIEW_LIST_KEY, reviewList);
+    }
+}
+
+//Update local storage for reviews
+function updateReviewLocalStorage(searchResult)
+{
+    if (!checkReviewList(searchResult))
+    {
+        reviewList.list.push(searchResult);
+    }
+    setLocalStorage(REVIEW_LIST_KEY, reviewList);
+}
+
+function checkReviewList(searchResult)
+{
+    for (let i = 0; i < reviewList.list.length; i++)
+    {
+        if (searchResult.address == reviewList.list[i].address)
+        {
+            reviewList.list[i]._review = searchResult.review;
+            return true;
+        }
+    }
+    return false;
 }
 
 //Display centrepoint bookmarks

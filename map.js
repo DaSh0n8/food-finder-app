@@ -535,6 +535,36 @@ function reviewSearchResult(resultPosition) { // result is an instance of Search
         </div>
     </div>
     `;
+    if(reviewList.list.length){
+        let reviewVal;
+        for(let i = 0; i < reviewList.list.length; i ++){
+            if (reviewList.list[i].address == resultInstanceList[resultPosition].address){
+                reviewVal = reviewList.list[i].review;
+            }
+        }
+        console.log(reviewVal);
+        switch(reviewVal) {
+            case 1:
+                document.getElementById("r1").checked = true;
+                break;
+            case 2:
+                document.getElementById("r2").checked = true;
+              // code block
+              break;
+            case 3:
+                document.getElementById("r3").checked = true;
+                break;
+            case 4:
+                document.getElementById("r4").checked = true;
+                break;
+            case 5:
+                document.getElementById("r5").checked = true;
+                break;
+            default:
+              // code block
+          }
+    }
+
 }
 
 function addingReviews(resultPosition) {

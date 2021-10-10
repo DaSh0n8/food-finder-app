@@ -234,7 +234,7 @@ class SearchResult {
     {
         this._roadDistance = distance;
     }
-    
+
     set review(review)
     {
         this._review = review;
@@ -267,16 +267,6 @@ class SearchResult {
         return d
     }
 
-    //Function to send request to get road distance
-    getRoadDistance(centrepoint)
-    {
-        /*let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${this._lng},${this._lat}?access_token=${MAPBOX_TOKEN}`
-        fetch(url)
-            .then(response => response.json())
-            .then(result => this.dataRoadDistance(result))
-            .catch(error => console.log('error', error));*/
-    }
-
     //Function to receive result from road distance request
     dataRoadDistance(result)
     {
@@ -285,7 +275,7 @@ class SearchResult {
 
     getTimeTaken()
     {
-        return this._roadDistance/vehicleSpeed;
+        return (this._roadDistance/vehicleSpeed)*60;
     }
 
     //(name, lat, lng, address, category, position, bookmarked = false, review = 0)

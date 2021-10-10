@@ -139,18 +139,18 @@ slider.oninput = function() {
 }
 
 // set vehicle
-let vehicleSpeed = 60; //km h^-1
+let vehicleSpeed = 5000; //m h^-1
 function setWalk() 
 {
-    vehicleSpeed = 5; //km h^-1
+    vehicleSpeed = 5000; //m h^-1
 }
 function setBike() 
 {
-    vehicleSpeed = 24; //km h^-1
+    vehicleSpeed = 24000; //m h^-1
 }
 function setCar() 
 {
-    vehicleSpeed = 60; //km h^-1
+    vehicleSpeed = 50000; //m h^-1
 }
 
 // travel distance based on vehicle speed
@@ -265,10 +265,8 @@ function drawResult() {
       reverseGeocode(result.features[i].properties.lat,result.features[i].properties.lon,true,false)
     }*/
     refreshMap();
-    //resultRoadDistance();
     for (let i = 0; i < resultInstanceList.length; i++)
     {
         requestRoadDistance(resultInstanceList[i], centrepointLocation).then(displaySearchResults);
-        //displaySearchResults(resultInstanceList[i]);
     }
 }

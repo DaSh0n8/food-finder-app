@@ -276,7 +276,12 @@ function displaySearchResults(result) //result should be an instance of SearchRe
             <i class="fas fa-award" style="font-size: 1.5em; color: white;"></i>
             <p>Review <p>
         </button>
-        </div>`);
+        </div>
+        
+        <div class="review" id="review">
+        </div>
+        
+        `);
 
         //set popup to marker
         marker.setPopup(popup);
@@ -525,24 +530,49 @@ function reviewSearchResult(resultPosition) { // result is an instance of Search
     <div class="review-body">
         Please rate your experience!
         <div class="wrapper">
-            <input type="radio" name="rate" id="r1" value="5">
+            <input type="radio" name="rate" id="r1" value="1" onclick="addingReviews(${resultPosition})">
             <label for="r1">&#10038;</label>
-            <input type="radio" name="rate" id="r2" value="4">
+            <input type="radio" name="rate" id="r2" value="2" onclick="addingReviews(${resultPosition})">
             <label for="r2">&#10038;</label>
-            <input type="radio" name="rate" id="r3" value="3">
+            <input type="radio" name="rate" id="r3" value="3" onclick="addingReviews(${resultPosition})">
             <label for="r3">&#10038;</label>
-            <input type="radio" name="rate" id="r4" value="2">
+            <input type="radio" name="rate" id="r4" value="4" onclick="addingReviews(${resultPosition})">
             <label for="r4">&#10038;</label>
-            <input type="radio" name="rate" id="r5" value="1">
+            <input type="radio" name="rate" id="r5" value="5" onclick="addingReviews(${resultPosition})">
             <label for="r5">&#10038;</label>
         </div>
-            <button
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                title="Use Current Location" onclick="addingReviews(${resultPosition})">
-
-                                <i class="material-icons">rate_review</i></button>
     </div>
     `;
+    if(reviewList.list.length){
+        let reviewVal;
+        for(let i = 0; i < reviewList.list.length; i ++){
+            if (reviewList.list[i].address == resultInstanceList[resultPosition].address){
+                reviewVal = reviewList.list[i].review;
+            }
+        }
+        console.log(reviewVal);
+        switch(reviewVal) {
+            case 1:
+                document.getElementById("r1").checked = true;
+                break;
+            case 2:
+                document.getElementById("r2").checked = true;
+              // code block
+              break;
+            case 3:
+                document.getElementById("r3").checked = true;
+                break;
+            case 4:
+                document.getElementById("r4").checked = true;
+                break;
+            case 5:
+                document.getElementById("r5").checked = true;
+                break;
+            default:
+              // code block
+          }
+    }
+
 }
 
 function addingReviews(resultPosition) {

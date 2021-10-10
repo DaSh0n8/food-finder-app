@@ -200,6 +200,11 @@ class SearchResult {
         this._bookmarked = bookmarked;
     }
 
+    set roadDistance(distance)
+    {
+        this._roadDistance = distance;
+    }
+
     set position(position){
         this._position = position;
     }
@@ -229,11 +234,11 @@ class SearchResult {
     //Function to send request to get road distance
     getRoadDistance(centrepoint)
     {
-        let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${this._lng},${this._lat}?access_token=${MAPBOX_TOKEN}`
+        /*let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${this._lng},${this._lat}?access_token=${MAPBOX_TOKEN}`
         fetch(url)
             .then(response => response.json())
             .then(result => this.dataRoadDistance(result))
-            .catch(error => console.log('error', error));
+            .catch(error => console.log('error', error));*/
     }
 
     //Function to receive result from road distance request
@@ -287,6 +292,21 @@ class SearchResultBookmarkList
             this.addSearchResult(searchResultInstance);
         }
     }
+}
+
+//Road distance
+async function requestRoadDistance(searchResult, centrepoint)
+{
+    let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${searchResult.lng},${searchResult.lat}?access_token=${MAPBOX_TOKEN}`
+    let response = await fetch(url);
+    let result = await response.json();
+    let distance = result.routes[0].distance;
+    resultInstanceList[searchResult.position].roadDistance = distance;
+    return resultInstanceList[searchResult.position];
+    /*fetch(url)
+        .then(response => response.json())
+        .then(result => this.dataRoadDistance(result))
+        .catch(error => console.log('error', error));*/
 }
 
 

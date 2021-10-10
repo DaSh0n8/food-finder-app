@@ -267,7 +267,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         // <button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
         popup.setHTML(`
         <div id='popup-location'>
-        <b>${name} <br><i style="color:gray">${result._roadDistance}km away<i></b>
+        <b>${name} <br><i style="color:gray">${Math.round(result._roadDistance)} m away<i></b>
         <button onclick="bookmarkSearchResult(${result._position})" id='bookmarkList'>
                     <i class="fas fa-bookmark" style="font-size: 1.5em; color: white;"></i>
                     <p>Bookmark<p>
@@ -288,6 +288,14 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         popup.addTo(map);
     }
 }
+
+/*function resultRoadDistance()
+{
+    for (let i = 0; i < resultInstanceList.length; i++)
+    {
+        resultInstanceList[i].getRoadDistance(centrepointLocation);
+    }
+}*/
 
 
 //Initialising map

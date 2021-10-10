@@ -197,7 +197,7 @@ function limitData(filteredList)
     for (let i = 0; i < limit; i++)
     {
         filteredList[i].position = i;
-        filteredList[i].getRoadDistance(centrepointLocation);
+        //filteredList[i].getRoadDistance(centrepointLocation);
         resultInstanceList.push(filteredList[i]);
     }
     /*for (let i = 0; i < searchLimit; i++)
@@ -221,7 +221,7 @@ function limitData(filteredList)
         resultInstanceList.push(filteredList[minIndex]);
         filteredList.splice(minIndex,1);
     }*/
-    drawResult()
+    drawResult();
 }
 
 function checkInSearchResultBookmarkList(searchResult)
@@ -245,9 +245,10 @@ function drawResult() {
       reverseGeocode(result.features[i].properties.lat,result.features[i].properties.lon,true,false)
     }*/
     refreshMap();
+    //resultRoadDistance();
     for (let i = 0; i < resultInstanceList.length; i++)
     {
-        console.log(resultInstanceList[i]._roadDistance);
-        displaySearchResults(resultInstanceList[i]);
+        requestRoadDistance(resultInstanceList[i], centrepointLocation).then(displaySearchResults);
+        //displaySearchResults(resultInstanceList[i]);
     }
 }

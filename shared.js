@@ -306,36 +306,26 @@ if (typeof Storage !== 'undefined')
     }
 }
 
-//Initialise search result list if none exists
-let searchResultBookmarkList = new SearchResultBookmarkList();
-{
-    if (checkLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY) == true)
-    {
-        let searchResultBookmarkListData = getLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY);
-        searchResultBookmarkList.fromData(searchResultBookmarkListData);
-    }
-    else
-    {
-        setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
-    }
-}
-
 //Display centrepoint bookmarks
 let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
-let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
+let listCentrepoints = `<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>`;
 for (let i = 0; i < centrepointBookmarkList.list.length; i++)
 {
-    listCentrepoints += `<p>${centrepointBookmarkList.list[i].address}</p>`;
+    listCentrepoints = `<p>${centrepointBookmarkList.list[i].address}</p>
+                         <aclass="delete" name="${i}" onClick="removeCentrepointBookmark(name)">Delete</a>`;
+                         bookmarkCentrepointRef.innerHTML += listCentrepoints;
 }
-bookmarkCentrepointRef.innerHTML = listCentrepoints;
+
 
 //Display search results bookmarks
 let bookmarkRef = document.getElementById('bookmarkList')
-let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
+let list = `<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>`
 for (let i = 0; i < searchResultBookmarkList.list.length; i++)
 {
-    list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
+    let name = i
+    list = `<p>${searchResultBookmarkList.list[i].address}</p> <bclass="delete" onClick="removeSearchResultBookmark(${name})">Delete</b>`;
+    bookmarkRef.innerHTML += list;
 }
-bookmarkRef.innerHTML = list;
+
 
 //>>>>>>> 8c7c1301d9bc431f28317d6b644614957730f726

@@ -652,6 +652,57 @@ function displaySearchResultBookmark()
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
 
+function removeCentrepointBookmark(itemIndex)
+{
+    console.log(itemIndex)
+
+    
+        
+        
+    centrepointBookmarkList.list.splice(itemIndex,1);
+        
+    
+
+
+
+    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
+    /{
+        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
+        
+    }
+    */
+    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
+
+    displayCentrepointBookmark()
+    
+    
+
+}
+
+function removeSearchResultBookmark(itemIndex)
+{
+    console.log(itemIndex)
+
+    
+        
+        
+    searchResultBookmarkList.list.splice(itemIndex,1);
+        
+    
+
+
+
+    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
+    /{
+        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
+        
+    }
+    */
+    setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
+
+    displaySearchResultBookmark()   
+}
+
 function sortCentrepointBookmark(a,b)
 {
     let value = "address";

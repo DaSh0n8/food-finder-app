@@ -623,27 +623,34 @@ function bookmarkCentrepoint() {
 }
 
 //Display Centrepoint Bookmark List
-function displayCentrepointBookmark() {
+function displayCentrepointBookmark()
+{
     let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
     //Display Bookmarked Centrepoints
     let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
-    for (let i = 0; i < centrepointBookmarkList._list.length; i++) {
-        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>`;
+    for (let i = 0; i < centrepointBookmarkList._list.length; i++)
+    {
+        let name = i
+        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>
+                            <a onClick="removeCentrepointBookmark(${name})" class="delete">Delete</a>`;
     }
     console.log(bookmarkRef);
     bookmarkCentrepointRef.innerHTML = listCentrepoints;
 }
 
 //Display Search Result Bookmark List
-function displaySearchResultBookmark() {
+function displaySearchResultBookmark()
+{
     let bookmarkRef = document.getElementById('bookmarkList')
     let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
-        list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+    {
+        let name = i
+        list += `<p>${searchResultBookmarkList.list[i].address}</p>
+                 <a onClick="removeSearchResultBookmark(${name})" class="delete">Delete</a>`;
     }
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
-}
 
 //CURRENT LOCATION
 function getCurrentLocation() {

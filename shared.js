@@ -4,6 +4,7 @@
 //Local Storage Keys
 const CENTREPOINT_LIST_KEY = 'centrepointList';
 const SEARCH_RESULT_BOOKMARK_LIST_KEY = 'searchResultBookmarkList';
+const REVIEW_LIST_KEY = 'reviewList';
 
 
 
@@ -78,6 +79,35 @@ class CentrepointList
             let centrepointInstance = new Centrepoint;
             centrepointInstance.fromData(dataObject._list[i]);
             this.addCentrepoint(centrepointInstance);
+        }
+    }
+}
+
+//Centrepoint List Class
+class ReviewList
+{
+    constructor()
+    {
+        this._list = [];
+    }
+
+    get list()
+    {
+        return this._list;
+    }
+
+    addReview(searchResult)
+    {
+        this._list.push(searchResult);
+    }
+
+    fromData(dataObject)
+    {
+        for (let i = 0; i < dataObject._list.length; i++)
+        {
+            let searchResultInstance = new SearchResult;
+            searchResultInstance.fromData(dataObject._list[i]);
+            this.addReview(searchResultInstance);
         }
     }
 }
@@ -191,8 +221,23 @@ class SearchResult {
         return this._position;
     }
 
+    get roadDistance()
+    {
+        return this._roadDistance;
+    }
+
     set bookmarked(bookmarked){
         this._bookmarked = bookmarked;
+    }
+
+    set roadDistance(distance)
+    {
+        this._roadDistance = distance;
+    }
+
+    set review(review)
+    {
+        this._review = review;
     }
 
     set position(position){
@@ -200,7 +245,8 @@ class SearchResult {
     }
 
     addReview(review){
-        this._review = review
+        this._review = review;
+        updateReviewLocalStorage(this);
     }
 
     getDistance(centrepoint){
@@ -221,21 +267,15 @@ class SearchResult {
         return d
     }
 
-    //Function to send request to get road distance
-    getRoadDistance(centrepoint)
-    {
-        let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${this._lng},${this._lat}?access_token=${MAPBOX_TOKEN}`
-        fetch(url)
-            .then(response => response.json())
-            .then(result => this.dataRoadDistance(result))
-            .catch(error => console.log('error', error));
-    }
-
     //Function to receive result from road distance request
     dataRoadDistance(result)
     {
-        console.log(result);
         this._roadDistance = result.routes[0].distance;
+    }
+
+    getTimeTaken()
+    {
+        return (this._roadDistance/vehicleSpeed)*60;
     }
 
     //(name, lat, lng, address, category, position, bookmarked = false, review = 0)
@@ -280,6 +320,21 @@ class SearchResultBookmarkList
     }
 }
 
+//Road distance
+async function requestRoadDistance(searchResult, centrepoint)
+{
+    let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${searchResult.lng},${searchResult.lat}?access_token=${MAPBOX_TOKEN}`
+    let response = await fetch(url);
+    let result = await response.json();
+    let distance = result.routes[0].distance;
+    resultInstanceList[searchResult.position].roadDistance = distance;
+    return resultInstanceList[searchResult.position];
+    /*fetch(url)
+        .then(response => response.json())
+        .then(result => this.dataRoadDistance(result))
+        .catch(error => console.log('error', error));*/
+}
+
 
 
 //Initialises centrepoint list if none exists
@@ -299,6 +354,7 @@ if (typeof Storage !== 'undefined')
 
 //Initialise search result list if none exists
 let searchResultBookmarkList = new SearchResultBookmarkList();
+if (typeof Storage !== 'undefined')
 {
     if (checkLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY) == true)
     {
@@ -309,6 +365,44 @@ let searchResultBookmarkList = new SearchResultBookmarkList();
     {
         setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
     }
+}
+
+//Initialise review list if none
+let reviewList = new ReviewList();
+if (typeof Storage !== 'undefined')
+{
+    if (checkLocalStorage(REVIEW_LIST_KEY) == true)
+    {
+        let reviewData = getLocalStorage(REVIEW_LIST_KEY);
+        reviewList.fromData(reviewData);
+    }
+    else
+    {
+        setLocalStorage(REVIEW_LIST_KEY, reviewList);
+    }
+}
+
+//Update local storage for reviews
+function updateReviewLocalStorage(searchResult)
+{
+    if (!checkReviewList(searchResult))
+    {
+        reviewList.list.push(searchResult);
+    }
+    setLocalStorage(REVIEW_LIST_KEY, reviewList);
+}
+
+function checkReviewList(searchResult)
+{
+    for (let i = 0; i < reviewList.list.length; i++)
+    {
+        if (searchResult.address == reviewList.list[i].address)
+        {
+            reviewList.list[i]._review = searchResult.review;
+            return true;
+        }
+    }
+    return false;
 }
 
 //Display centrepoint bookmarks

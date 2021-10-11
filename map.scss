@@ -32,6 +32,7 @@
     display: flex;
     flex-direction: column;
     width: 150%;
+    height: 100%;
     .bottom {
       width: 800px;
       .mdl-grid {
@@ -152,4 +153,24 @@
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
+}
+#bookmarkList {
+  border-radius: 15px;
+  border-color: tomato;
+  background-color: tomato;
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  margin-bottom: 3px;
+  p {
+    margin-left: 3px;
+    color: white;
+  }
+}
+#popup-location {
+  background-color: #FFEBCD;
+  height: 119px;
+  b {
+    color: rgba(165, 42, 42, 0.562);
+  }
 }

@@ -652,6 +652,72 @@ function displaySearchResultBookmark()
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
 
+function sortCentrepointBookmark(a,b)
+{
+    let value = "address";
+
+    if (value == "name")
+    {
+        if (a.name < b.name)
+        {
+            return -1;
+        }
+        if (a.name > b.name)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    else if (value == "address")
+    {
+        if (a.address < b.address)
+        {
+            return -1;
+        }
+        if (a.address > b.address)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+}
+}
+
+function sortSearchResultBookmark(a,b)
+{
+    let value = "address";
+
+    if (value == "name")
+    {
+        if (a.name < b.name)
+        {
+            return -1;
+        }
+        if (a.name > b.name)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    else if (value == "address")
+    {
+        if (a.address < b.address)
+        {
+            return -1;
+        }
+        if (a.address > b.address)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+}
+
+
+
+
 //CURRENT LOCATION
 function getCurrentLocation() {
     // Before getting current location, make sure no center point has been confirmed

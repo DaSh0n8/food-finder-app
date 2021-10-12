@@ -623,27 +623,151 @@ function bookmarkCentrepoint() {
 }
 
 //Display Centrepoint Bookmark List
-function displayCentrepointBookmark() {
+function displayCentrepointBookmark()
+{
     let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
     //Display Bookmarked Centrepoints
     let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
-    for (let i = 0; i < centrepointBookmarkList._list.length; i++) {
-        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>`;
+    for (let i = 0; i < centrepointBookmarkList._list.length; i++)
+    {
+        let name = i
+        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>
+                            <a onClick="removeCentrepointBookmark(${name})" class="delete">Delete</a>`;
     }
     console.log(bookmarkRef);
     bookmarkCentrepointRef.innerHTML = listCentrepoints;
 }
 
 //Display Search Result Bookmark List
-function displaySearchResultBookmark() {
+function displaySearchResultBookmark()
+{
     let bookmarkRef = document.getElementById('bookmarkList')
     let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
-        list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+    {
+        let name = i
+        list += `<p>${searchResultBookmarkList.list[i].address}</p>
+                 <a onClick="removeSearchResultBookmark(${name})" class="delete">Delete</a>`;
     }
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
+
+function removeCentrepointBookmark(itemIndex)
+{
+    console.log(itemIndex)
+
+    
+        
+        
+    centrepointBookmarkList.list.splice(itemIndex,1);
+        
+    
+
+
+
+    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
+    /{
+        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
+        
+    }
+    */
+    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
+
+    displayCentrepointBookmark()
+    
+    
+
 }
+
+function removeSearchResultBookmark(itemIndex)
+{
+    console.log(itemIndex)
+
+    
+        
+        
+    searchResultBookmarkList.list.splice(itemIndex,1);
+        
+    
+
+
+
+    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
+    /{
+        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
+        
+    }
+    */
+    setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
+
+    displaySearchResultBookmark()   
+}
+
+function sortCentrepointBookmark(a,b)
+{
+    let value = "address";
+
+    if (value == "name")
+    {
+        if (a.name < b.name)
+        {
+            return -1;
+        }
+        if (a.name > b.name)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    else if (value == "address")
+    {
+        if (a.address < b.address)
+        {
+            return -1;
+        }
+        if (a.address > b.address)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+}
+}
+
+function sortSearchResultBookmark(a,b)
+{
+    let value = "address";
+
+    if (value == "name")
+    {
+        if (a.name < b.name)
+        {
+            return -1;
+        }
+        if (a.name > b.name)
+        {
+            return 1;
+        }
+        return 0;
+    }
+    else if (value == "address")
+    {
+        if (a.address < b.address)
+        {
+            return -1;
+        }
+        if (a.address > b.address)
+        {
+            return 1;
+        }
+        return 0;
+    }
+
+}
+
+
+
 
 //CURRENT LOCATION
 function getCurrentLocation() {

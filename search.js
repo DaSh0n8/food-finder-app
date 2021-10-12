@@ -11,8 +11,9 @@ function searchMap() {
       };
       if (!locationConfirmed)
       {
-          window.alert('Please confirm a centrepoint.');
-          return;
+          confirmLocation();
+          //window.alert('Please confirm a centrepoint.');
+          //return;
       }
       if (!centrepointSet)
       {

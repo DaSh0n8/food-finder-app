@@ -450,6 +450,16 @@ function refreshMap() {
     });
 }
 
+//SELECT CENTREPOINT FROM CENTREPOINT BOOKMARK LIST
+function selectCentrepointBookmark(position)
+{
+    if (locationConfirmed && !centrepointSet)
+    {
+        locationConfirmed = false;
+        reverseGeocode(centrepointBookmarkList.list[position].lat, centrepointBookmarkList.list[position].lng, false, false)
+    }
+}
+
 //CONFIRM LOCATION
 function confirmLocation() {
     centrepointLocation = new Centrepoint(newLocation.lat, newLocation.lng, newLocation.address);
@@ -620,6 +630,7 @@ function bookmarkCentrepoint() {
     centrepointBookmarkList.addCentrepoint(centrepointLocation);
     setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
     console.log(`${centrepointLocation.address} has been bookmarked.`);
+    displayCentrepointBookmark();
 }
 
 //Display Centrepoint Bookmark List
@@ -634,7 +645,7 @@ function displayCentrepointBookmark()
         listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>
                             <a onClick="removeCentrepointBookmark(${name})" class="delete">Delete</a>`;
     }
-    console.log(bookmarkRef);
+    //console.log(bookmarkRef);
     bookmarkCentrepointRef.innerHTML = listCentrepoints;
 }
 

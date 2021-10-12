@@ -18,6 +18,7 @@ class Centrepoint
         this._lng = lng;
         this._address = address;
         this._bookmarked = false;
+        this._position = 0;
     }
 
     get lat()
@@ -40,9 +41,19 @@ class Centrepoint
         return this._bookmarked;
     }
 
+    get position()
+    {
+        return this.position;
+    }
+
     set bookmarked(bookmarked)
     {
         this._bookmarked = bookmarked;
+    }
+
+    set position(position)
+    {
+        this._position = position;
     }
 
     fromData(dataObject)
@@ -70,6 +81,15 @@ class CentrepointList
     addCentrepoint(centrepointInstance)
     {
         this._list.push(centrepointInstance);
+        this._list[this._list.length-1].position = this._list.length-1;
+    }
+
+    assignPosition()
+    {
+        for (let i = 0; i < this._list.length; i++)
+        {
+            this._list[i].position = i;
+        }
     }
 
     fromData(dataObject)
@@ -406,13 +426,14 @@ function checkReviewList(searchResult)
 }
 
 //Display centrepoint bookmarks
-let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
+displayCentrepointBookmark();
+/*let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
 let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
 for (let i = 0; i < centrepointBookmarkList.list.length; i++)
 {
-    listCentrepoints += `<p>${centrepointBookmarkList.list[i].address}</p>`;
+    listCentrepoints += `<button>${centrepointBookmarkList.list[i].address}</button>`;
 }
-bookmarkCentrepointRef.innerHTML = listCentrepoints;
+bookmarkCentrepointRef.innerHTML = listCentrepoints;*/
 
 //Display search results bookmarks
 let bookmarkRef = document.getElementById('bookmarkList')

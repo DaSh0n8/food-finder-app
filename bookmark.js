@@ -37,12 +37,12 @@ function displayCentrepointBookmark()
 {
     let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
     //Display Bookmarked Centrepoints
-    let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
+    let listCentrepoints = '<p>Bookmarked Centrepoints:\n</p>';
     for (let i = 0; i < centrepointBookmarkList._list.length; i++)
     {
-        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>
-                            <a onClick="removeCentrepointBookmark(${i})" class="delete">Delete</a>
-                            <button onClick='selectCentrepointBookmark(${i})'>Select Centrepoint</button>`;
+        listCentrepoints += `<p>(${i+1}) ${centrepointBookmarkList._list[i].address}</p>
+                            <button onClick='selectCentrepointBookmark(${i})'>Select Centrepoint</button>
+                            <button onClick="removeCentrepointBookmark(${i})" class="delete">Delete</button>`;
     }
     //console.log(bookmarkRef);
     bookmarkCentrepointRef.innerHTML = listCentrepoints;
@@ -51,8 +51,8 @@ function displayCentrepointBookmark()
 //Display Search Result Bookmark List
 function displaySearchResultBookmark()
 {
-    let bookmarkRef = document.getElementById('bookmarkList')
-    let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
+    let bookmarkRef = document.getElementById('bookmarkListDisplay')
+    let list = '<p>Bookmarked Places:\n</p>';
     for (let i = 0; i < searchResultBookmarkList.list.length; i++)
     {
         let name = i

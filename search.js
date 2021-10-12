@@ -31,7 +31,7 @@ function searchMap() {
             select = 'catering.cafe';
             break;
         case 'Food court':
-            select = 'catering.foot_court';
+            select = 'catering.food_court';
             break;
         case 'Bar':
             select = 'catering.bar';
@@ -114,14 +114,13 @@ function filterData(results)
     for (let i = 0; i < results.features.length; i++)
     {
         let properties = results.features[i].properties;
-        if (!properties.hasOwnProperty('name'))
+        if (properties.hasOwnProperty('name'))
         {
-            properties.name = 'This place has no name. (???)'
-        }
-        let res = new SearchResult(properties.name,properties.lat,properties.lon,properties.formatted,properties.categories,0);
-        if (res.getDistance(centrepointLocation) <= searchRadius)
-        {
-            filteredList.push(res);
+            let res = new SearchResult(properties.name,properties.lat,properties.lon,properties.formatted,properties.categories,0);
+            if (res.getDistance(centrepointLocation) <= searchRadius)
+            {
+                filteredList.push(res);
+            }
         }
     }
     limitData(filteredList)

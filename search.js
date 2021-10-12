@@ -31,7 +31,7 @@ function searchMap() {
             select = 'catering.cafe';
             break;
         case 'Food court':
-            select = 'catering.foot_court';
+            select = 'catering.food_court';
             break;
         case 'Bar':
             select = 'catering.bar';
@@ -114,14 +114,13 @@ function filterData(results)
     for (let i = 0; i < results.features.length; i++)
     {
         let properties = results.features[i].properties;
-        if (!properties.hasOwnProperty('name'))
+        if (properties.hasOwnProperty('name'))
         {
-            properties.name = 'This place has no name. (???)'
-        }
-        let res = new SearchResult(properties.name,properties.lat,properties.lon,properties.formatted,properties.categories,0);
-        if (res.getDistance(centrepointLocation) <= searchRadius)
-        {
-            filteredList.push(res);
+            let res = new SearchResult(properties.name,properties.lat,properties.lon,properties.formatted,properties.categories,0);
+            if (res.getDistance(centrepointLocation) <= searchRadius)
+            {
+                filteredList.push(res);
+            }
         }
     }
     limitData(filteredList)
@@ -139,18 +138,42 @@ slider.oninput = function() {
 }
 
 // set vehicle
-let vehicleSpeed = 60; //km h^-1
+let vehicleSpeed = 5000; //m h^-1
 function setWalk() 
 {
-    vehicleSpeed = 5; //km h^-1
+    if (vehicleSpeed != 5000)
+    {
+        vehicleSpeed = 5000; //m h^-1
+        refreshMap();
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 function setBike() 
 {
-    vehicleSpeed = 24; //km h^-1
+    if (vehicleSpeed != 24000)
+    {
+        vehicleSpeed = 24000; //m h^-1
+        refreshMap();
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 function setCar() 
 {
-    vehicleSpeed = 60; //km h^-1
+    if (vehicleSpeed != 50000)
+    {
+        vehicleSpeed = 50000; //m h^-1
+        refreshMap();
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 
 // travel distance based on vehicle speed
@@ -197,7 +220,15 @@ function limitData(filteredList)
     for (let i = 0; i < limit; i++)
     {
         filteredList[i].position = i;
-        filteredList[i].getRoadDistance(centrepointLocation);
+        if (checkInSearchResultBookmarkList(filteredList[i]))
+        {
+            filteredList[i].bookmarked = true;
+        }
+        let reviewVal = checkInReviewList(filteredList[i]);
+        if (reviewVal != 0)
+        {
+            filteredList[i].review = reviewVal;
+        }
         resultInstanceList.push(filteredList[i]);
     }
     /*for (let i = 0; i < searchLimit; i++)
@@ -221,7 +252,7 @@ function limitData(filteredList)
         resultInstanceList.push(filteredList[minIndex]);
         filteredList.splice(minIndex,1);
     }*/
-    drawResult()
+    drawResult();
 }
 
 function checkInSearchResultBookmarkList(searchResult)
@@ -236,6 +267,18 @@ function checkInSearchResultBookmarkList(searchResult)
     return false;
 }
 
+function checkInReviewList(searchResult)
+{
+    for (let i = 0; i < reviewList.list.length; i++)
+    {
+        if (searchResult.address == reviewList.list[i].address)
+        {
+            return reviewList.list[i].review;
+        }
+    }
+    return 0
+}
+
 function drawResult() {
     //console.log(result);
     //console.log(result.features[0].properties.lat);
@@ -247,6 +290,6 @@ function drawResult() {
     refreshMap();
     for (let i = 0; i < resultInstanceList.length; i++)
     {
-        displaySearchResults(resultInstanceList[i]);
+        requestRoadDistance(resultInstanceList[i], centrepointLocation).then(displaySearchResults);
     }
 }

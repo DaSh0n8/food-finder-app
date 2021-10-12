@@ -242,7 +242,6 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     let lng = result.lng;
     let address = result.formatted;
     let categories = result.categories;
-
     //Show Marker
     let geojson = {
         type: 'FeatureCollection',
@@ -265,10 +264,24 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         let marker = new mapboxgl.Marker(el).setLngLat(geometry.coordinates);
         //popup with formated information
         let popup = new mapboxgl.Popup({ offset: 45 });
-        popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
-        <button type="button" onclick="reviewSearchResult(${result._position})">Review</button>
+        // <button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
+        popup.setHTML(`
+        <div id='popup-location'>
+        <b>${name} <br><i style="color:gray">${Math.round(result.getTimeTaken())} min away<i></b>
+        <button onclick="bookmarkSearchResult(${result._position})" id='bookmarkList'>
+                    <i class="fas fa-bookmark" style="font-size: 1.5em; color: white;"></i>
+                    <p>Bookmark<p>
+        </button>
+        <button type="button" onclick="reviewSearchResult(${result._position})" id='bookmarkList'>
+            <i class="fas fa-award" style="font-size: 1.5em; color: white;"></i>
+            <p>Review <p>
+        </button>
+        </div>
+        
         <div class="review" id="review">
-        </div>`);
+        </div>
+        
+        `);
 
         //set popup to marker
         marker.setPopup(popup);
@@ -281,6 +294,14 @@ function displaySearchResults(result) //result should be an instance of SearchRe
     }
 }
 
+/*function resultRoadDistance()
+{
+    for (let i = 0; i < resultInstanceList.length; i++)
+    {
+        resultInstanceList[i].getRoadDistance(centrepointLocation);
+    }
+}*/
+
 
 //Initialising map
 let mapStyle = 'osm-carto'
@@ -291,7 +312,7 @@ let map = new mapboxgl.Map(
         container: 'map',
         style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 15 // starting zoom
+        zoom: 17 // starting zoom
     });
 globalThis.map;
 
@@ -431,7 +452,7 @@ function refreshMap() {
 
 //CONFIRM LOCATION
 function confirmLocation() {
-    centrepointLocation = new Centrepoint(newLocation.lat,newLocation.lng,newLocation.address);
+    centrepointLocation = new Centrepoint(newLocation.lat, newLocation.lng, newLocation.address);
     centrepointSet = true;
     locationConfirmed = true;
 
@@ -499,7 +520,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
 
 // Review Search Result
-function reviewSearchResult(resultPosition){ // result is an instance of SearchResult
+function reviewSearchResult(resultPosition) { // result is an instance of SearchResult
     console.log("Review Search Result")
     document.getElementById("review").innerHTML = `
 
@@ -509,50 +530,73 @@ function reviewSearchResult(resultPosition){ // result is an instance of SearchR
     <div class="review-body">
         Please rate your experience!
         <div class="wrapper">
-            <input type="radio" name="rate" id="r1" value="5">
+            <input type="radio" name="rate" id="r1" value="1" onclick="addingReviews(${resultPosition})">
             <label for="r1">&#10038;</label>
-            <input type="radio" name="rate" id="r2" value="4">
+            <input type="radio" name="rate" id="r2" value="2" onclick="addingReviews(${resultPosition})">
             <label for="r2">&#10038;</label>
-            <input type="radio" name="rate" id="r3" value="3">
+            <input type="radio" name="rate" id="r3" value="3" onclick="addingReviews(${resultPosition})">
             <label for="r3">&#10038;</label>
-            <input type="radio" name="rate" id="r4" value="2">
+            <input type="radio" name="rate" id="r4" value="4" onclick="addingReviews(${resultPosition})">
             <label for="r4">&#10038;</label>
-            <input type="radio" name="rate" id="r5" value="1">
+            <input type="radio" name="rate" id="r5" value="5" onclick="addingReviews(${resultPosition})">
             <label for="r5">&#10038;</label>
         </div>
-            <button
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                title="Use Current Location" onclick="addingReviews(${resultPosition})">
-
-                                <i class="material-icons">rate_review</i></button>
     </div>
-    `; 
+    `;
+    if(reviewList.list.length){
+        let reviewVal;
+        for(let i = 0; i < reviewList.list.length; i ++){
+            if (reviewList.list[i].address == resultInstanceList[resultPosition].address){
+                reviewVal = reviewList.list[i].review;
+            }
+        }
+        console.log(reviewVal);
+        switch(reviewVal) {
+            case 1:
+                document.getElementById("r1").checked = true;
+                break;
+            case 2:
+                document.getElementById("r2").checked = true;
+              // code block
+              break;
+            case 3:
+                document.getElementById("r3").checked = true;
+                break;
+            case 4:
+                document.getElementById("r4").checked = true;
+                break;
+            case 5:
+                document.getElementById("r5").checked = true;
+                break;
+            default:
+              // code block
+          }
+    }
+
 }
 
-function addingReviews(resultPosition){
+function addingReviews(resultPosition) {
     var reviewValue;
     console.log(resultInstanceList[resultPosition]._name)
     var ele = document.getElementsByName('rate');
-    for(var i = 0; i < ele.length; i++) {
-         if(ele[i].checked){
-              reviewValue = ele[i].value;
-            }
+    for (var i = 0; i < ele.length; i++) {
+        if (ele[i].checked) {
+            reviewValue = ele[i].value;
         }
+    }
     reviewValue = parseInt(reviewValue);
     var sm = resultInstanceList[resultPosition]
     sm.addReview(reviewValue);
     console.log(sm)
-    
+
 
 }
 
 //Bookmark Search Result
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
 {
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
-    {
-        if (searchResultBookmarkList.list[i].address == resultInstanceList[resultPosition].address)
-        {
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
+        if (searchResultBookmarkList.list[i].address == resultInstanceList[resultPosition].address) {
             window.alert('Place already bookmarked.');
             return;
         }
@@ -565,12 +609,9 @@ function bookmarkSearchResult(resultPosition) //result is an instance of SearchR
 }
 
 //Bookmark Centrepoint
-function bookmarkCentrepoint()
-{
-    for (let i = 0; i < centrepointBookmarkList.list.length; i++)
-    {
-        if (centrepointBookmarkList.list[i].address == centrepointLocation.address)
-        {
+function bookmarkCentrepoint() {
+    for (let i = 0; i < centrepointBookmarkList.list.length; i++) {
+        if (centrepointBookmarkList.list[i].address == centrepointLocation.address) {
             window.alert('Centrepoint already bookmarked.');
             return;
         }
@@ -610,6 +651,32 @@ function displaySearchResultBookmark()
     }
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
+
+function removeCentrepointBookmark(itemIndex)
+{
+    console.log(itemIndex)
+
+    
+        
+        
+    centrepointBookmarkList.list.splice(itemIndex,1);
+        
+    
+
+
+
+    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
+    /{
+        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
+        
+    }
+    */
+    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
+
+    displayCentrepointBookmark()
+    
+    
+
 }
 
 function removeCentrepointBookmark(itemIndex)
@@ -645,7 +712,7 @@ function removeSearchResultBookmark(itemIndex)
     
         
         
-    searchResultBookmarkList.list.splice(itemIndex,1)
+    searchResultBookmarkList.list.splice(itemIndex,1);
         
     
 
@@ -662,7 +729,7 @@ function removeSearchResultBookmark(itemIndex)
     displaySearchResultBookmark()   
 }
 
-function sortCentrepointBookmarks(a,b)
+function sortCentrepointBookmark(a,b)
 {
     let value = "address";
 
@@ -729,15 +796,13 @@ function getCurrentLocation() {
     cancelLocation()
     if ('geolocation' in navigator) {
         console.log('Geolocation is available.')
-        if (!centrepointSet && locationConfirmed)
-        {
+        if (!centrepointSet && locationConfirmed) {
             locationConfirmed = false;
             navigator.geolocation.getCurrentPosition((position) => {
                 reverseGeocode(position.coords.latitude, position.coords.longitude);
             });
         }
-        else
-        {
+        else {
             alert('Current centrepoint is already set. Cannot use current location for centrepoint.')
         }
     }

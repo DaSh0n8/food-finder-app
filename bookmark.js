@@ -1,3 +1,6 @@
+centrepointSortBy = 'name';
+searchResultSortBy = 'name';
+
 //Bookmark Search Result
 function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
 {
@@ -103,11 +106,60 @@ function removeSearchResultBookmark(itemIndex)
     displaySearchResultBookmark()   
 }
 
-function sortCentrepointBookmark(a,b)
-{
-    let value = "address";
+let sortBy = {
+    name: function(a,b)
+    {
+        if (a.name < b.name)
+        {
+            return -1;
+        }
+        if (a.name > b.name)
+        {
+            return 1;
+        }
+        return 0;
+    },
+    address: function(a,b)
+    {
+        if (a.address < b.address)
+        {
+            return -1;
+        }
+        if (a.address > b.address)
+        {
+            return 1;
+        }
+        return 0;
+    },
+    review: function(a,b)
+    {
+        if (a.review < b.review)
+        {
+            return -1;
+        }
+        if (a.review > b.review)
+        {
+            return 1;
+        }
+        return 0;
+    },
+    distance: function(a,b)
+    {
+        if (a.getDistance(centrepointLocation) < b.getDistance(centrepointLocation))
+        {
+            return -1;
+        }
+        if (a.getDistance(centrepointLocation) > b.getDistance(centrepointLocation))
+        {
+            return 1;
+        }
+        return 0;
+    }
+}
 
-    if (value == "name")
+/*function sortCentrepointBookmark(a, b, property)
+{
+    if (centrepointSortBy == "name")
     {
         if (a.name < b.name)
         {
@@ -119,7 +171,7 @@ function sortCentrepointBookmark(a,b)
         }
         return 0;
     }
-    else if (value == "address")
+    else if (centrepointSortBy == "address")
     {
         if (a.address < b.address)
         {
@@ -133,11 +185,9 @@ function sortCentrepointBookmark(a,b)
     }
 }
 
-function sortSearchResultBookmarks(a,b)
+function sortSearchResultBookmarks(a, b)
 {
-    let value = "address";
-
-    if (value == "name")
+    if (searchResultSortBy == "name")
     {
         if (a.name < b.name)
         {
@@ -149,7 +199,7 @@ function sortSearchResultBookmarks(a,b)
         }
         return 0;
     }
-    else if (value == "address")
+    else if (searchResultSortBy == "address")
     {
         if (a.address < b.address)
         {
@@ -161,4 +211,4 @@ function sortSearchResultBookmarks(a,b)
         }
         return 0;
     }
-}
+}*/

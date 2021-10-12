@@ -103,7 +103,7 @@ class CentrepointList
     }
 }
 
-//Centrepoint List Class
+//Review List Class
 class ReviewList
 {
     constructor()
@@ -327,6 +327,26 @@ class SearchResultBookmarkList
     addSearchResult(searchResultInstance)
     {
         this._list.push(searchResultInstance);
+    }
+
+    sort(property)
+    {
+        if (property == 'name')
+        {
+            this._list.sort(sortBy.name);
+        }
+        if (property == 'address')
+        {
+            this._list.sort(sortBy.address);
+        }
+        if (property == 'review')
+        {
+            this._list.sort(sortBy.review);
+        }
+        if (property == 'distance')
+        {
+            this._list.sort(sortBy.distance);
+        }
     }
 
     fromData(dataObject)

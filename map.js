@@ -679,6 +679,32 @@ function removeCentrepointBookmark(itemIndex)
 
 }
 
+function removeCentrepointBookmark(itemIndex)
+{
+    console.log(itemIndex)
+
+    
+        
+        
+    centrepointBookmarkList.list.splice(itemIndex,1)
+        
+    
+
+
+
+    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
+    /{
+        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
+        
+    }
+    */
+    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
+
+    displayCentrepointBookmark()
+    
+    
+
+}
 function removeSearchResultBookmark(itemIndex)
 {
     console.log(itemIndex)
@@ -731,11 +757,9 @@ function sortCentrepointBookmark(a,b)
         }
         return 0;
     }
-
-}
 }
 
-function sortSearchResultBookmark(a,b)
+function sortSearchResultBookmarks(a,b)
 {
     let value = "address";
 
@@ -765,9 +789,6 @@ function sortSearchResultBookmark(a,b)
     }
 
 }
-
-
-
 
 //CURRENT LOCATION
 function getCurrentLocation() {

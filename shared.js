@@ -8,6 +8,54 @@ const REVIEW_LIST_KEY = 'reviewList';
 
 
 
+//LOCAL STORAGE FUNCTIONS
+//check if local storage is available
+function checkLocalStorage(key)
+{
+    if (typeof (Storage) !== "undefined")
+    {
+        if (localStorage.getItem(key) !== null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    else
+    {
+        return false;
+    }
+}
+
+//set local storage
+function setLocalStorage(key, data)
+{
+    data = JSON.stringify(data);
+    localStorage.setItem(key, data);
+}
+
+//get data
+function getLocalStorage(key)
+{
+    let data = localStorage.getItem(key);
+    try
+    {
+        data = JSON.parse(data);
+    }
+    catch (e)
+    {
+        console.log(e);
+    }
+    finally
+    {
+        return data;
+    }
+}
+
+
+
 //CLASSES
 //Centrepoint class
 class Centrepoint
@@ -132,70 +180,7 @@ class ReviewList
     }
 }
 
-
-
-//LOCAL STORAGE FUNCTIONS
-//check if local storage is available
-function checkLocalStorage(key)
-{
-    if (typeof (Storage) !== "undefined")
-    {
-        if (localStorage.getItem(key) !== null)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    else
-    {
-        return false;
-    }
-}
-
-//set local storage
-function setLocalStorage(key, data)
-{
-    data = JSON.stringify(data);
-    localStorage.setItem(key, data);
-}
-
-//get data
-function getLocalStorage(key)
-{
-    let data = localStorage.getItem(key);
-    try
-    {
-        data = JSON.parse(data);
-    }
-    catch (e)
-    {
-        console.log(e);
-    }
-    finally
-    {
-        return data;
-    }
-}
-
-
-
-/*//centrepoint test function
-function testCentrepoints()
-{
-    let test = new Centrepoint(1, 2 ,'d');
-    centrepointList.addCentrepoint(test);
-    test = new Centrepoint(3, 4, '2');
-    centrepointList.addCentrepoint(test);
-    test = new Centrepoint(8, 5, 'my house');
-    centrepointList.addCentrepoint(test);
-}*/
-
-
-
-// Constructing Classes
+//Search result class
 class SearchResult {
     constructor(name, lat, lng, address, category, position, bookmarked = false, review = 0){
         this._name = name;
@@ -266,6 +251,7 @@ class SearchResult {
 
     addReview(review){
         this._review = review;
+        updateReviewBookmarkList(this);
         updateReviewLocalStorage(this);
     }
 
@@ -311,7 +297,7 @@ class SearchResult {
     }
 }
 
-//Search Result List Class
+//Search result list class
 class SearchResultBookmarkList
 {
     constructor()
@@ -376,6 +362,8 @@ async function requestRoadDistance(searchResult, centrepoint)
 }
 
 
+
+//INITIALISATION
 
 //Initialises centrepoint list if none exists
 let centrepointBookmarkList = new CentrepointList();
@@ -443,6 +431,23 @@ function checkReviewList(searchResult)
         }
     }
     return false;
+}
+
+
+
+//OTHER FUNCTIONS
+
+//Update search result bookmark list for reviews
+function updateReviewBookmarkList(searchResult)
+{
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+    {
+        if (searchResultBookmarkList.list[i].address == searchResult.address)
+        {
+            searchResultBookmarkList.list[i].review = searchResult.review;
+            setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
+        }
+    }
 }
 
 //Display centrepoint bookmarks

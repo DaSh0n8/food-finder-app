@@ -427,13 +427,6 @@ function checkReviewList(searchResult)
 
 //Display centrepoint bookmarks
 displayCentrepointBookmark();
-/*let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
-let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
-for (let i = 0; i < centrepointBookmarkList.list.length; i++)
-{
-    listCentrepoints += `<button>${centrepointBookmarkList.list[i].address}</button>`;
-}
-bookmarkCentrepointRef.innerHTML = listCentrepoints;*/
 
 //Display search results bookmarks
 let bookmarkRef = document.getElementById('bookmarkList')

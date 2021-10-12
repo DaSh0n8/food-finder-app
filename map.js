@@ -641,9 +641,9 @@ function displayCentrepointBookmark()
     let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
     for (let i = 0; i < centrepointBookmarkList._list.length; i++)
     {
-        let name = i
         listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>
-                            <a onClick="removeCentrepointBookmark(${name})" class="delete">Delete</a>`;
+                            <a onClick="removeCentrepointBookmark(${i})" class="delete">Delete</a>
+                            <button onClick='selectCentrepointBookmark(${i})'>Select Centrepoint</button>`;
     }
     //console.log(bookmarkRef);
     bookmarkCentrepointRef.innerHTML = listCentrepoints;
@@ -662,20 +662,12 @@ function displaySearchResultBookmark()
     }
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
+}
 
 function removeCentrepointBookmark(itemIndex)
 {
-    console.log(itemIndex)
-
-    
-        
-        
+    //console.log(itemIndex)
     centrepointBookmarkList.list.splice(itemIndex,1);
-        
-    
-
-
-
     /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
     /{
         searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
@@ -685,9 +677,6 @@ function removeCentrepointBookmark(itemIndex)
     setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
 
     displayCentrepointBookmark()
-    
-    
-
 }
 
 function removeCentrepointBookmark(itemIndex)
@@ -719,16 +708,7 @@ function removeCentrepointBookmark(itemIndex)
 function removeSearchResultBookmark(itemIndex)
 {
     console.log(itemIndex)
-
-    
-        
-        
     searchResultBookmarkList.list.splice(itemIndex,1);
-        
-    
-
-
-
     /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
     /{
         searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);

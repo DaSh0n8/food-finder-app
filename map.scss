@@ -14,7 +14,7 @@
 .mdl-layout__content {
   display: flex;
   flex-direction: row;
-  background: #FFEBCD;
+  background: #ffebcd;
   .nav-overlay {
     position: fixed;
     display: none;
@@ -43,29 +43,44 @@
     }
     #map {
       width: 235%;
+      left: -10px;
+      top: -10px;
     }
     #menu {
       position: absolute;
-      top: 650px;
+      top: 150px;
       left: 20px;
       z-index: 1;
+      display: flex;
+      flex-flow: column;
     }
   }
 
   .main-right {
     width: 40%;
+    height: 97%;
     background-color: white;
     border-radius: 25px;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 20px;
-    margin-left: -50px;
+    margin-left: -60px;
+    left: -20px;
     padding: 20px;
+    .bookmark {
+      display: flex;
+      flex-flow: row;
+      justify-content: space-between;
+      #w3-button{
+        border-radius: 15px;
+        background:#ffebcd;
+      }
+    }
     .searchResult {
       height: 170px;
       border-radius: 10px;
-      width: 80%;
+      width: 100%;
       padding: 5px;
-      background-color: #FAEBD7;
+      background-color: #faebd7;
       p {
         color: rgba(85, 84, 84, 0.87);
         font-size: 19;
@@ -168,9 +183,11 @@
   }
 }
 #popup-location {
-  background-color: #FFEBCD;
+  background-color: #ffebcd;
   height: 119px;
   b {
     color: rgba(165, 42, 42, 0.562);
   }
 }
+
+

@@ -26,7 +26,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  background: #FFEBCD;
+  background: #ffebcd;
 }
 
 .mdl-layout__content .nav-overlay {
@@ -74,31 +74,60 @@
 
 .mdl-layout__content .main-left #map {
   width: 235%;
+  left: -10px;
+  top: -10px;
 }
 
 .mdl-layout__content .main-left #menu {
   position: absolute;
-  top: 650px;
+  top: 50px;
   left: 20px;
   z-index: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
 }
 
 .mdl-layout__content .main-right {
   width: 40%;
+  height: 97%;
   background-color: white;
   border-radius: 25px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 20px;
-  margin-left: -50px;
+  margin-left: -60px;
+  left: -20px;
   padding: 20px;
+}
+
+.mdl-layout__content .main-right .bookmark {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.mdl-layout__content .main-right .bookmark #w3-button {
+  border-radius: 15px;
+  background: #ffebcd;
 }
 
 .mdl-layout__content .main-right .searchResult {
   height: 170px;
   border-radius: 10px;
-  width: 80%;
+  width: 100%;
   padding: 5px;
-  background-color: #FAEBD7;
+  background-color: #faebd7;
 }
 
 .mdl-layout__content .main-right .searchResult p {
@@ -233,7 +262,7 @@
 }
 
 #popup-location {
-  background-color: #FFEBCD;
+  background-color: #ffebcd;
   height: 119px;
 }
 

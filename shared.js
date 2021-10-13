@@ -476,15 +476,7 @@ function updateReviewBookmarkList(searchResult)
 //Display centrepoint bookmarks
 displayCentrepointBookmark();
 
-//Display search results bookmarks
-// let bookmarkRef = document.getElementById('bookmarkList')
-// let list = `<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>`
-// for (let i = 0; i < searchResultBookmarkList.list.length; i++)
-// {
-//     let name = i
-//     list = `<p>${searchResultBookmarkList.list[i].address}</p> <bclass="delete" onClick="removeSearchResultBookmark(${name})">Delete</b>`;
-//     bookmarkRef.innerHTML += list;
-// }
+displaySearchResultBookmark();
 
 
 //>>>>>>> 8c7c1301d9bc431f28317d6b644614957730f726

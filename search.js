@@ -145,6 +145,7 @@ function setWalk()
     if (vehicleSpeed != 5000)
     {
         vehicleSpeed = 5000; //m h^-1
+        travelMethod = 'foot';
         refreshMap();
         for (let i = 0; i < resultInstanceList.length; i++)
         {
@@ -157,6 +158,7 @@ function setBike()
     if (vehicleSpeed != 24000)
     {
         vehicleSpeed = 24000; //m h^-1
+        travelMethod = 'bike';
         refreshMap();
         for (let i = 0; i < resultInstanceList.length; i++)
         {
@@ -169,6 +171,7 @@ function setCar()
     if (vehicleSpeed != 50000)
     {
         vehicleSpeed = 50000; //m h^-1
+        travelMethod = 'car'
         refreshMap();
         for (let i = 0; i < resultInstanceList.length; i++)
         {

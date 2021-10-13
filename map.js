@@ -9,7 +9,7 @@ let resultInstanceList = [];
 let locationConfirmed = true;
 let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
-let travelMethod = 'driving';
+let travelMethod = 'foot';
 
 const APPDATA_KEY = 'appdatakey';
 const INCOMPLETE_KEY = 'incompletekey';
@@ -267,7 +267,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         // <button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
         popup.setHTML(`
         <div id='popup-location'>
-        <b>${name} <br><i style="color:gray">${Math.round(result.getTimeTaken())} min away<i></b>
+        <b>${name} <br><i style="color:gray">${Math.round(result.getTimeTaken())} min away by ${travelMethod}<i></b>
         <button onclick="bookmarkSearchResult(${result._position})" id='bookmarkList'>
                     <i class="fas fa-bookmark" style="font-size: 1.5em; color: white;"></i>
                     <p>Bookmark<p>

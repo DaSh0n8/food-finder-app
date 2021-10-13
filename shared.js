@@ -372,7 +372,7 @@ class SearchResultBookmarkList
 //Road distance
 async function requestRoadDistance(searchResult, centrepoint)
 {
-    let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${searchResult.lng},${searchResult.lat}?access_token=${MAPBOX_TOKEN}`
+    let url = `https://api.mapbox.com/directions/v5/mapbox/driving/${centrepoint.lng},${centrepoint.lat};${searchResult.lng},${searchResult.lat}?access_token=${MAPBOX_TOKEN}`
     let response = await fetch(url);
     let result = await response.json();
     let distance = result.routes[0].distance;

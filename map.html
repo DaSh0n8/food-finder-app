@@ -31,9 +31,17 @@
         /* Define any CSS here */
         #map {
             width: 720px;
-            height: 720px
+            height: 820px
         }
     </style>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        .city {
+            display: none
+        }
+    </style>
+
     <link rel="stylesheet" href="map.css">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
@@ -79,23 +87,30 @@
                         </div>
 
                     </div>
-                <!-- adding map styles -->
+                    <!-- adding map styles -->
                 </div>
                 <div id="menu">
                     <input id="streets-v11" type="radio" name="rtoggle" value="streets" checked="checked">
-                    <label for="streets-v11"><img src="images/streets.JPG" alt="streets" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="streets-v11"><img src="images/streets.JPG" alt="streets"
+                            style="max-width: 70px; max-height: 70px;"></label>
                     <input id="light-v10" type="radio" name="rtoggle" value="light">
-                    <label for="light-v10"><img src="images/light.JPG" alt="light" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="light-v10"><img src="images/light.JPG" alt="light"
+                            style="max-width: 70px; max-height: 70px;"></label>
                     <input id="dark-v10" type="radio" name="rtoggle" value="dark">
-                    <label for="dark-v10"><img src="images/dark.JPG" alt="dark" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="dark-v10"><img src="images/dark.JPG" alt="dark"
+                            style="max-width: 70px; max-height: 70px;"></label>
                     <input id="satellite-v9" type="radio" name="rtoggle" value="satellite">
-                    <label for="satellite-v9"><img src="images/satellite.JPG" alt="satellite" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="satellite-v9"><img src="images/satellite.JPG" alt="satellite"
+                            style="max-width: 70px; max-height: 70px;"></label>
                     <input id="satellite-streets-v11" type="radio" name="rtoggle" value="satellite-streets">
-                    <label for="satellite-streets-v11"><img src="images/satellite-streets.JPG" alt="satellite-streets" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="satellite-streets-v11"><img src="images/satellite-streets.JPG" alt="satellite-streets"
+                            style="max-width: 70px; max-height: 70px;"></label>
                     <input id="navigation-day-v1" type="radio" name="rtoggle" value="navigation-day">
-                    <label for="navigation-day-v1"><img src="images/navigation-day.JPG" alt="navigation-day" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="navigation-day-v1"><img src="images/navigation-day.JPG" alt="navigation-day"
+                            style="max-width: 70px; max-height: 70px;"></label>
                     <input id="navigation-night-v1" type="radio" name="rtoggle" value="navigation-night">
-                    <label for="navigation-night-v1"><img src="images/navigation-night.JPG" alt="navigation-night" style="max-width: 70px; max-height: 70px;"></label>
+                    <label for="navigation-night-v1"><img src="images/navigation-night.JPG" alt="navigation-night"
+                            style="max-width: 70px; max-height: 70px;"></label>
                 </div>
                 <div class="bottom">
 
@@ -118,9 +133,6 @@
                         </div>
                     </div>
                 </div>
-                <div style="font-size: 1.5em; color: Tomato;" id='bookmarkCentrepointList'>
-                    <i class="fas fa-bookmark"></i>
-                </div>
             </div>
             <div class="main-right">
                 <br>
@@ -132,13 +144,12 @@
                         <input class="mdl-textfield__input" type="text" id="addDest">
                         <label class="mdl-textfield__label" for="addDest" id="addDest">Add destination</label>
                         <span id="addDest_msg" class="mdl-textfield__error"></span>
-                        
-                    </div>
-                    <button
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                title="Use Current Location" onclick="searchCenterPoint()">
 
-                                <i class="material-icons">search</i></button>
+                    </div>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                        title="Use Current Location" onclick="searchCenterPoint()">
+
+                        <i class="material-icons">search</i></button>
                 </form>
                 <div class="searchInfo">
                     <img src="./images/menu_icon.jpg" alt="menu_icon" id="menu_icon">
@@ -167,7 +178,7 @@
                 <div class="searchResult">
                     <p>
                         <img src="./images/radius-icon.jpg" alt="radius-icon" id="radius-icon">
-                        Maximum radius: <span id="demoRadius"></span>   metres
+                        Maximum radius: <span id="demoRadius"></span> metres
                     </p>
                     <input class="mdl-slider mdl-js-slider" type="range" min="0" max="5000" value="1000" tabindex="0"
                         id="myRadius">
@@ -177,12 +188,55 @@
                     </div>
                 </div>
                 <br>
-                <br>
-                <p>Travel vehicle:</p>
-                <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <button type="button" class="btn btn-success" onclick="setWalk()">Walk</button>
-                    <button type="button" class="btn btn-warning" onclick="setBike()">Bike</button>
-                    <button type="button" class="btn btn-danger" onclick="setCar()">Car</button>
+                <div class="bookmark">
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button type="button" class="btn btn-success" onclick="setWalk()">Walk</button>
+                        <button type="button" class="btn btn-warning" onclick="setBike()">Bike</button>
+                        <button type="button" class="btn btn-danger" onclick="setCar()">Car</button>
+                    </div>
+                    <div class="w3-container" style="border-radius: 15px;">
+                        <button onclick="document.getElementById('id01').style.display='block'"
+                            class="w3-button w3-brown" id="w3-button"><b style="color: aliceblue;">Bookmark list</b></button>
+
+                        <div id="id01" class="w3-modal" style="border-radius: 15px;">
+                            <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="border-radius:15px;">
+                                <header class="w3-container w3-brown" style="display: flex;  border-radius: 15px 15px 0px 0px;">
+                                    <span onclick="document.getElementById('id01').style.display='none'"
+                                        class="w3-button w3-brown w3-xlarge w3-display-topright">&times;</span>
+                                        <div style="font-size: 1.5em; color: Tomato; position:fixed;">
+                                            <i class="fas fa-bookmark"></i>
+                                        </div>
+                                    <h2 style="color: aliceblue; justify-content: center;"><b>Bookmark List</b></h2>
+                                </header>
+
+                                <div class="w3-bar w3-border-bottom" style="background: blanchedalmond;">
+                                    <button class="tablink w3-bar-item w3-button"
+                                        onclick="openCity(event, 'Place')">
+                                        <h5 style="color: rgb(252, 87, 87);"><b>Place</b></h5>
+                                    </button>
+                                    <button class="tablink w3-bar-item w3-button"
+                                        onclick="openCity(event, 'Centrepoint')">
+                                        <h5 style="color: rgb(252, 87, 87);"><b>Centrepoint</b></h5>
+                                    </button>
+                                </div>
+
+                                <div id="Place" class="w3-container city">
+                                    <div id='bookmarkListDisplay'>
+
+                                    </div>
+                                </div>
+
+                                <div id="Centrepoint" class="w3-container city">
+                                    <div id='bookmarkCentrepointList'>
+                                    </div>
+                                </div>
+                                <div class="w3-container w3-light-grey w3-padding" style="border-radius: 0px 0px 15px 15px;">
+                                    <button class="w3-button w3-right w3-white w3-border" style="border-radius: 15px;"
+                                        onclick="document.getElementById('id01').style.display='none'">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
                 <br>
@@ -190,8 +244,7 @@
                     <img src="./images/search-icon.png" alt="search_icon" id="search_icon">
                     Start searching!
                 </button>
-                <br>
-                <br>
+
             </div>
         </main>
     </div>

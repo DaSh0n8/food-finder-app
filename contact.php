@@ -1,5 +1,9 @@
 <?php
 include 'php/sendEmail.php';
+
+session_start();
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
+
 ?>
 <!DOCTYPE html>
 <?php echo $alert;?>
@@ -31,3 +35,9 @@ include 'php/sendEmail.php';
 </script>
 </body>
 </html>
+    <?php
+}else{
+    header("Location: index.php");
+    exit();
+}
+?>

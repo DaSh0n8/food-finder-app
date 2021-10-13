@@ -8,112 +8,6 @@ const REVIEW_LIST_KEY = 'reviewList';
 
 
 
-//CLASSES
-//Centrepoint class
-class Centrepoint
-{
-    constructor(lat, lng, address)
-    {
-        this._lat = lat;
-        this._lng = lng;
-        this._address = address;
-        this._bookmarked = false;
-    }
-
-    get lat()
-    {
-        return this._lat;
-    }
-
-    get lng()
-    {
-        return this._lng;
-    }
-
-    get address()
-    {
-        return this._address;
-    }
-
-    get bookmarked()
-    {
-        return this._bookmarked;
-    }
-
-    set bookmarked(bookmarked)
-    {
-        this._bookmarked = bookmarked;
-    }
-
-    fromData(dataObject)
-    {
-        this._lat = dataObject._lat;
-        this._lng = dataObject._lng;
-        this._address = dataObject._address;
-        this._bookmarked = dataObject._bookmarked;
-    }
-}
-
-//Centrepoint List Class
-class CentrepointList
-{
-    constructor()
-    {
-        this._list = [];
-    }
-
-    get list()
-    {
-        return this._list;
-    }
-
-    addCentrepoint(centrepointInstance)
-    {
-        this._list.push(centrepointInstance);
-    }
-
-    fromData(dataObject)
-    {
-        for (let i = 0; i < dataObject._list.length; i++)
-        {
-            let centrepointInstance = new Centrepoint;
-            centrepointInstance.fromData(dataObject._list[i]);
-            this.addCentrepoint(centrepointInstance);
-        }
-    }
-}
-
-//Centrepoint List Class
-class ReviewList
-{
-    constructor()
-    {
-        this._list = [];
-    }
-
-    get list()
-    {
-        return this._list;
-    }
-
-    addReview(searchResult)
-    {
-        this._list.push(searchResult);
-    }
-
-    fromData(dataObject)
-    {
-        for (let i = 0; i < dataObject._list.length; i++)
-        {
-            let searchResultInstance = new SearchResult;
-            searchResultInstance.fromData(dataObject._list[i]);
-            this.addReview(searchResultInstance);
-        }
-    }
-}
-
-
-
 //LOCAL STORAGE FUNCTIONS
 //check if local storage is available
 function checkLocalStorage(key)
@@ -162,20 +56,131 @@ function getLocalStorage(key)
 
 
 
-/*//centrepoint test function
-function testCentrepoints()
+//CLASSES
+//Centrepoint class
+class Centrepoint
 {
-    let test = new Centrepoint(1, 2 ,'d');
-    centrepointList.addCentrepoint(test);
-    test = new Centrepoint(3, 4, '2');
-    centrepointList.addCentrepoint(test);
-    test = new Centrepoint(8, 5, 'my house');
-    centrepointList.addCentrepoint(test);
-}*/
+    constructor(lat, lng, address)
+    {
+        this._lat = lat;
+        this._lng = lng;
+        this._address = address;
+        this._bookmarked = false;
+        this._position = 0;
+    }
 
+    get lat()
+    {
+        return this._lat;
+    }
 
+    get lng()
+    {
+        return this._lng;
+    }
 
-// Constructing Classes
+    get address()
+    {
+        return this._address;
+    }
+
+    get bookmarked()
+    {
+        return this._bookmarked;
+    }
+
+    get position()
+    {
+        return this.position;
+    }
+
+    set bookmarked(bookmarked)
+    {
+        this._bookmarked = bookmarked;
+    }
+
+    set position(position)
+    {
+        this._position = position;
+    }
+
+    fromData(dataObject)
+    {
+        this._lat = dataObject._lat;
+        this._lng = dataObject._lng;
+        this._address = dataObject._address;
+        this._bookmarked = dataObject._bookmarked;
+    }
+}
+
+//Centrepoint List Class
+class CentrepointList
+{
+    constructor()
+    {
+        this._list = [];
+    }
+
+    get list()
+    {
+        return this._list;
+    }
+
+    addCentrepoint(centrepointInstance)
+    {
+        this._list.push(centrepointInstance);
+        this._list[this._list.length-1].position = this._list.length-1;
+    }
+
+    assignPosition()
+    {
+        for (let i = 0; i < this._list.length; i++)
+        {
+            this._list[i].position = i;
+        }
+    }
+
+    fromData(dataObject)
+    {
+        for (let i = 0; i < dataObject._list.length; i++)
+        {
+            let centrepointInstance = new Centrepoint;
+            centrepointInstance.fromData(dataObject._list[i]);
+            this.addCentrepoint(centrepointInstance);
+        }
+    }
+}
+
+//Review List Class
+class ReviewList
+{
+    constructor()
+    {
+        this._list = [];
+    }
+
+    get list()
+    {
+        return this._list;
+    }
+
+    addReview(searchResult)
+    {
+        this._list.push(searchResult);
+    }
+
+    fromData(dataObject)
+    {
+        for (let i = 0; i < dataObject._list.length; i++)
+        {
+            let searchResultInstance = new SearchResult;
+            searchResultInstance.fromData(dataObject._list[i]);
+            this.addReview(searchResultInstance);
+        }
+    }
+}
+
+//Search result class
 class SearchResult {
     constructor(name, lat, lng, address, category, position, bookmarked = false, review = 0){
         this._name = name;
@@ -187,6 +192,7 @@ class SearchResult {
         this._review = review;
         this._position = position;
         this._roadDistance = 0;
+        this._showReview = false;
     }
 
     get name(){
@@ -226,6 +232,11 @@ class SearchResult {
         return this._roadDistance;
     }
 
+    get showReview()
+    {
+        return this._showReview;
+    }
+
     set bookmarked(bookmarked){
         this._bookmarked = bookmarked;
     }
@@ -244,9 +255,27 @@ class SearchResult {
         this._position = position;
     }
 
+    set showReview(showReview)
+    {
+        this._showReview = showReview;
+    }
+
     addReview(review){
         this._review = review;
+        updateReviewBookmarkList(this);
         updateReviewLocalStorage(this);
+    }
+
+    displayReview()
+    {
+        if (this._showReview)
+        {
+            hideSearchResultReview(this._position);
+        }
+        else
+        {
+            showSearchResultReview(this._position);
+        }
     }
 
     getDistance(centrepoint){
@@ -291,7 +320,7 @@ class SearchResult {
     }
 }
 
-//Search Result List Class
+//Search result list class
 class SearchResultBookmarkList
 {
     constructor()
@@ -309,6 +338,26 @@ class SearchResultBookmarkList
         this._list.push(searchResultInstance);
     }
 
+    sort(property)
+    {
+        if (property == 'name')
+        {
+            this._list.sort(sortBy.name);
+        }
+        if (property == 'address')
+        {
+            this._list.sort(sortBy.address);
+        }
+        if (property == 'review')
+        {
+            this._list.sort(sortBy.review);
+        }
+        if (property == 'distance')
+        {
+            this._list.sort(sortBy.distance);
+        }
+    }
+
     fromData(dataObject)
     {
         for (let i = 0; i < dataObject._list.length; i++)
@@ -323,7 +372,7 @@ class SearchResultBookmarkList
 //Road distance
 async function requestRoadDistance(searchResult, centrepoint)
 {
-    let url = `https://api.mapbox.com/directions/v5/mapbox/${travelMethod}/${centrepoint.lng},${centrepoint.lat};${searchResult.lng},${searchResult.lat}?access_token=${MAPBOX_TOKEN}`
+    let url = `https://api.mapbox.com/directions/v5/mapbox/driving/${centrepoint.lng},${centrepoint.lat};${searchResult.lng},${searchResult.lat}?access_token=${MAPBOX_TOKEN}`
     let response = await fetch(url);
     let result = await response.json();
     let distance = result.routes[0].distance;
@@ -336,6 +385,8 @@ async function requestRoadDistance(searchResult, centrepoint)
 }
 
 
+
+//INITIALISATION
 
 //Initialises centrepoint list if none exists
 let centrepointBookmarkList = new CentrepointList();
@@ -405,22 +456,27 @@ function checkReviewList(searchResult)
     return false;
 }
 
-//Display centrepoint bookmarks
-let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
-let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
-for (let i = 0; i < centrepointBookmarkList.list.length; i++)
-{
-    listCentrepoints += `<p>${centrepointBookmarkList.list[i].address}</p>`;
-}
-bookmarkCentrepointRef.innerHTML = listCentrepoints;
 
-//Display search results bookmarks
-let bookmarkRef = document.getElementById('bookmarkList')
-let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
-for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+
+//OTHER FUNCTIONS
+
+//Update search result bookmark list for reviews
+function updateReviewBookmarkList(searchResult)
 {
-    list += `<p>${searchResultBookmarkList.list[i].address}</p>`;
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
+    {
+        if (searchResultBookmarkList.list[i].address == searchResult.address)
+        {
+            searchResultBookmarkList.list[i].review = searchResult.review;
+            setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
+        }
+    }
 }
-bookmarkRef.innerHTML = list;
+
+//Display centrepoint bookmarks
+displayCentrepointBookmark();
+
+displaySearchResultBookmark();
+
 
 //>>>>>>> 8c7c1301d9bc431f28317d6b644614957730f726

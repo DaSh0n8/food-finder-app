@@ -9,7 +9,9 @@ let resultInstanceList = [];
 let locationConfirmed = true;
 let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
-let travelMethod = 'driving';
+let travelMethod = 'foot';
+let mapStyle = 'osm-carto';
+let randomSearch = false;
 
 const APPDATA_KEY = 'appdatakey';
 const INCOMPLETE_KEY = 'incompletekey';
@@ -136,12 +138,12 @@ function getData(result) {
 
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="confirmLocation()">Confirm Centrepoint</button>`;
-    displayButtons += `</div>`;
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Cancel Centrepoint</button>`;
-    displayButtons += `</div>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>`
     buttonsRef.innerHTML = displayButtons;
 }
 
@@ -225,12 +227,12 @@ function getDataSearch(result) {
 
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="confirmLocation()">Confirm Centrepoint</button>`;
-    displayButtons += `</div>`;
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Cancel Centrepoint</button>`;
-    displayButtons += `</div>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>`
     buttonsRef.innerHTML = displayButtons;
 }
 
@@ -267,7 +269,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         // <button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>
         popup.setHTML(`
         <div id='popup-location'>
-        <b>${name} <br><i style="color:gray">${Math.round(result.getTimeTaken())} min away<i></b>
+        <b>${name} <br><i style="color:gray">${Math.round(result.getTimeTaken())} min away by ${travelMethod}<i></b>
         <button onclick="bookmarkSearchResult(${result._position})" id='bookmarkList'>
                     <i class="fas fa-bookmark" style="font-size: 1.5em; color: white;"></i>
                     <p>Bookmark<p>
@@ -278,7 +280,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         </button>
         </div>
         
-        <div class="review" id="review">
+        <div class="review" id="review${result._position}">
         </div>
         
         `);
@@ -304,15 +306,13 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
 
 //Initialising map
-let mapStyle = 'osm-carto'
-
 mapboxgl.accessToken = MAPBOX_TOKEN;
 let map = new mapboxgl.Map(
     {
         container: 'map',
-        style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
+        style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`,
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 17 // starting zoom
+        zoom: 16 // starting zoom
     });
 globalThis.map;
 
@@ -385,15 +385,22 @@ function onDragEnd(marker) {
 }
 
 //REFRESH MAP
-function refreshMap() {
+function refreshMap(random = false) {
     //refresh map
     let mapCentre = map.getCenter();
     let mapZoom = map.getZoom();
+
+    if (random)
+    {
+        mapCentre.lat = resultInstanceList[0].lat;
+        mapCentre.lng = resultInstanceList[0].lng;
+    }
+
     mapboxgl.accessToken = MAPBOX_TOKEN;
     map = new mapboxgl.Map(
         {
             container: 'map',
-            style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
+            style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`,
             center: [mapCentre.lng, mapCentre.lat], // starting position [lng, lat]
             zoom: mapZoom // starting zoom
         });
@@ -429,25 +436,22 @@ function refreshMap() {
             popup.addTo(map);
         }
 
-        //recreate result locations
-        for (let i = 0; i < resultList.length; i++) {
-            //initiate marker
-            let markerResult = resultMarker(resultList[i].lat, resultList[i].lng);
-
-            //add marker to map
-            markerResult.addTo(map);
-
-            //popup with formated information
-            let popup = new mapboxgl.Popup({ offset: 45 });
-            popup.setHTML('INSERT INFORMATION HERE');
-
-            //set popup to marker
-            markerResult.setPopup(popup);
-
-            //add popup to map
-            popup.addTo(map);
+        //reset showReview
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            resultInstanceList[i].showReview = false;
         }
     });
+}
+
+//SELECT CENTREPOINT FROM CENTREPOINT BOOKMARK LIST
+function selectCentrepointBookmark(position)
+{
+    if (locationConfirmed && !centrepointSet)
+    {
+        locationConfirmed = false;
+        reverseGeocode(centrepointBookmarkList.list[position].lat, centrepointBookmarkList.list[position].lng, false, false)
+    }
 }
 
 //CONFIRM LOCATION
@@ -467,11 +471,9 @@ function confirmLocation() {
     //delete location button
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `</div>`;
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Remove Centrepoint</button>`;
-    displayButtons += `</div>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="cancelLocation()" id="buttonCancel">X Delete Centrepoint</button>`
     buttonsRef.innerHTML = displayButtons;
 }
 
@@ -490,40 +492,23 @@ function cancelLocation() {
     buttonsRef.innerHTML = displayButtons;
 }
 
-/*//Displaying searach results
-function displaySearchResults(result) //result should be an instance of SearchResult
-{
-    let name = result.name;
-    let lat = result.lat;
-    let lng = result.lng;
-    let address = result.formatted;
-    let categories = result.categories;
-    
-    //Show Marker
-    //set marker position
-    let marker = resultMarker(lat, lng);
-    marker.setLngLat([lng, lat]);
-
-    //popup with formated information
-    let popup = new mapboxgl.Popup({ offset: 45 });
-    popup.setHTML(`<p>${name}</p><button type="button" onclick="bookmarkSearchResult(${result._position})">Bookmark</button>`);
-
-    //set popup to marker
-    marker.setPopup(popup);
-
-    //add marker to map
-    marker.addTo(map);
-
-    //add popup to map
-    popup.addTo(map);
-}*/
 
 
 // Review Search Result
 function reviewSearchResult(resultPosition) { // result is an instance of SearchResult
-    console.log("Review Search Result")
-    document.getElementById("review").innerHTML = `
+    for (let i = 0; i < resultInstanceList.length; i++)
+    {
+        if (resultInstanceList[i].showReview && i != resultPosition)
+        {
+            resultInstanceList[i].displayReview();
+        }
+    }
+    resultInstanceList[resultPosition].displayReview();
+}
 
+function showSearchResultReview(resultPosition)
+{
+    document.getElementById(`review${resultPosition}`).innerHTML = `
     <div class="review-header">
         <div class="title">Reviews</div>
     </div>
@@ -543,6 +528,22 @@ function reviewSearchResult(resultPosition) { // result is an instance of Search
         </div>
     </div>
     `;
+    resultInstanceList[resultPosition].showReview = true;
+    displaySearchResultReviewValue(resultPosition);
+}
+
+function hideSearchResultReview(resultPosition)
+{
+    if (document.getElementById(`review${resultPosition}`) != null)
+    {
+        document.getElementById(`review${resultPosition}`).innerHTML = '';
+    }
+    resultInstanceList[resultPosition].showReview = false;
+}
+
+//Display search result review value
+function displaySearchResultReviewValue(resultPosition)
+{
     if(reviewList.list.length){
         let reviewVal;
         for(let i = 0; i < reviewList.list.length; i ++){
@@ -553,26 +554,25 @@ function reviewSearchResult(resultPosition) { // result is an instance of Search
         console.log(reviewVal);
         switch(reviewVal) {
             case 1:
-                document.getElementById("r1").checked = true;
+                document.getElementById(`r1`).checked = true;
                 break;
             case 2:
-                document.getElementById("r2").checked = true;
+                document.getElementById(`r2`).checked = true;
               // code block
               break;
             case 3:
-                document.getElementById("r3").checked = true;
+                document.getElementById(`r3`).checked = true;
                 break;
             case 4:
-                document.getElementById("r4").checked = true;
+                document.getElementById(`r4`).checked = true;
                 break;
             case 5:
-                document.getElementById("r5").checked = true;
+                document.getElementById(`r5`).checked = true;
                 break;
             default:
               // code block
           }
     }
-
 }
 
 function addingReviews(resultPosition) {
@@ -591,183 +591,6 @@ function addingReviews(resultPosition) {
 
 
 }
-
-//Bookmark Search Result
-function bookmarkSearchResult(resultPosition) //result is an instance of SearchResult
-{
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
-        if (searchResultBookmarkList.list[i].address == resultInstanceList[resultPosition].address) {
-            window.alert('Place already bookmarked.');
-            return;
-        }
-    }
-    resultInstanceList[resultPosition]._bookmarked = true;
-    searchResultBookmarkList.addSearchResult(resultInstanceList[resultPosition]);
-    setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
-    console.log(`${resultInstanceList[resultPosition]._address} has been bookmarked.`);
-    displaySearchResultBookmark();
-}
-
-//Bookmark Centrepoint
-function bookmarkCentrepoint() {
-    for (let i = 0; i < centrepointBookmarkList.list.length; i++) {
-        if (centrepointBookmarkList.list[i].address == centrepointLocation.address) {
-            window.alert('Centrepoint already bookmarked.');
-            return;
-        }
-    }
-    centrepointLocation.bookmarked = true;
-    centrepointBookmarkList.addCentrepoint(centrepointLocation);
-    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
-    console.log(`${centrepointLocation.address} has been bookmarked.`);
-}
-
-//Display Centrepoint Bookmark List
-function displayCentrepointBookmark()
-{
-    let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
-    //Display Bookmarked Centrepoints
-    let listCentrepoints = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Centrepoints:\n</p>';
-    for (let i = 0; i < centrepointBookmarkList._list.length; i++)
-    {
-        let name = i
-        listCentrepoints += `<p>${centrepointBookmarkList._list[i].address}</p>
-                            <a onClick="removeCentrepointBookmark(${name})" class="delete">Delete</a>`;
-    }
-    console.log(bookmarkRef);
-    bookmarkCentrepointRef.innerHTML = listCentrepoints;
-}
-
-//Display Search Result Bookmark List
-function displaySearchResultBookmark()
-{
-    let bookmarkRef = document.getElementById('bookmarkList')
-    let list = '<span><i class="fas fa-bookmark"></i></span><br><p>Bookmarked Places:\n</p>';
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
-    {
-        let name = i
-        list += `<p>${searchResultBookmarkList.list[i].address}</p>
-                 <a onClick="removeSearchResultBookmark(${name})" class="delete">Delete</a>`;
-    }
-    console.log(bookmarkRef);
-    bookmarkRef.innerHTML = list;
-
-function removeCentrepointBookmark(itemIndex)
-{
-    console.log(itemIndex)
-
-    
-        
-        
-    centrepointBookmarkList.list.splice(itemIndex,1);
-        
-    
-
-
-
-    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
-    /{
-        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
-        
-    }
-    */
-    setLocalStorage(CENTREPOINT_LIST_KEY, centrepointBookmarkList);
-
-    displayCentrepointBookmark()
-    
-    
-
-}
-
-function removeSearchResultBookmark(itemIndex)
-{
-    console.log(itemIndex)
-
-    
-        
-        
-    searchResultBookmarkList.list.splice(itemIndex,1);
-        
-    
-
-
-
-    /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
-    /{
-        searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
-        
-    }
-    */
-    setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
-
-    displaySearchResultBookmark()   
-}
-
-function sortCentrepointBookmark(a,b)
-{
-    let value = "address";
-
-    if (value == "name")
-    {
-        if (a.name < b.name)
-        {
-            return -1;
-        }
-        if (a.name > b.name)
-        {
-            return 1;
-        }
-        return 0;
-    }
-    else if (value == "address")
-    {
-        if (a.address < b.address)
-        {
-            return -1;
-        }
-        if (a.address > b.address)
-        {
-            return 1;
-        }
-        return 0;
-    }
-
-}
-}
-
-function sortSearchResultBookmark(a,b)
-{
-    let value = "address";
-
-    if (value == "name")
-    {
-        if (a.name < b.name)
-        {
-            return -1;
-        }
-        if (a.name > b.name)
-        {
-            return 1;
-        }
-        return 0;
-    }
-    else if (value == "address")
-    {
-        if (a.address < b.address)
-        {
-            return -1;
-        }
-        if (a.address > b.address)
-        {
-            return 1;
-        }
-        return 0;
-    }
-
-}
-
-
-
 
 //CURRENT LOCATION
 function getCurrentLocation() {
@@ -796,7 +619,7 @@ function changeMapStyle(style) {
     refreshMap();
 }
 
-const layerList = document.getElementById('menu');
+/*const layerList = document.getElementById('menu');
 const inputs = layerList.getElementsByTagName('input');
 
 for (const input of inputs) {
@@ -804,4 +627,11 @@ for (const input of inputs) {
         const layerId = layer.target.id;
         map.setStyle('mapbox://styles/mapbox/' + layerId);
     };
+}*/
+
+//RANDOM PLACE
+function randomRestaurant()
+{
+    randomSearch = true;
+    searchMap();
 }

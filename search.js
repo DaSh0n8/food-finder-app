@@ -11,8 +11,9 @@ function searchMap() {
       };
       if (!locationConfirmed)
       {
-          window.alert('Please confirm a centrepoint.');
-          return;
+          confirmLocation();
+          //window.alert('Please confirm a centrepoint.');
+          //return;
       }
       if (!centrepointSet)
       {
@@ -31,7 +32,7 @@ function searchMap() {
             select = 'catering.cafe';
             break;
         case 'Food court':
-            select = 'catering.foot_court';
+            select = 'catering.food_court';
             break;
         case 'Bar':
             select = 'catering.bar';
@@ -68,7 +69,6 @@ function searchCenterPointData(result){
     let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
     // Call reverse geocode to put the marker on the map 
     reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
-
 }
 
 function searchCenterPoint(){
@@ -114,14 +114,13 @@ function filterData(results)
     for (let i = 0; i < results.features.length; i++)
     {
         let properties = results.features[i].properties;
-        if (!properties.hasOwnProperty('name'))
+        if (properties.hasOwnProperty('name'))
         {
-            properties.name = 'This place has no name. (???)'
-        }
-        let res = new SearchResult(properties.name,properties.lat,properties.lon,properties.formatted,properties.categories,0);
-        if (res.getDistance(centrepointLocation) <= searchRadius)
-        {
-            filteredList.push(res);
+            let res = new SearchResult(properties.name,properties.lat,properties.lon,properties.formatted,properties.categories,0);
+            if (res.getDistance(centrepointLocation) <= searchRadius)
+            {
+                filteredList.push(res);
+            }
         }
     }
     limitData(filteredList)
@@ -145,6 +144,7 @@ function setWalk()
     if (vehicleSpeed != 5000)
     {
         vehicleSpeed = 5000; //m h^-1
+        travelMethod = 'foot';
         refreshMap();
         for (let i = 0; i < resultInstanceList.length; i++)
         {
@@ -157,6 +157,7 @@ function setBike()
     if (vehicleSpeed != 24000)
     {
         vehicleSpeed = 24000; //m h^-1
+        travelMethod = 'bike';
         refreshMap();
         for (let i = 0; i < resultInstanceList.length; i++)
         {
@@ -169,6 +170,7 @@ function setCar()
     if (vehicleSpeed != 50000)
     {
         vehicleSpeed = 50000; //m h^-1
+        travelMethod = 'car'
         refreshMap();
         for (let i = 0; i < resultInstanceList.length; i++)
         {
@@ -214,7 +216,7 @@ function limitData(filteredList)
     filteredList.sort(compare);
     let limit = searchLimit;
     //in the event there are less results than the search limit
-    if (searchLimit > filteredList.length)
+    if (searchLimit > filteredList.length || randomSearch)
     {
         limit = filteredList.length;
     }
@@ -232,27 +234,15 @@ function limitData(filteredList)
         }
         resultInstanceList.push(filteredList[i]);
     }
-    /*for (let i = 0; i < searchLimit; i++)
+    if (randomSearch)
     {
-        minDistance = filteredList[0].getDistance(centrepointLocation)
-        minIndex = 0;
-        for (let j = 0; j < filteredList.length; j++)
-        {
-            distance = filteredList[j].getDistance(centrepointLocation);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                minIndex = j;
-            }
-        }
-        filteredList[minIndex].position = i;
-        if (checkInSearchResultBookmarkList(filteredList[minIndex]))
-        {
-            filteredList[minIndex].bookmarked = true;
-        }
-        resultInstanceList.push(filteredList[minIndex]);
-        filteredList.splice(minIndex,1);
-    }*/
+        let randomIndex = Math.floor(Math.random()*resultInstanceList.length);
+        let randomResult = resultInstanceList[randomIndex];
+
+        resultInstanceList = [];
+        randomResult.position = 0;
+        resultInstanceList.push(randomResult);
+    }
     drawResult();
 }
 
@@ -288,7 +278,8 @@ function drawResult() {
       resultList.push({lat:result.features[i].properties.lat,lng:result.features[i].properties.lon})
       reverseGeocode(result.features[i].properties.lat,result.features[i].properties.lon,true,false)
     }*/
-    refreshMap();
+    refreshMap(randomSearch);
+    randomSearch = false;
     for (let i = 0; i < resultInstanceList.length; i++)
     {
         requestRoadDistance(resultInstanceList[i], centrepointLocation).then(displaySearchResults);

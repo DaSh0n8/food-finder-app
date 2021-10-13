@@ -192,6 +192,7 @@ class SearchResult {
         this._review = review;
         this._position = position;
         this._roadDistance = 0;
+        this._showReview = false;
     }
 
     get name(){
@@ -231,6 +232,11 @@ class SearchResult {
         return this._roadDistance;
     }
 
+    get showReview()
+    {
+        return this._showReview;
+    }
+
     set bookmarked(bookmarked){
         this._bookmarked = bookmarked;
     }
@@ -249,10 +255,27 @@ class SearchResult {
         this._position = position;
     }
 
+    set showReview(showReview)
+    {
+        this._showReview = showReview;
+    }
+
     addReview(review){
         this._review = review;
         updateReviewBookmarkList(this);
         updateReviewLocalStorage(this);
+    }
+
+    displayReview()
+    {
+        if (this._showReview)
+        {
+            hideSearchResultReview(this._position);
+        }
+        else
+        {
+            showSearchResultReview(this._position);
+        }
     }
 
     getDistance(centrepoint){

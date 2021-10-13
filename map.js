@@ -278,7 +278,7 @@ function displaySearchResults(result) //result should be an instance of SearchRe
         </button>
         </div>
         
-        <div class="review" id="review">
+        <div class="review" id="review${result._position}">
         </div>
         
         `);
@@ -504,9 +504,19 @@ function cancelLocation() {
 
 // Review Search Result
 function reviewSearchResult(resultPosition) { // result is an instance of SearchResult
-    console.log("Review Search Result")
-    document.getElementById("review").innerHTML = `
+    for (let i = 0; i < resultInstanceList.length; i++)
+    {
+        if (resultInstanceList[i].showReview && i != resultPosition)
+        {
+            resultInstanceList[i].displayReview();
+        }
+    }
+    resultInstanceList[resultPosition].displayReview();
+}
 
+function showSearchResultReview(resultPosition)
+{
+    document.getElementById(`review${resultPosition}`).innerHTML = `
     <div class="review-header">
         <div class="title">Reviews</div>
     </div>
@@ -526,6 +536,22 @@ function reviewSearchResult(resultPosition) { // result is an instance of Search
         </div>
     </div>
     `;
+    resultInstanceList[resultPosition].showReview = true;
+    displaySearchResultReviewValue(resultPosition);
+}
+
+function hideSearchResultReview(resultPosition)
+{
+    if (document.getElementById(`review${resultPosition}`) != null)
+    {
+        document.getElementById(`review${resultPosition}`).innerHTML = '';
+    }
+    resultInstanceList[resultPosition].showReview = false;
+}
+
+//Display search result review value
+function displaySearchResultReviewValue(resultPosition)
+{
     if(reviewList.list.length){
         let reviewVal;
         for(let i = 0; i < reviewList.list.length; i ++){
@@ -536,26 +562,25 @@ function reviewSearchResult(resultPosition) { // result is an instance of Search
         console.log(reviewVal);
         switch(reviewVal) {
             case 1:
-                document.getElementById("r1").checked = true;
+                document.getElementById(`r1`).checked = true;
                 break;
             case 2:
-                document.getElementById("r2").checked = true;
+                document.getElementById(`r2`).checked = true;
               // code block
               break;
             case 3:
-                document.getElementById("r3").checked = true;
+                document.getElementById(`r3`).checked = true;
                 break;
             case 4:
-                document.getElementById("r4").checked = true;
+                document.getElementById(`r4`).checked = true;
                 break;
             case 5:
-                document.getElementById("r5").checked = true;
+                document.getElementById(`r5`).checked = true;
                 break;
             default:
               // code block
           }
     }
-
 }
 
 function addingReviews(resultPosition) {

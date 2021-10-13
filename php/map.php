@@ -8,7 +8,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
 
 <head>
     <meta charset="utf-8">
-    <title>Accessible Food Widget</title>
+    <title>Accessible Foodasd Widget</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
 
     <!-- Import Bootstrap CSS -->

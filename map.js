@@ -10,6 +10,7 @@ let locationConfirmed = true;
 let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
 let travelMethod = 'foot';
+let mapStyle = 'osm-carto';
 let randomSearch = false;
 
 const APPDATA_KEY = 'appdatakey';
@@ -305,15 +306,13 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
 
 //Initialising map
-let mapStyle = 'streets-v11';
-
 mapboxgl.accessToken = MAPBOX_TOKEN;
 let map = new mapboxgl.Map(
     {
         container: 'map',
-        style: `mapbox://styles/mapbox/${mapStyle}`,
+        style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`,
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 17 // starting zoom
+        zoom: 16 // starting zoom
     });
 globalThis.map;
 
@@ -394,7 +393,7 @@ function refreshMap() {
     map = new mapboxgl.Map(
         {
             container: 'map',
-            style: `mapbox://styles/mapbox/${mapStyle}`,
+            style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`,
             center: [mapCentre.lng, mapCentre.lat], // starting position [lng, lat]
             zoom: mapZoom // starting zoom
         });
@@ -628,7 +627,7 @@ function changeMapStyle(style) {
     refreshMap();
 }
 
-const layerList = document.getElementById('menu');
+/*const layerList = document.getElementById('menu');
 const inputs = layerList.getElementsByTagName('input');
 
 for (const input of inputs) {
@@ -636,7 +635,7 @@ for (const input of inputs) {
         const layerId = layer.target.id;
         map.setStyle('mapbox://styles/mapbox/' + layerId);
     };
-}
+}*/
 
 //RANDOM PLACE
 function randomRestaurant()

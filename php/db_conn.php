@@ -1,10 +1,10 @@
 <?php
 
-$sname= "127.0.0.1";
-$unmae= "brandoncakeproj";
-$password = "brandoncakeproj";
+$sname= "sql6.freesqldatabase.com";
+$unmae= "sql6444158";
+$password = "sl9KcEkUCH";
 
-$db_name = "brandoncakeproj";
+$db_name = "sql6444158";
 
 $conn = mysqli_connect($sname, $unmae, $password, $db_name);
 

@@ -69,7 +69,6 @@ function searchCenterPointData(result){
     let newCenterPoint = new Centrepoint(properties.lat, properties.lon, properties.formatted)
     // Call reverse geocode to put the marker on the map 
     reverseGeocode(newCenterPoint.lat, newCenterPoint.lng)
-
 }
 
 function searchCenterPoint(){
@@ -217,7 +216,7 @@ function limitData(filteredList)
     filteredList.sort(compare);
     let limit = searchLimit;
     //in the event there are less results than the search limit
-    if (searchLimit > filteredList.length)
+    if (searchLimit > filteredList.length || randomSearch)
     {
         limit = filteredList.length;
     }
@@ -235,27 +234,16 @@ function limitData(filteredList)
         }
         resultInstanceList.push(filteredList[i]);
     }
-    /*for (let i = 0; i < searchLimit; i++)
+    if (randomSearch)
     {
-        minDistance = filteredList[0].getDistance(centrepointLocation)
-        minIndex = 0;
-        for (let j = 0; j < filteredList.length; j++)
-        {
-            distance = filteredList[j].getDistance(centrepointLocation);
-            if (distance < minDistance)
-            {
-                minDistance = distance;
-                minIndex = j;
-            }
-        }
-        filteredList[minIndex].position = i;
-        if (checkInSearchResultBookmarkList(filteredList[minIndex]))
-        {
-            filteredList[minIndex].bookmarked = true;
-        }
-        resultInstanceList.push(filteredList[minIndex]);
-        filteredList.splice(minIndex,1);
-    }*/
+        let randomIndex = Math.floor(Math.random()*resultInstanceList.length);
+        let randomResult = resultInstanceList[randomIndex];
+
+        resultInstanceList = [];
+        randomResult.position = 0;
+        resultInstanceList.push(randomResult);
+        randomSearch = false;
+    }
     drawResult();
 }
 

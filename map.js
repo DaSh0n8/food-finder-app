@@ -10,6 +10,7 @@ let locationConfirmed = true;
 let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
 let travelMethod = 'foot';
+let randomSearch = false;
 
 const APPDATA_KEY = 'appdatakey';
 const INCOMPLETE_KEY = 'incompletekey';
@@ -635,4 +636,11 @@ for (const input of inputs) {
         const layerId = layer.target.id;
         map.setStyle('mapbox://styles/mapbox/' + layerId);
     };
+}
+
+//RANDOM PLACE
+function randomRestaurant()
+{
+    randomSearch = true;
+    searchMap();
 }

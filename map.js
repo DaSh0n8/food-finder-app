@@ -138,12 +138,12 @@ function getData(result) {
 
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="confirmLocation()">Confirm Centrepoint</button>`;
-    displayButtons += `</div>`;
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Cancel Centrepoint</button>`;
-    displayButtons += `</div>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>`
     buttonsRef.innerHTML = displayButtons;
 }
 
@@ -227,12 +227,12 @@ function getDataSearch(result) {
 
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="confirmLocation()">Confirm Centrepoint</button>`;
-    displayButtons += `</div>`;
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Cancel Centrepoint</button>`;
-    displayButtons += `</div>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>`
     buttonsRef.innerHTML = displayButtons;
 }
 
@@ -471,11 +471,9 @@ function confirmLocation() {
     //delete location button
     let buttonsRef = document.getElementById('buttons');
     let displayButtons = '';
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `</div>`;
-    displayButtons += `<div class="mdl-cell mdl-cell--4-col">`;
-    displayButtons += `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" onclick="cancelLocation()">Remove Centrepoint</button>`;
-    displayButtons += `</div>`;
+    displayButtons += `<button
+        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+        onclick="cancelLocation()" id="buttonCancel">X Delete Centrepoint</button>`
     buttonsRef.innerHTML = displayButtons;
 }
 

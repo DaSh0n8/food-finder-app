@@ -98,13 +98,15 @@
                 </div>
                 <div class="bottom">
                     <div class="mdl-grid">
-                        <button
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                            onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>
-                        <!-- Cancel Location Button -->
-                        <button
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                            onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>
+                        <div id="buttons">
+                            <button
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>
+                            <!-- Cancel Location Button -->
+                            <button
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>
+                        </div>
                         <button
                             class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
                             title="Use Current Location" onclick="getCurrentLocation()" id="currentButton">

@@ -32,11 +32,11 @@ if(isset($_POST['name']) && isset($_POST['email'])){
 
         $mail->send();
         $alert = '<div class="alert-success">
-                        <span>Message sent! Thank you for contacting us.</span>
+                        <span style="background-color: green">Message sent! Thank you for contacting us.</span>
                  </div>';
     } catch (Exception $e){
         $alert = '<div class="alert-error">
-                       <span>Something went wrong! Please try again.</span>
+                       <span style="background-color: red">Something went wrong! Please try again.</span>
                   </div>';
     }
 }

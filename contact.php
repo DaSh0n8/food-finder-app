@@ -14,7 +14,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
 <body>
 <h4 class="sent-notification"></h4>
 <form action="" method="post">
-    <h2>Contact Us</h2>
+    <h2>Give us feedback</h2>
 
     <label>Name</label>
     <input type="text" name="name" placeholder="Enter Name" required>

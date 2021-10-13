@@ -10,6 +10,7 @@ let locationConfirmed = true;
 let searchRadius = 500; //radius in m to search for
 let searchLimit = 5; //number of searches to show
 let travelMethod = 'foot';
+let mapStyle = 'osm-carto';
 let randomSearch = false;
 
 const APPDATA_KEY = 'appdatakey';
@@ -305,15 +306,13 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
 
 //Initialising map
-let mapStyle = 'streets-v11';
-
 mapboxgl.accessToken = MAPBOX_TOKEN;
 let map = new mapboxgl.Map(
     {
         container: 'map',
-        style: `mapbox://styles/mapbox/${mapStyle}`,
+        style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`,
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
-        zoom: 17 // starting zoom
+        zoom: 16 // starting zoom
     });
 globalThis.map;
 
@@ -386,15 +385,22 @@ function onDragEnd(marker) {
 }
 
 //REFRESH MAP
-function refreshMap() {
+function refreshMap(random = false) {
     //refresh map
     let mapCentre = map.getCenter();
     let mapZoom = map.getZoom();
+
+    if (random)
+    {
+        mapCentre.lat = resultInstanceList[0].lat;
+        mapCentre.lng = resultInstanceList[0].lng;
+    }
+
     mapboxgl.accessToken = MAPBOX_TOKEN;
     map = new mapboxgl.Map(
         {
             container: 'map',
-            style: `mapbox://styles/mapbox/${mapStyle}`,
+            style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`,
             center: [mapCentre.lng, mapCentre.lat], // starting position [lng, lat]
             zoom: mapZoom // starting zoom
         });
@@ -430,23 +436,10 @@ function refreshMap() {
             popup.addTo(map);
         }
 
-        //recreate result locations
-        for (let i = 0; i < resultList.length; i++) {
-            //initiate marker
-            let markerResult = resultMarker(resultList[i].lat, resultList[i].lng);
-
-            //add marker to map
-            markerResult.addTo(map);
-
-            //popup with formated information
-            let popup = new mapboxgl.Popup({ offset: 45 });
-            popup.setHTML('INSERT INFORMATION HERE');
-
-            //set popup to marker
-            markerResult.setPopup(popup);
-
-            //add popup to map
-            popup.addTo(map);
+        //reset showReview
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            resultInstanceList[i].showReview = false;
         }
     });
 }
@@ -628,7 +621,7 @@ function changeMapStyle(style) {
     refreshMap();
 }
 
-const layerList = document.getElementById('menu');
+/*const layerList = document.getElementById('menu');
 const inputs = layerList.getElementsByTagName('input');
 
 for (const input of inputs) {
@@ -636,7 +629,7 @@ for (const input of inputs) {
         const layerId = layer.target.id;
         map.setStyle('mapbox://styles/mapbox/' + layerId);
     };
-}
+}*/
 
 //RANDOM PLACE
 function randomRestaurant()

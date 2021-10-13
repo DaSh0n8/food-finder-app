@@ -6,6 +6,7 @@
 
 body{
     font-family: 'Montserrat', sans-serif;
+    background-color: rgb(202, 231, 248);
 }
 
 h2{
@@ -14,7 +15,7 @@ h2{
 section{
     height: 100vh;
     width: 100%;
-    background-color: aliceblue;
+    background-color: rgb(202, 231, 248);
     display: flex;
     align-items: center;
     justify-content: center;

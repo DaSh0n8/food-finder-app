@@ -1,0 +1,149 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #cae7f8;
+}
+
+h2 {
+  text-align: center;
+}
+
+section {
+  height: 100vh;
+  width: 100%;
+  background-color: aliceblue;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.container {
+  width: 90%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 20px #00000010;
+          box-shadow: 0px 0px 20px #00000010;
+  background-color: white;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.buttonList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: end;
+}
+
+.buttonList #login {
+  border: 0;
+  height: 50px;
+  border-radius: 10px;
+  width: 20%;
+  padding: 5px;
+  background-color: #b7d7e9;
+  color: rgba(85, 84, 84, 0.87);
+  font-size: 19;
+  font-weight: 700;
+  margin-right: 15px;
+}
+
+.buttonList #login:hover {
+  -webkit-box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+          box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.buttonList #login:active {
+  -webkit-box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+          box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+}
+
+.buttonList #register {
+  border: 0;
+  height: 50px;
+  border-radius: 10px;
+  width: 20%;
+  padding: 5px;
+  background-color: #b7d7e9;
+  color: rgba(85, 84, 84, 0.87);
+  font-size: 19;
+  font-weight: 700;
+}
+
+.buttonList #register:hover {
+  -webkit-box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+          box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.buttonList #register:active {
+  -webkit-box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+          box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+}
+
+.buttonList input[type="submit"] {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 20px;
+  font-size: 24px;
+  border-radius: 8px;
+  font-family: "Montserrat", sans-serif;
+  color: #1ba6f7;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 10px;
+  -webkit-transition: 0.3s ease background-color;
+  transition: 0.3s ease background-color;
+}
+
+.buttonList input[type="submit"]:hover {
+  background-color: #d6e2ec;
+}
+
+.form-group {
+  width: 100%;
+  margin-top: 15px;
+  font-size: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 5px;
+  font-size: 18px;
+  border: 1px solid rgba(128, 128, 128, 0.199);
+  margin-top: 5px;
+}
+
+textarea {
+  resize: vertical;
+}
+/*# sourceMappingURL=register.css.map */

@@ -49,9 +49,9 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
     </style>
 
     <link rel="stylesheet" href="../map.css">
-    <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
-    <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
-    <link href="./node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
+    <link href="../node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="../jsforUI.js"></script>
 </head>
@@ -60,9 +60,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
+            <a href="../contact.php" style="float: right; position: absolute; left: 10px; font-style: italic;">Give us feedback</a>
             <span class="mdl-layout__title">Accessible Food Widget</span>
             <img src="../images/icon_header.png" alt="image_header" id="iconHeader">
-            <a href="logout.php" style="float: right">Logout</a>
+            <a href="logout.php" style="float: right; position: absolute; right: 10px; font-style: italic;">Log out</a>
         </div>
     </header>
     <main class="mdl-layout__content">
@@ -237,7 +238,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
                 <button class="Button2" onclick="randomRestaurant()">
                     Choose random place
                 </button>
-                <a href="../contact.php">Give us feedback</a>
             </div>
         </div>
     </main>

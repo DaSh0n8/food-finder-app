@@ -1,9 +1,9 @@
 <?php
 session_start();
-if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
-    header("Location: php/login.php");
-    die();
-}?>
+
+if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
+
+?>
 <html>
 
 <head>
@@ -40,12 +40,12 @@ if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
             height: 720px
         }
     </style>
-    <link rel="stylesheet" href="map.css">
+    <link rel="stylesheet" href="../map.css">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="jsforUI.js"></script>
+    <script src="../jsforUI.js"></script>
 </head>
 
 <body>
@@ -53,8 +53,8 @@ if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
     <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
             <span class="mdl-layout__title">Accessible Food Widget</span>
-            <a href="php/logout.php">Logout</a>
-            <img src="./images/icon_header.png" alt="image_header" id="iconHeader">
+            <a href="logout.php">Logout</a>
+            <img src="../images/icon_header.png" alt="image_header" id="iconHeader">
         </div>
     </header>
     <main class="mdl-layout__content">
@@ -90,19 +90,19 @@ if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
             </div>
             <div id="menu">
                 <input id="streets-v11" type="radio" name="rtoggle" value="streets" checked="checked">
-                <label for="streets-v11"><img src="images/streets.JPG" alt="streets" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="streets-v11"><img src="../images/streets.JPG" alt="streets" style="max-width: 70px; max-height: 70px;"></label>
                 <input id="light-v10" type="radio" name="rtoggle" value="light">
-                <label for="light-v10"><img src="images/light.JPG" alt="light" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="light-v10"><img src="../images/light.JPG" alt="light" style="max-width: 70px; max-height: 70px;"></label>
                 <input id="dark-v10" type="radio" name="rtoggle" value="dark">
-                <label for="dark-v10"><img src="images/dark.JPG" alt="dark" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="dark-v10"><img src="../images/dark.JPG" alt="dark" style="max-width: 70px; max-height: 70px;"></label>
                 <input id="satellite-v9" type="radio" name="rtoggle" value="satellite">
-                <label for="satellite-v9"><img src="images/satellite.JPG" alt="satellite" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="satellite-v9"><img src="../images/satellite.JPG" alt="satellite" style="max-width: 70px; max-height: 70px;"></label>
                 <input id="satellite-streets-v11" type="radio" name="rtoggle" value="satellite-streets">
-                <label for="satellite-streets-v11"><img src="images/satellite-streets.JPG" alt="satellite-streets" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="satellite-streets-v11"><img src="../images/satellite-streets.JPG" alt="satellite-streets" style="max-width: 70px; max-height: 70px;"></label>
                 <input id="navigation-day-v1" type="radio" name="rtoggle" value="navigation-day">
-                <label for="navigation-day-v1"><img src="images/navigation-day.JPG" alt="navigation-day" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="navigation-day-v1"><img src="../images/navigation-day.JPG" alt="navigation-day" style="max-width: 70px; max-height: 70px;"></label>
                 <input id="navigation-night-v1" type="radio" name="rtoggle" value="navigation-night">
-                <label for="navigation-night-v1"><img src="images/navigation-night.JPG" alt="navigation-night" style="max-width: 70px; max-height: 70px;"></label>
+                <label for="navigation-night-v1"><img src="../images/navigation-night.JPG" alt="navigation-night" style="max-width: 70px; max-height: 70px;"></label>
             </div>
             <div class="bottom">
 
@@ -148,7 +148,7 @@ if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
                     <i class="material-icons">search</i></button>
             </form>
             <div class="searchInfo">
-                <img src="./images/menu_icon.jpg" alt="menu_icon" id="menu_icon">
+                <img src="../images/menu_icon.jpg" alt="menu_icon" id="menu_icon">
                 <select class="form-select" aria-label="Default select example" id="select">
                     <option selected>Open this select menu</option>
                     <option value="Restaurant">Restaurant</option>
@@ -173,7 +173,7 @@ if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
             <br>
             <div class="searchResult">
                 <p>
-                    <img src="./images/radius-icon.jpg" alt="radius-icon" id="radius-icon">
+                    <img src="../images/radius-icon.jpg" alt="radius-icon" id="radius-icon">
                     Maximum radius: <span id="demoRadius"></span>
                 </p>
                 <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="25" tabindex="0"
@@ -194,23 +194,30 @@ if(empty($_SESSION['userLogin']) || $_SESSION['userLogin'] == ''){
             <br>
             <br>
             <button class="Button" onclick="searchMap()">
-                <img src="./images/search-icon.png" alt="search_icon" id="search_icon">
+                <img src="../images/search-icon.png" alt="search_icon" id="search_icon">
                 Start searching!
             </button>
             <br>
             <br>
+            <a href="../contact.php">Give us feedback</a>
             <!-- <div style="font-size: 1.5em; color: Tomato;" id='bookmarkList'>
                 <i class="fas fa-bookmark"></i>
             </div> -->
         </div>
     </main>
 </div>
-<script src="shared.js"></script>
-<script src="map.js"></script>
-<script src="search.js"></script>
+<script src="../shared.js"></script>
+<script src="../map.js"></script>
+<script src="../search.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
 </body>
 
 </html>
+    <?php
+}else{
+    header("Location: ../index.php");
+    exit();
+}
+?>

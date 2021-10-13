@@ -242,7 +242,6 @@ function limitData(filteredList)
         resultInstanceList = [];
         randomResult.position = 0;
         resultInstanceList.push(randomResult);
-        randomSearch = false;
     }
     drawResult();
 }
@@ -279,7 +278,8 @@ function drawResult() {
       resultList.push({lat:result.features[i].properties.lat,lng:result.features[i].properties.lon})
       reverseGeocode(result.features[i].properties.lat,result.features[i].properties.lon,true,false)
     }*/
-    refreshMap();
+    refreshMap(randomSearch);
+    randomSearch = false;
     for (let i = 0; i < resultInstanceList.length; i++)
     {
         requestRoadDistance(resultInstanceList[i], centrepointLocation).then(displaySearchResults);

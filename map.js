@@ -385,10 +385,17 @@ function onDragEnd(marker) {
 }
 
 //REFRESH MAP
-function refreshMap() {
+function refreshMap(random = false) {
     //refresh map
     let mapCentre = map.getCenter();
     let mapZoom = map.getZoom();
+
+    if (random)
+    {
+        mapCentre.lat = resultInstanceList[0].lat;
+        mapCentre.lng = resultInstanceList[0].lng;
+    }
+
     mapboxgl.accessToken = MAPBOX_TOKEN;
     map = new mapboxgl.Map(
         {
@@ -429,23 +436,10 @@ function refreshMap() {
             popup.addTo(map);
         }
 
-        //recreate result locations
-        for (let i = 0; i < resultList.length; i++) {
-            //initiate marker
-            let markerResult = resultMarker(resultList[i].lat, resultList[i].lng);
-
-            //add marker to map
-            markerResult.addTo(map);
-
-            //popup with formated information
-            let popup = new mapboxgl.Popup({ offset: 45 });
-            popup.setHTML('INSERT INFORMATION HERE');
-
-            //set popup to marker
-            markerResult.setPopup(popup);
-
-            //add popup to map
-            popup.addTo(map);
+        //reset showReview
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            resultInstanceList[i].showReview = false;
         }
     });
 }

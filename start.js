@@ -1,3 +1,3 @@
 function goToMainPage() {
-    window.location.href = "map.html";
+    window.location.href = "php/loginpage.php";
 }

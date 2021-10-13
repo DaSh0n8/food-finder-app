@@ -617,6 +617,13 @@ function getCurrentLocation() {
 function changeMapStyle(style) {
     mapStyle = style;
     refreshMap();
+    if (resultInstanceList.length > 0)
+    {
+        for (let i = 0; i < resultInstanceList.length; i++)
+        {
+            displaySearchResults(resultInstanceList[i]);
+        }
+    }
 }
 
 /*const layerList = document.getElementById('menu');

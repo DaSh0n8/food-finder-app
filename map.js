@@ -304,13 +304,13 @@ function displaySearchResults(result) //result should be an instance of SearchRe
 
 
 //Initialising map
-let mapStyle = 'osm-carto'
+let mapStyle = 'streets-v11';
 
 mapboxgl.accessToken = MAPBOX_TOKEN;
 let map = new mapboxgl.Map(
     {
         container: 'map',
-        style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
+        style: `mapbox://styles/mapbox/${mapStyle}`,
         center: [144.9626398, -37.8104191], // starting position [lng, lat]
         zoom: 17 // starting zoom
     });
@@ -393,7 +393,7 @@ function refreshMap() {
     map = new mapboxgl.Map(
         {
             container: 'map',
-            style: `https://maps.geoapify.com/v1/styles/${mapStyle}/style.json?apiKey=${GEOAPIFY_TOKEN}`, // stylesheet location
+            style: `mapbox://styles/mapbox/${mapStyle}`,
             center: [mapCentre.lng, mapCentre.lat], // starting position [lng, lat]
             zoom: mapZoom // starting zoom
         });

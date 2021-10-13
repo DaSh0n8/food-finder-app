@@ -70,22 +70,6 @@
                             <div id='map'>
                             </div>
                         </div>
-
-                        <div class="mdl-cell mdl-cell--5-col">
-                            <!-- Confirm Location Button -->
-                        </div>
-
-
-                        <div class="mdl-cell mdl-cell--2-col">
-                            <!-- Colored mini FAB button -->
-                            <button
-                                class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                                title="Use Current Location" onclick="getCurrentLocation()">
-
-                                <i class="material-icons">my_location</i></button>
-
-                        </div>
-
                     </div>
                     <!-- adding map styles -->
                 </div>
@@ -104,38 +88,35 @@
                             style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('satellite-v9')"></label>
                     <input id="satellite-streets-v11" type="radio" name="rtoggle" value="satellite-streets">
                     <label for="satellite-streets-v11"><img src="images/satellite-streets.JPG" alt="satellite-streets"
-                            style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('satellite-streets-v11')"></label>
+                            style="max-width: 70px; max-height: 70px;"
+                            onclick="changeMapStyle('satellite-streets-v11')"></label>
                     <input id="navigation-day-v1" type="radio" name="rtoggle" value="navigation-day">
                     <label for="navigation-day-v1"><img src="images/navigation-day.JPG" alt="navigation-day"
-                            style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('navigation-day-v1')"></label>
+                            style="max-width: 70px; max-height: 70px;"
+                            onclick="changeMapStyle('navigation-day-v1')"></label>
                     <input id="navigation-night-v1" type="radio" name="rtoggle" value="navigation-night">
                     <label for="navigation-night-v1"><img src="images/navigation-night.JPG" alt="navigation-night"
-                            style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('navigation-night-v1')"></label>
+                            style="max-width: 70px; max-height: 70px;"
+                            onclick="changeMapStyle('navigation-night-v1')"></label>
                 </div>
                 <div class="bottom">
+                    <div class="mdl-grid">
+                        <button
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                            onclick="confirmLocation()" id="buttonConfirm">Confirm Centrepoint</button>
+                        <!-- Cancel Location Button -->
+                        <button
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                            onclick="cancelLocation()" id="buttonCancel">X Cancel Centrepoint</button>
+                        <button
+                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                            title="Use Current Location" onclick="getCurrentLocation()" id="currentButton">
 
-                    <div class="mdl-grid" id="buttons">
-                        <div class="button-left">
-                            <div class="mdl-cell mdl-cell--4-col">
-                                <!-- Confirm Location Button -->
-                                <button
-                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                                    onclick="confirmLocation()">Confirm Centrepoint</button>
-                            </div>
-                        </div>
-                        <div class="button-right">
-                            <div class="mdl-cell mdl-cell--4-col">
-                                <!-- Cancel Location Button -->
-                                <button
-                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
-                                    onclick="cancelLocation()">Cancel Centrepoint</button>
-                            </div>
-                        </div>
+                            <i class="material-icons">my_location</i> </button>
                     </div>
                 </div>
             </div>
             <div class="main-right">
-                <br>
                 <span class="mdl-layout-title"><strong>Search nearest Restaurant / Café</strong> </span>
                 <br>
                 <h7 style="color: crimson;"> <i>Use the text field or pinpoint map to add center point </i> </h7>
@@ -196,22 +177,23 @@
                     </div>
                     <div class="w3-container" style="border-radius: 15px;">
                         <button onclick="document.getElementById('id01').style.display='block'"
-                            class="w3-button w3-brown" id="w3-button"><b style="color: aliceblue;">Bookmark list</b></button>
+                            class="w3-button w3-brown" id="w3-button"><b style="color: aliceblue;">Bookmark
+                                list</b></button>
 
                         <div id="id01" class="w3-modal" style="border-radius: 15px;">
                             <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="border-radius:15px;">
-                                <header class="w3-container w3-brown" style="display: flex;  border-radius: 15px 15px 0px 0px;">
+                                <header class="w3-container w3-brown"
+                                    style="display: flex;  border-radius: 15px 15px 0px 0px;">
                                     <span onclick="document.getElementById('id01').style.display='none'"
                                         class="w3-button w3-brown w3-xlarge w3-display-topright">&times;</span>
-                                        <div style="font-size: 1.5em; color: Tomato; position:fixed;">
-                                            <i class="fas fa-bookmark"></i>
-                                        </div>
+                                    <div style="font-size: 1.5em; color: Tomato; position:fixed;">
+                                        <i class="fas fa-bookmark"></i>
+                                    </div>
                                     <h2 style="color: aliceblue; justify-content: center;"><b>Bookmark List</b></h2>
                                 </header>
 
                                 <div class="w3-bar w3-border-bottom" style="background: blanchedalmond;">
-                                    <button class="tablink w3-bar-item w3-button"
-                                        onclick="openCity(event, 'Place')">
+                                    <button class="tablink w3-bar-item w3-button" onclick="openCity(event, 'Place')">
                                         <h5 style="color: rgb(252, 87, 87);"><b>Place</b></h5>
                                     </button>
                                     <button class="tablink w3-bar-item w3-button"
@@ -230,7 +212,8 @@
                                     <div id='bookmarkCentrepointList'>
                                     </div>
                                 </div>
-                                <div class="w3-container w3-light-grey w3-padding" style="border-radius: 0px 0px 15px 15px;">
+                                <div class="w3-container w3-light-grey w3-padding"
+                                    style="border-radius: 0px 0px 15px 15px;">
                                     <button class="w3-button w3-right w3-white w3-border" style="border-radius: 15px;"
                                         onclick="document.getElementById('id01').style.display='none'">Close</button>
                                 </div>
@@ -240,11 +223,15 @@
                 </div>
                 <br>
                 <br>
-                <button class="Button" onclick="searchMap()">
-                    <img src="./images/search-icon.png" alt="search_icon" id="search_icon">
-                    Start searching!
-                </button>
-
+                <div class="buttonList">
+                    <button class="Button" onclick="searchMap()">
+                        <img src="./images/search-icon.png" alt="search_icon" id="search_icon">
+                        Start searching!
+                    </button>
+                    <button class="Button2" onclick="randomRestaurant()">
+                        Choose random place
+                    </button>
+                </div>
             </div>
         </main>
     </div>

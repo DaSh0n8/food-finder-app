@@ -56,7 +56,16 @@
 }
 
 .mdl-layout__content .main-left .bottom {
-  width: 800px;
+  position: absolute;
+  top: 8px;
+  width: 80%;
+  z-index: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .mdl-layout__content .main-left .bottom .mdl-grid {
@@ -72,6 +81,21 @@
           justify-content: space-between;
 }
 
+.mdl-layout__content .main-left .bottom .mdl-grid #buttonCancel {
+  margin-left: 10px;
+  border-radius: 15px;
+  background-color: #fc5757;
+}
+
+.mdl-layout__content .main-left .bottom .mdl-grid #buttonConfirm {
+  border-radius: 15px;
+  background-color: #6e6eff;
+}
+
+.mdl-layout__content .main-left .bottom .mdl-grid #currentButton {
+  margin-left: 40px;
+}
+
 .mdl-layout__content .main-left #map {
   width: 235%;
   left: -10px;
@@ -80,7 +104,7 @@
 
 .mdl-layout__content .main-left #menu {
   position: absolute;
-  top: 50px;
+  top: 150px;
   left: 20px;
   z-index: 1;
   display: -webkit-box;
@@ -194,13 +218,24 @@
   display: none;
 }
 
-.mdl-layout__content .main-right .Button {
+.mdl-layout__content .main-right .buttonList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+}
+
+.mdl-layout__content .main-right .buttonList .Button {
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   justify-self: center;
   padding: 1.5rem 2rem;
+  width: 250px;
   border: 0;
   color: white;
   font-size: 1.2rem;
@@ -214,18 +249,44 @@
           box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
 }
 
-.mdl-layout__content .main-right .Button #search_icon {
+.mdl-layout__content .main-right .buttonList .Button #search_icon {
   height: 20px;
 }
 
-.mdl-layout__content .main-right .Button:hover {
+.mdl-layout__content .main-right .buttonList .Button:hover {
   -webkit-box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
           box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
 }
 
-.mdl-layout__content .main-right .Button:active {
+.mdl-layout__content .main-right .buttonList .Button:active {
+  -webkit-box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+          box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
+  -webkit-transform: scale(1.025);
+          transform: scale(1.025);
+}
+
+.mdl-layout__content .main-right .buttonList .Button2 {
+  border-radius: 15px;
+  background: #eedf0f;
+  border: 0;
+  width: 190px;
+  margin-left: 20px;
+  color: black;
+  cursor: pointer;
+  -webkit-box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+          box-shadow: 0 1.75rem 2rem -0.4rem rgba(50, 0, 100, 0.15);
+}
+
+.mdl-layout__content .main-right .buttonList .Button2:hover {
+  -webkit-box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+          box-shadow: 0 1.75rem 3rem 0rem rgba(50, 0, 100, 0.1);
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.mdl-layout__content .main-right .buttonList .Button2:active {
   -webkit-box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
           box-shadow: 0 1.75rem 2.5rem -0.2rem rgba(50, 0, 100, 0.125);
   -webkit-transform: scale(1.025);

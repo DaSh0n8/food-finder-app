@@ -37,6 +37,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
                 </div>
                 <br><br>
                 <input type="submit" name="submit" value="Send">
+                <a href="php/map.php"><input type="cancel" name="cancel" value="Cancel"></a>
             </form>
         </div>
     </section>

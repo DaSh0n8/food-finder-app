@@ -179,22 +179,7 @@ function sortBookMark() {
     displaySearchResultBookmark();
 }
 
-//Function to run sorting algorithm and display it to the user
-function sortSearchResultBookmarks()
-{
-    let category = document.getElementById('Sortselect').value;
 
-    if (category == 'Distance' && centrepointSet == 'False')
-    {
-        window.alert('Please place down and confirm a centrepoint before sorting by distance');
-        return;
-    }
-
-    searchResultBookmarkList.sort(category);
-
-    displaySearchResultBookmark()
-
-}
 /*function sortCentrepointBookmark(a, b, property)
 {
     if (centrepointSortBy == "name")

@@ -34,6 +34,7 @@ if(isset($_POST['name']) && isset($_POST['email'])){
         $alert = '<div class="alert-success">
                         <span style="background-color: green">Message sent! Thank you for contacting us.</span>
                  </div>';
+        header("Location: php/map.php");
     } catch (Exception $e){
         $alert = '<div class="alert-error">
                        <span style="background-color: red">Something went wrong! Please try again.</span>

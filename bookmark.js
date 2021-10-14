@@ -178,6 +178,8 @@ function sortBookMark() {
                 }
     displaySearchResultBookmark();
 }
+
+
 /*function sortCentrepointBookmark(a, b, property)
 {
     if (centrepointSortBy == "name")

@@ -33,40 +33,51 @@ function bookmarkCentrepoint() {
 }
 
 //Display Centrepoint Bookmark List
-function displayCentrepointBookmark()
-{
+function displayCentrepointBookmark() {
     let bookmarkCentrepointRef = document.getElementById('bookmarkCentrepointList')
     //Display Bookmarked Centrepoints
-    let listCentrepoints = '<p>Bookmarked Centrepoints:\n</p>';
-    for (let i = 0; i < centrepointBookmarkList._list.length; i++)
-    {
-        listCentrepoints += `<p>(${i+1}) ${centrepointBookmarkList._list[i].address}</p>
-                            <button onClick='selectCentrepointBookmark(${i})'>Select Centrepoint</button>
-                            <button onClick="removeCentrepointBookmark(${i})" class="delete">Delete</button>`;
+    let listCentrepoints = '<h4 style="border-block: 10px;font-style: italic;border: black;border-style: solid;width: 30%;padding: 5px;">Bookmarked Centrepoints:\n</h4>';
+    for (let i = 0; i < centrepointBookmarkList._list.length; i++) {
+        listCentrepoints += `
+                            <span style="display:flex; flex-flow:row;">
+                            <p>(${i + 1}) ${centrepointBookmarkList._list[i].address} &nbsp; &nbsp;</p>
+                            <button onClick='selectCentrepointBookmark(${i})' class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                            id="buttonCancel" style="position:absolute; right:150px; background:green;">
+                                Select Centrepoint
+                            </button>           
+
+                            <button onClick="removeCentrepointBookmark(${i})" 
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                            id="buttonCancel" style="position:absolute; right:50px; background:red;">
+                                Delete
+                            </button> </span>
+                            `;
     }
     //console.log(bookmarkRef);
     bookmarkCentrepointRef.innerHTML = listCentrepoints;
 }
 
 //Display Search Result Bookmark List
-function displaySearchResultBookmark()
-{
+function displaySearchResultBookmark() {
     let bookmarkRef = document.getElementById('bookmarkListDisplay')
-    let list = '<p>Bookmarked Places:\n</p>';
-    for (let i = 0; i < searchResultBookmarkList.list.length; i++)
-    {
+    let list = '<h4 style="border-block: 10px;font-style: italic;border: black;border-style: solid;width: 30%;padding: 5px;">Bookmarked Places:\n</h4>';
+    for (let i = 0; i < searchResultBookmarkList.list.length; i++) {
         let name = i
-        list += `<p>${searchResultBookmarkList.list[i].address}</p>
-                 <button onClick="removeSearchResultBookmark(${name})" class="delete">Delete</button>`;
+        list += `<span style="display:flex; flex-flow:row;"><p>(${i + 1}) ${searchResultBookmarkList.list[i].address} &nbsp; &nbsp;</p>
+                 <button onClick="removeSearchResultBookmark(${name})" 
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                    id="buttonCancel" style="position:absolute; right:250px; background:red;">
+                            Delete
+                 </button> </span>
+                 `;
     }
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
 }
 
-function removeCentrepointBookmark(itemIndex)
-{
+function removeCentrepointBookmark(itemIndex) {
     //console.log(itemIndex)
-    centrepointBookmarkList.list.splice(itemIndex,1);
+    centrepointBookmarkList.list.splice(itemIndex, 1);
     /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
     /{
         searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
@@ -78,10 +89,9 @@ function removeCentrepointBookmark(itemIndex)
     displayCentrepointBookmark()
 }
 
-function removeCentrepointBookmark(itemIndex)
-{
+function removeCentrepointBookmark(itemIndex) {
     console.log(itemIndex)
-    centrepointBookmarkList.list.splice(itemIndex,1)
+    centrepointBookmarkList.list.splice(itemIndex, 1)
     /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
     /{
         searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
@@ -92,10 +102,9 @@ function removeCentrepointBookmark(itemIndex)
     displayCentrepointBookmark()
 }
 
-function removeSearchResultBookmark(itemIndex)
-{
+function removeSearchResultBookmark(itemIndex) {
     console.log(itemIndex)
-    searchResultBookmarkList.list.splice(itemIndex,1);
+    searchResultBookmarkList.list.splice(itemIndex, 1);
     /*for (let n = 0; n < searchResultBookmarkList.list.length; n++)
     /{
         searchResultBookmarkList.addSearchResult(searchResultBookmarkList.list[n]);
@@ -103,82 +112,70 @@ function removeSearchResultBookmark(itemIndex)
     }
     */
     setLocalStorage(SEARCH_RESULT_BOOKMARK_LIST_KEY, searchResultBookmarkList);
-    displaySearchResultBookmark()   
+    displaySearchResultBookmark()
 }
 
 let sortBy = {
-    name: function(a,b)
-    {
-        if (a.name < b.name)
-        {
+    name: function (a, b) {
+        if (a.name < b.name) {
             return -1;
         }
-        if (a.name > b.name)
-        {
+        if (a.name > b.name) {
             return 1;
         }
         return 0;
     },
-    address: function(a,b)
-    {
-        if (a.address < b.address)
-        {
+    address: function (a, b) {
+        if (a.address < b.address) {
             return -1;
         }
-        if (a.address > b.address)
-        {
+        if (a.address > b.address) {
             return 1;
         }
         return 0;
     },
-    review: function(a,b)
-    {
-        if (a.review < b.review)
-        {
+    review: function (a, b) {
+        if (a.review < b.review) {
             return -1;
         }
-        if (a.review > b.review)
-        {
+        if (a.review > b.review) {
             return 1;
         }
         return 0;
     },
-    distance: function(a,b)
-    {
-        if (a.getDistance(centrepointLocation) < b.getDistance(centrepointLocation))
-        {
+    distance: function (a, b) {
+        if (a.getDistance(centrepointLocation) < b.getDistance(centrepointLocation)) {
             return -1;
         }
-        if (a.getDistance(centrepointLocation) > b.getDistance(centrepointLocation))
-        {
+        if (a.getDistance(centrepointLocation) > b.getDistance(centrepointLocation)) {
             return 1;
         }
         return 0;
     }
 }
 
-function sortBookMark(){
+function sortBookMark() {
     let value = document.getElementById('Sortselect').value;
     if (value == "Name") {
         searchResultBookmarkList.sort("name");
     }
-    else 
-    if (value == "Address") {
-        searchResultBookmarkList.sort("address");
-    }
     else
-    if (value == "Review") {
-        searchResultBookmarkList.sort("review");
-    }
-    else
-    if (value == "Distance") {
-        if (centrepointLocation == {} || centrepointLocation == null) {
-            window.alert("Please choose the Centre point to use this service !");
+        if (value == "Address") {
+            searchResultBookmarkList.sort("address");
         }
-        else {
-            searchResultBookmarkList.sort("distance");
-        }
-    }
+        else
+            if (value == "Review") {
+                searchResultBookmarkList.sort("review");
+            }
+            else
+                if (value == "Distance") {
+                    if (centrepointLocation == {} || centrepointLocation == null) {
+                        window.alert("Please choose the Centre point to use this service !");
+                    }
+                    else {
+                        searchResultBookmarkList.sort("distance");
+                    }
+                }
     displaySearchResultBookmark();
 }
 /*function sortCentrepointBookmark(a, b, property)

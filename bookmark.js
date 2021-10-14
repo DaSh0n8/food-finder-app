@@ -57,7 +57,7 @@ function displaySearchResultBookmark()
     {
         let name = i
         list += `<p>${searchResultBookmarkList.list[i].address}</p>
-                 <a onClick="removeSearchResultBookmark(${name})" class="delete">Delete</a>`;
+                 <button onClick="removeSearchResultBookmark(${name})" class="delete">Delete</button>`;
     }
     console.log(bookmarkRef);
     bookmarkRef.innerHTML = list;
@@ -157,6 +157,30 @@ let sortBy = {
     }
 }
 
+function sortBookMark(){
+    let value = document.getElementById('Sortselect').value;
+    if (value == "Name") {
+        searchResultBookmarkList.sort("name");
+    }
+    else 
+    if (value == "Address") {
+        searchResultBookmarkList.sort("address");
+    }
+    else
+    if (value == "Review") {
+        searchResultBookmarkList.sort("review");
+    }
+    else
+    if (value == "Distance") {
+        if (centrepointLocation == {} || centrepointLocation == null) {
+            window.alert("Please choose the Centre point to use this service !");
+        }
+        else {
+            searchResultBookmarkList.sort("distance");
+        }
+    }
+    displaySearchResultBookmark();
+}
 /*function sortCentrepointBookmark(a, b, property)
 {
     if (centrepointSortBy == "name")

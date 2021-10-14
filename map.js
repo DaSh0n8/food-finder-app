@@ -447,8 +447,11 @@ function refreshMap(random = false) {
 //SELECT CENTREPOINT FROM CENTREPOINT BOOKMARK LIST
 function selectCentrepointBookmark(position)
 {
-    if (locationConfirmed && !centrepointSet)
+    if (!centrepointSet)
     {
+        if (!locationConfirmed) {
+            cancelLocation();
+        }
         locationConfirmed = false;
         reverseGeocode(centrepointBookmarkList.list[position].lat, centrepointBookmarkList.list[position].lng, false, false)
     }

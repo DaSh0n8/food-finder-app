@@ -351,6 +351,7 @@ class SearchResultBookmarkList
         if (property == 'review')
         {
             this._list.sort(sortBy.review);
+            this._list.reverse();
         }
         if (property == 'distance')
         {

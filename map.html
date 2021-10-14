@@ -54,10 +54,12 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
-                <a href="../contact.php" style="float: right; position: absolute; left: 10px; font-style: italic;">Give us feedback</a>
+                <a href="../contact.php" style="float: right; position: absolute; left: 10px; font-style: italic;">Give
+                    us feedback</a>
                 <span class="mdl-layout__title">Accessible Food Widget</span>
                 <img src="./images/icon_header.png" alt="image_header" id="iconHeader">
-                <a href="logout.php" style="float: right; position: absolute; right: 10px; font-style: italic;">Log out</a>
+                <a href="logout.php" style="float: right; position: absolute; right: 10px; font-style: italic;">Log
+                    out</a>
             </div>
         </header>
         <main class="mdl-layout__content">
@@ -76,27 +78,30 @@
                     <!-- adding map styles -->
                 </div>
                 <div id="menu">
-                    <input id="osm-carto" type="radio" name="rtoggle" value="osm-carto" checked="checked">
+                    <input id="osm-carto" type="radio" name="rtoggle" value="osm-carto" checked="checked" onclick="changeMapStyle('osm-carto')">
                     <label for="osm-carto"><img src="images/osm-carto.png" alt="osm-carto"
                             style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('osm-carto')"></label>
-                    <input id="osm-bright" type="radio" name="rtoggle" value="osm-bright">
+                    <input id="osm-bright" type="radio" name="rtoggle" value="osm-bright" onclick="changeMapStyle('osm-bright')">
                     <label for="osm-bright"><img src="images/osm-bright.png" alt="osm-bright"
                             style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('osm-bright')"></label>
-                    <input id="klokantech-basic" type="radio" name="rtoggle" value="klokantech-basic">
+                    <input id="klokantech-basic" type="radio" name="rtoggle" value="klokantech-basic" onclick="changeMapStyle('klokantech-basic')">
                     <label for="klokantech-basic"><img src="images/klokantech-basic.png" alt="klokantech-basic"
-                            style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('klokantech-basic')"></label>
-                    <input id="osm-liberty" type="radio" name="rtoggle" value="osm-liberty">
+                            style="max-width: 70px; max-height: 70px;"
+                            onclick="changeMapStyle('klokantech-basic')"></label>
+                    <input id="osm-liberty" type="radio" name="rtoggle" value="osm-liberty" onclick="changeMapStyle('osm-liberty')">
                     <label for="osm-liberty"><img src="images/osm-liberty.png" alt="satellite"
                             style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('osm-liberty')"></label>
-                    <input id="toner-grey" type="radio" name="rtoggle" value="satellite-streets">
+                    <input id="toner-grey" type="radio" name="rtoggle" value="satellite-streets" onclick="changeMapStyle('toner-grey')">
                     <label for="toner-grey"><img src="images/toner-grey.png" alt="satellite-streets"
                             style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('toner-grey')"></label>
-                    <input id="positron-blue" type="radio" name="rtoggle" value="positron-blue">
+                    <input id="positron-blue" type="radio" name="rtoggle" value="positron-blue" onclick="changeMapStyle('positron-blue')">
                     <label for="positron-blue"><img src="images/positron-blue.png" alt="positron-blue"
-                            style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('positron-blue')"></label>
-                    <input id="dark-matter-dark-grey" type="radio" name="rtoggle" value="dark-matter-dark-grey">
-                    <label for="dark-matter-dark-grey"><img src="images/dark-matter-dark-grey.png" alt="dark-matter-dark-grey"
-                            style="max-width: 70px; max-height: 70px;" onclick="changeMapStyle('dark-matter-dark-grey')"></label>
+                            style="max-width: 70px; max-height: 70px;"
+                            onclick="changeMapStyle('positron-blue')"></label>
+                    <input id="dark-matter-dark-grey" type="radio" name="rtoggle" value="dark-matter-dark-grey" onclick="changeMapStyle('dark-matter-dark-grey')">
+                    <label for="dark-matter-dark-grey"><img src="images/dark-matter-dark-grey.png"
+                            alt="dark-matter-dark-grey" style="max-width: 70px; max-height: 70px;"
+                            onclick="changeMapStyle('dark-matter-dark-grey')"></label>
                 </div>
                 <div class="bottom">
                     <div class="mdl-grid">
@@ -204,8 +209,21 @@
                                 </div>
 
                                 <div id="Place" class="w3-container city">
+                                    <div class="sortBookmark" style="display: flex; flex-flow: row; width:fit-content;">
+                                        <p style="text-align:center; margin-top:10px">Sort by: &nbsp; &nbsp; </p>
+                                        <select class="form-select" aria-label="Default select example" id="Sortselect"
+                                            style="width: 30%;">
+                                            <option selected>Open this select menu</option>
+                                            <option value="Name">Name</option>
+                                            <option value="Address">Address</option>
+                                            <option value="Review">Review</option>
+                                            <option value="Distance">Distance</option>
+                                        </select>
+                                        <button class="w3-button w3-right w3-amber w3-border"
+                                            style="border-radius: 15px; width: 100px; margin-left: 10px;"
+                                            onclick="sortBookMark()">Sort</button>
+                                    </div>
                                     <div id='bookmarkListDisplay'>
-
                                     </div>
                                 </div>
 

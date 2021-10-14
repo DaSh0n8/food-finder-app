@@ -12,9 +12,13 @@ if (isset($_POST["submit"])){
         header("Location: registerpage.php?error=Username is required");
     }else if (empty($password)){
         header("Location: registerpage.php?error=Password is required");
+    }else if($password !== $passwordcfm){
+        header("Location: registerpage.php?error=Password doesn't match");
+        exit();
     }else {
         if(mysqli_num_rows($check_username) > 0){
-            echo "Username already exists";
+            header("Location: registerpage.php?error=Username has been taken");
+            echo "username taken";
         }
         else{
             $query = "INSERT INTO users (user_name, password) VALUES ('$username', '$password')";

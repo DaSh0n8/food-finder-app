@@ -15,7 +15,9 @@
         <h4 class="sent-notification"></h4>
         <form action="" method="post">
             <h2>Create new account</h2>
-
+            <?php if (isset($_GET['error'])) { ?>
+                <p style="color: red"><?php echo $_GET['error']; ?></p>
+            <?php } ?>
             <div class="form-group">
                 <label>Username: </label>
                 <input type="text" name="username" placeholder="User Name" required>

@@ -3,6 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="start.css">
+    <title>Accessible Food Widget</title>
 </head>
 <body>
 <div class="Header">

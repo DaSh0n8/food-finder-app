@@ -16,7 +16,7 @@
         <form action="" method="post">
             <h2>Login</h2>
             <?php if (isset($_GET['error'])) { ?>
-                <p class="error"><?php echo $_GET['error']; ?></p>
+                <p style="color: red"><?php echo $_GET['error']; ?></p>
             <?php } ?>
             <div class="form-group">
                 <label>Username: </label>

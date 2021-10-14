@@ -94,8 +94,9 @@ body {
   }
 }
 .Button {
-  position: absolute;
-  left: 600px;
+  position: relative;
+  left: 400px;
+  bottom: 120px;
   padding: 1.5rem 2rem;
   border: 0;
   color: var(--color-3);

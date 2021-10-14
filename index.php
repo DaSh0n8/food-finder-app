@@ -3,6 +3,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="start.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <title>Accessible Food Widget</title>
 </head>
 <body>

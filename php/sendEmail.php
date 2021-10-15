@@ -28,7 +28,7 @@ if(isset($_POST['name']) && isset($_POST['email'])){
 
         $mail->isHTML(true);
         $mail->Subject= 'Message Received (Contact Page)';
-        $mail->Body = "<h3>Name : $name <br>Email: $email <br>Message: $message</h3>";
+        $mail->Body = "<h3>Name : $name <br>Email: $email <br>Feedback: $message</h3>";
 
         $mail->send();
         $alert = '<div class="alert-success">

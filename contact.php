@@ -33,8 +33,8 @@ if (isset($_SESSION['id']) && isset($_SESSION['user_name'])){
                     <input type="text" id="email" name="email" placeholder="Enter Email" required>
                 </div>
                 <div class="form-group">
-                    <p>Message</p>
-                    <textarea name="message" id="message" rows="5" placeholder="Type Message" required></textarea>
+                    <p>Feedback</p>
+                    <textarea name="message" id="message" rows="5" placeholder="Type Feedback" required></textarea>
                 </div>
                 <br><br>
                 <input type="submit" name="submit" value="Send">
